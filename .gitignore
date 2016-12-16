@@ -1,5 +1,7 @@
 .idea
 node_modules
+node_cache
+bhmc2.iml
 jspm_packages
 npm-debug.*
 link-checker-results.txt
