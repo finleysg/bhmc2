@@ -1,3 +1,7 @@
+.clickable {
+  cursor: pointer;
+}
+
 .mCSB_scrollTools {
   width: 5px;
 }

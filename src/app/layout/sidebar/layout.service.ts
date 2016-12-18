@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 @Injectable()
 export class LayoutService {
 
- //private storage = localStorage;
+ // private storage = localStorage;
   private _layoutToggleSource = new BehaviorSubject<number>(1);
   public layoutToggle: Observable<number> = this._layoutToggleSource.asObservable();
   private _sidebarToggleSource = new BehaviorSubject<boolean>(false);
@@ -24,11 +24,9 @@ export class LayoutService {
     }
   }
 
-  // sidebarStatus(event) {
-  //   if (!angular.element(event.target).parent().hasClass('active')) {
-  //     this.sidebarToggle = false;
-  //   }
-  // }
+  closeSidebar() {
+    this._sidebarToggleSource.next(false);
+  }
 
   get layoutType(): number {
     return this._layoutToggleSource.getValue();
@@ -36,6 +34,6 @@ export class LayoutService {
 
   updateLayout(value: number) {
     this._layoutToggleSource.next(value);
-    //this.storage['layout-type'] = layoutType;
+    // this.storage['layout-type'] = layoutType;
   }
 }
