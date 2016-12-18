@@ -1,5 +1,5 @@
 import {Component, HostBinding} from '@angular/core';
-import {LayoutService} from "./layout/sidebar/layout.service";
+import {LayoutService} from './services/layout.service';
 
 @Component({
   moduleId: module.id,
@@ -13,6 +13,6 @@ export class AppComponent  {
   @HostBinding('class.sw-toggled') swToggle: boolean;
 
   constructor(private layoutService: LayoutService) {
-    layoutService.layoutToggle.subscribe(value => this.swToggle = value === 1)
+    layoutService.layoutToggle.subscribe(value => this.swToggle = value === 1);
   }
 }

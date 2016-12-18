@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {LayoutService} from "../sidebar/layout.service";
-import {Router} from "@angular/router";
+import {LayoutService} from '../../services/layout.service';
+import {Router} from '@angular/router';
 
 @Component({
   moduleId: module.id,

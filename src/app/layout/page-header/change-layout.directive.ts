@@ -1,5 +1,5 @@
 import { Directive, ElementRef, HostListener } from '@angular/core';
-import {LayoutService} from "./layout.service";
+import {LayoutService} from '../../services/layout.service';
 
 @Directive({ selector: '[change-layout]' })
 export class ChangeLayoutDirective {

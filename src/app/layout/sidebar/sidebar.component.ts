@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
-import {LayoutService} from './layout.service';
-import {UserService} from '../user/user.service';
-import {User} from '../user/user';
+import {User} from '../../services/user';
+import {LayoutService} from '../../services/layout.service';
+import {UserService} from '../../services/user.service';
 
 @Component({
   moduleId: module.id,
@@ -27,7 +27,7 @@ export class SidebarComponent implements OnInit {
   ngOnInit(): void {
     this.user = this._userService.getCurrentUser();
     this.adminUrl = 'http://localhost:8000/admin';
-    this._layoutService.sidebarToggle.subscribe(value => this.isOpen = value)
+    this._layoutService.sidebarToggle.subscribe(value => this.isOpen = value);
   }
 
   close(): void {

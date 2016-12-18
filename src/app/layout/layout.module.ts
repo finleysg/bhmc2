@@ -1,13 +1,11 @@
 import {NgModule} from '@angular/core';
 import {PageHeaderComponent} from './page-header/page-header.component';
-import {SidebarComponent} from "./sidebar/sidebar.component";
-import {ChangeLayoutDirective} from "./sidebar/change-layout.directive";
-import {LayoutService} from "./sidebar/layout.service";
-import {ToggleSubmenuDirective} from "./sidebar/toggle-submenu.directive";
-import {UserService} from "./user/user.service";
+import {SidebarComponent} from './sidebar/sidebar.component';
+import {ChangeLayoutDirective} from './page-header/change-layout.directive';
+import {ToggleSubmenuDirective} from './sidebar/toggle-submenu.directive';
 import {RouterModule} from '@angular/router';
-import {CommonModule} from "@angular/common";
-import {LayoutComponent} from "./layout.component";
+import {CommonModule} from '@angular/common';
+import {LayoutComponent} from './layout.component';
 
 @NgModule({
   imports: [
@@ -20,10 +18,6 @@ import {LayoutComponent} from "./layout.component";
     SidebarComponent,
     ChangeLayoutDirective,
     ToggleSubmenuDirective
-  ],
-  providers: [
-    LayoutService,
-    UserService
   ],
   exports: [
     LayoutComponent
