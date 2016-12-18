@@ -9,16 +9,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var layout_service_1 = require("./layout/sidebar/layout.service");
 var AppComponent = (function () {
-    function AppComponent() {
-        this.name = 'Angular';
+    function AppComponent(layoutService) {
+        var _this = this;
+        this.layoutService = layoutService;
+        this.name = 'Bunker Hills Men\'s Club';
+        layoutService.layoutToggle.subscribe(function (value) { return _this.swToggle = value === 1; });
     }
+    __decorate([
+        core_1.HostBinding('class.sw-toggled'), 
+        __metadata('design:type', Boolean)
+    ], AppComponent.prototype, "swToggle", void 0);
     AppComponent = __decorate([
         core_1.Component({
-            selector: 'my-app',
-            template: "<div class=\"jumbotron\"><h1>Hello {{name}}</h1></div>",
+            moduleId: module.id,
+            selector: 'body',
+            template: "<bhmc-layout></bhmc-layout>"
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [layout_service_1.LayoutService])
     ], AppComponent);
     return AppComponent;
 }());

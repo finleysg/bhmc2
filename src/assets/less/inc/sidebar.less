@@ -11,13 +11,13 @@
     .opacity(0);
     .transition(all);
     .transition-duration(300ms);
-    
+
     .sidebar-inner {
         height: 100%;
         overflow-y: auto;
         width: @sidebar-left-width;
     }
-    
+
     &.toggled {
         .translate3d(0, 0, 0);
         .opacity(1);
@@ -30,12 +30,12 @@
         height: 129px;
         margin-bottom: 5px;
         width: 100%;
-        background: url(../../img/six_east.png) no-repeat left top;
+        background: url(../img/six_east.png) no-repeat left top;
         background-size: 100%;
-        
+
         .profile-pic {
             padding: 12px;
-            
+
             & > img {
                 width: 47px;
                 height: 47px;
@@ -46,14 +46,14 @@
                 //background-size: 100%;
             }
         }
-        
+
         .profile-info {
             background: rgba(0, 0, 0, 0.37);
             padding: 7px 14px;
             color: #fff;
             margin-top: 20px;
             position: relative;
-            
+
             & > i {
                 font-size: 19px;
                 line-height: 100%;
@@ -69,11 +69,11 @@
         display: none;
         margin: 0 0 0;
         border-bottom: 1px solid #E6E6E6;
-        
+
     }
-    
+
     .clearfix();
-    
+
     &.toggled {
         .profile-info {
             & > i {

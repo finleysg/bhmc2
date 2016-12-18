@@ -6,7 +6,7 @@ module.exports = {
     baseDir: ['./', './src'],
     index: 'index.html'
   },
-  files: './**/*.{js, html, css}',
+  files: './src/**/*.{js, html, css}',
   open: false,
   // server: {
   //     //'baseDir': './',

@@ -1822,6 +1822,11 @@
       "resolved": "./node_shrinkwrap/magic-string-0.14.0.tar",
       "dev": true
     },
+    "material-design-iconic-font": {
+      "version": "2.2.0",
+      "from": "material-design-iconic-font@latest",
+      "resolved": "./node_shrinkwrap/material-design-iconic-font-2.2.0.tar"
+    },
     "media-typer": {
       "version": "0.3.0",
       "from": "media-typer@0.3.0",

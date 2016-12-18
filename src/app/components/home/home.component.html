@@ -1,0 +1,30 @@
+<div class="block-header">
+  <h2>Men's Club Home</h2>
+</div>
+<div class="row">
+  <div class="col-md-9">
+    <div class="card event-card">
+      <div class="card-header">
+        <h2>Announcements</h2>
+      </div>
+      <div class="card-body card-padding">
+        <p *ngFor="let a of announcements">{{ a.text }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card event-card">
+      <div class="card-header">
+        <h2>Quick Links</h2>
+      </div>
+      <div class="card-body card-padding">
+        <p><a href="http://bookit.activegolf.com/book-bunker-hills-gc-tee-times/1114" target="_blank">Tee Times</a></p>
+        <p><a href="http://bunkerhillsgolf.com/" target="_blank">Bunker Hills Home</a></p>
+        <p><a href="http://mpga.net.p.hostingprod.com/" target="_blank">Minnesota Public Golf Association</a></p>
+        <p><a href="http://www.mngolf.org/home" target="_blank">Minnesota Golf Association</a></p>
+        <p><a href="http://www.usga.org/rules/rules-and-decisions.html" target="_blank">Rules of Golf</a></p>
+        <p><a href="https://www.ghin.com/default.aspx" target="_blank">Handicaps (GHIN)</a></p>
+      </div>
+    </div>
+  </div>
+</div>
