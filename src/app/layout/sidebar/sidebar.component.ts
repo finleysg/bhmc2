@@ -1,8 +1,8 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { User } from '../../services/user';
-import { LayoutService } from '../../services/layout.service';
-import { AuthenticationService } from '../../services/authentication.service';
+import { User } from '../../core/user';
+import { LayoutService } from '../../core/layout.service';
+import { AuthenticationService } from '../../core/authentication.service';
 
 @Component({
     moduleId: module.id,

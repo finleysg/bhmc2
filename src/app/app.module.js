@@ -13,11 +13,9 @@ var platform_browser_1 = require('@angular/platform-browser');
 var app_component_1 = require('./app.component');
 var layout_module_1 = require('./layout/layout.module');
 var app_routing_module_1 = require('./app-routing.module');
-var components_module_1 = require('./components/components.module');
-var layout_service_1 = require('./services/layout.service');
-var user_service_1 = require('./services/user.service');
-var authentication_service_1 = require('./services/authentication.service');
-var http_1 = require('@angular/http');
+var core_module_1 = require('./core/core.module');
+var shared_module_1 = require('./shared/shared.module');
+var home_component_1 = require('./home/home.component');
 var AppModule = (function () {
     function AppModule() {
     }
@@ -26,17 +24,17 @@ var AppModule = (function () {
             imports: [
                 platform_browser_1.BrowserModule,
                 app_routing_module_1.AppRoutingModule,
-                layout_module_1.LayoutModule,
-                components_module_1.ComponentsModule,
-                http_1.HttpModule
+                core_module_1.BhmcCoreModule,
+                shared_module_1.SharedModule,
+                layout_module_1.LayoutModule
             ],
-            declarations: [app_component_1.AppComponent],
-            providers: [
-                layout_service_1.LayoutService,
-                user_service_1.UserService,
-                authentication_service_1.AuthenticationService
+            declarations: [
+                app_component_1.AppComponent,
+                home_component_1.HomeComponent
             ],
-            bootstrap: [app_component_1.AppComponent]
+            bootstrap: [
+                app_component_1.AppComponent
+            ]
         }), 
         __metadata('design:paramtypes', [])
     ], AppModule);

@@ -1,0 +1,13 @@
+.message-pane {
+    height: 90px;
+    /*padding: 5px;*/
+    overflow: auto;
+}
+
+.modal-header > h3 {
+    color: #ffffff;
+}
+
+.modal-header > small {
+    color: #ffffff;
+}
