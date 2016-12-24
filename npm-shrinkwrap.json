@@ -141,6 +141,11 @@
       "from": "angular-in-memory-web-api@0.2.1",
       "resolved": "./node_shrinkwrap/angular-in-memory-web-api-0.2.1.tar"
     },
+    "angular2-toaster": {
+      "version": "2.0.0",
+      "from": "angular2-toaster@latest",
+      "resolved": "./node_shrinkwrap/angular2-toaster-2.0.0.tar"
+    },
     "ansi-regex": {
       "version": "0.2.1",
       "from": "ansi-regex@>=0.2.0 <0.3.0",
@@ -1897,6 +1902,11 @@
       "from": "negotiator@0.4.9",
       "resolved": "./node_shrinkwrap/negotiator-0.4.9.tar",
       "dev": true
+    },
+    "ng2-cookies": {
+      "version": "1.0.4",
+      "from": "ng2-cookies@latest",
+      "resolved": "./node_shrinkwrap/ng2-cookies-1.0.4.tar"
     },
     "node-uuid": {
       "version": "1.4.7",

@@ -8,6 +8,7 @@ import {HomeComponent} from './home/home.component';
 import {ContactComponent} from './contact/contact.component';
 import {DirectoryComponent} from './directory/directory.component';
 import {ProfileComponent} from './profile/profile.component';
+import {AuthModule} from './auth/auth.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import {ProfileComponent} from './profile/profile.component';
     ComponentsRoutingModule,
     EventModule,
     PoliciesModule,
-    ResultsModule
+    ResultsModule,
+    AuthModule
   ],
   declarations: [
     HomeComponent,

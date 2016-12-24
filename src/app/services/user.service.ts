@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
-import { User } from './user';
+import {Injectable} from '@angular/core';
+import {User} from './user';
 
 @Injectable()
 export class UserService {
 
-  constructor() { }
+  constructor() {
+  }
 
   getCurrentUser(): User {
     const thisUser = new User();

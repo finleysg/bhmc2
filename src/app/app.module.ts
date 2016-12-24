@@ -6,18 +6,22 @@ import {AppRoutingModule} from './app-routing.module';
 import {ComponentsModule} from './components/components.module';
 import {LayoutService} from './services/layout.service';
 import {UserService} from './services/user.service';
+import {AuthenticationService} from './services/authentication.service';
+import {HttpModule} from '@angular/http';
 
 @NgModule({
   imports: [
     BrowserModule,
     AppRoutingModule,
     LayoutModule,
-    ComponentsModule
+    ComponentsModule,
+    HttpModule
   ],
   declarations: [AppComponent],
   providers: [
     LayoutService,
-    UserService
+    UserService,
+    AuthenticationService
   ],
   bootstrap: [AppComponent]
 })

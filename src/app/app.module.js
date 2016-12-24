@@ -16,6 +16,8 @@ var app_routing_module_1 = require('./app-routing.module');
 var components_module_1 = require('./components/components.module');
 var layout_service_1 = require('./services/layout.service');
 var user_service_1 = require('./services/user.service');
+var authentication_service_1 = require('./services/authentication.service');
+var http_1 = require('@angular/http');
 var AppModule = (function () {
     function AppModule() {
     }
@@ -25,12 +27,14 @@ var AppModule = (function () {
                 platform_browser_1.BrowserModule,
                 app_routing_module_1.AppRoutingModule,
                 layout_module_1.LayoutModule,
-                components_module_1.ComponentsModule
+                components_module_1.ComponentsModule,
+                http_1.HttpModule
             ],
             declarations: [app_component_1.AppComponent],
             providers: [
                 layout_service_1.LayoutService,
-                user_service_1.UserService
+                user_service_1.UserService,
+                authentication_service_1.AuthenticationService
             ],
             bootstrap: [app_component_1.AppComponent]
         }), 
