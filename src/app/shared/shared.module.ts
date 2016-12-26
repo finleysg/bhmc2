@@ -3,6 +3,9 @@ import { CommonModule }  from '@angular/common';
 import { FormsModule }   from '@angular/forms';
 import { RouterModule }  from '@angular/router';
 import { PaymentComponent } from './payments/payment.component';
+import { SpinnerDirective } from './spinner/spinner.directive';
+import { SpinnerService } from './spinner/spinner.service';
+import { SpinnerButtonComponent } from './spinner/spinner-button.component';
 
 @NgModule({
     imports: [
@@ -11,13 +14,20 @@ import { PaymentComponent } from './payments/payment.component';
         RouterModule
     ],
     declarations: [
-        PaymentComponent
+        PaymentComponent,
+        SpinnerDirective,
+        SpinnerButtonComponent
+    ],
+    providers: [
+        SpinnerService
     ],
     exports: [
         CommonModule,
         FormsModule,
         RouterModule,
-        PaymentComponent
+        PaymentComponent,
+        SpinnerDirective,
+        SpinnerButtonComponent
     ]
 })
 export class SharedModule { }

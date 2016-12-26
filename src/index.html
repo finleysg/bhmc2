@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <base href="/">
     <title>Bunker Hills Men's Club</title>
     <meta charset="UTF-8">
@@ -18,21 +18,24 @@
 
     <script src="systemjs.config.js"></script>
     <script>
-      System.import('app').catch(function(err){ console.error(err); });
+        System.import('app').catch(function (err) {
+            console.error(err);
+        });
     </script>
-  </head>
+</head>
 
-  <body>
-    <!--Workaround for static hosting like surge.sh and github.io-->
-    <script>
-      (function(){
+<body>
+<!--Workaround for static hosting like surge.sh and github.io-->
+<script>
+    (function () {
         var redirect = sessionStorage.redirect;
         delete sessionStorage.redirect;
         if (redirect && redirect != location.href) {
-          history.replaceState(null, null, redirect);
+            history.replaceState(null, null, redirect);
         }
-      })();
-    </script>
-    <script src="https://js.stripe.com/v2/" type="text/javascript"></script>
-  </body>
+    })();
+</script>
+<script src="https://js.stripe.com/v2/" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js" type="text/javascript"></script>
+</body>
 </html>

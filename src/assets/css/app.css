@@ -2552,7 +2552,7 @@ output {
   background-color: #fff;
   background-image: none;
   border: 1px solid #e0e0e0;
-  border-radius: 0;
+  border-radius: 2px;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
@@ -2560,10 +2560,10 @@ output {
   transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
 .form-control:focus {
-  border-color: #b4b4b4;
+  border-color: #48a8f5;
   outline: 0;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(180, 180, 180, 0.6);
-  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(180, 180, 180, 0.6);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(72, 168, 245, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(72, 168, 245, 0.6);
 }
 .form-control::-moz-placeholder {
   color: #999;
@@ -2737,7 +2737,7 @@ select[multiple].form-group-sm .form-control {
   padding: 10px 16px;
   font-size: 17px;
   line-height: 1.3333333;
-  border-radius: 0px;
+  border-radius: 2px;
 }
 select.input-lg {
   height: 40px;
@@ -2752,7 +2752,7 @@ select[multiple].input-lg {
   padding: 10px 16px;
   font-size: 17px;
   line-height: 1.3333333;
-  border-radius: 0px;
+  border-radius: 2px;
 }
 select.form-group-lg .form-control {
   height: 40px;
@@ -4200,7 +4200,7 @@ tbody.collapse.in {
   padding: 10px 16px;
   font-size: 17px;
   line-height: 1.3333333;
-  border-radius: 0px;
+  border-radius: 2px;
 }
 select.input-group-lg > .form-control,
 select.input-group-lg > .input-group-addon,
@@ -9663,30 +9663,20 @@ label {
 /*
  * Reset Focus and Active shadows
  */
-input:active,
-input:focus {
-  outline: 0;
-  box-shadow: none !important;
-}
 .form-control {
-  box-shadow: none !important;
-  resize: none;
-}
-.form-control:active,
-.form-control:focus {
-  box-shadow: none;
-}
-.form-control:not(.fc-alt) {
-  border-left: 0;
-  border-right: 0;
-  border-top: 0;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  padding: 0;
-}
-.form-control:not(.fc-alt).auto-size {
-  padding-top: 6px;
+  /*    &:not(.fc-alt) {
+        border-left: 0;
+        border-right: 0;
+        border-top: 0;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        padding: 0;
+
+        &.auto-size {
+            padding-top: 6px;
+        }
+    }*/
 }
 /*
  * Checkbox and Radio

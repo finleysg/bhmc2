@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, RequestOptions, Headers } from '@angular/http';
+import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { User } from './user';
@@ -10,16 +10,16 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/toPromise';
+import { BhmcDataService } from './bhmc-data.service';
 
 @Injectable()
 export class AuthenticationService {
 
-    private _authUrl: string = 'https://finleysg.pythonanywhere.com/rest-auth/';
     private currentUserSource: BehaviorSubject<User>;
     public currentUser$: Observable<User>;
     private _currentUser: User;
 
-    constructor(private http: Http) {
+    constructor(private dataService: BhmcDataService) {
         if (!this._currentUser) {
             let storedUser = localStorage.getItem('bhmc_user');
             if (!storedUser) {
@@ -41,7 +41,7 @@ export class AuthenticationService {
             username = '';
         }
 
-        return this.postRequest('login', {username: username, email: email, password: password})
+        return this.dataService.postAuthRequest('login', {username: username, email: email, password: password})
             .toPromise()
             .then(data => {
                 if (data && data.key) {
@@ -58,7 +58,7 @@ export class AuthenticationService {
     }
 
     logout() {
-        return this.postRequest('logout', {})
+        return this.dataService.postAuthRequest('logout', {})
             .toPromise()
             .then(() => this.resetUser())
             .catch((err: Response) => {
@@ -69,12 +69,11 @@ export class AuthenticationService {
     }
 
     resetPassword(email: string) {
-        return this.postRequest('password/reset', {email: email});
+        return this.dataService.postAuthRequest('password/reset', {email: email});
     }
 
     getUser(): Observable<User> {
-        const url: string = this._authUrl + 'user/';
-        return this.http.get(url, this.createOptions())
+        return this.dataService.getAuthRequest('user')
             .map((r: Response) => r.json() as User)
             .catch((e: Response) => {
                 console.log(e.statusText);
@@ -89,41 +88,5 @@ export class AuthenticationService {
         this._currentUser = new User();
         this.currentUserSource.next(this._currentUser);
         localStorage.setItem('bhmc_user', JSON.stringify(this._currentUser));
-    }
-
-    private postRequest(resource: string, data: any) {
-        const url: string = this._authUrl + resource + '/';
-        return this.http.post(url, JSON.stringify(data), this.createOptions())
-            .map((response: Response) => {
-                return response.json() || {};
-            })
-            .catch(this.handleError);
-    }
-
-    private createOptions(): RequestOptions {
-        const headers = new Headers({'Content-Type': 'application/json'});
-        const token = localStorage.getItem('bhmc_token');
-        if (token) {
-            headers.append('Authorization', 'Token ' + token);
-        }
-        // This cookie is added to responses by Django
-        const csrf = Cookie.get('csrftoken');
-        if (csrf) {
-            headers.append('X-CSRFToken', csrf);
-        }
-        return new RequestOptions({headers: headers});
-    }
-
-    private handleError(error: Response | any) {
-        let errMsg: string;
-        if (error instanceof Response) {
-            const body = error.json() || '';
-            const err = body.error || JSON.stringify(body);
-            errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-        } else {
-            errMsg = error.message ? error.message : error.toString();
-        }
-        console.error(errMsg);
-        return Observable.throw(errMsg);
     }
 }
