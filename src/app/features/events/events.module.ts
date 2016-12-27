@@ -1,3 +1,6 @@
+import { TeetimeComponent } from './teetimes/teetime.component';
+import { ReserveComponent } from './reserve/reserve.component';
+import { RegisterComponent } from './register/register.component';
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
 import { EventsRoutingModule } from './events-routing.module';
@@ -11,7 +14,10 @@ import { EventComponent } from './event.component';
     ],
     declarations: [
         CalendarComponent,
-        EventComponent
+        EventComponent,
+        RegisterComponent,
+        ReserveComponent,
+        TeetimeComponent
     ]
 })
 export class EventsModule {

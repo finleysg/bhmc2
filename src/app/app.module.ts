@@ -1,3 +1,8 @@
+import { PoliciesModule } from './features/policies/policies.module';
+import { ResultsModule } from './features/results/results.module';
+import { EventsModule } from './features/events/events.module';
+import { DirectoryModule } from './features/directory/directory.module';
+import { ContactModule } from './features/contact/contact.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
@@ -13,15 +18,18 @@ import { HomeComponent } from './home/home.component';
         AppRoutingModule,
         BhmcCoreModule,
         SharedModule,
-        LayoutModule
+        LayoutModule,
+        ContactModule,
+        DirectoryModule,
+        EventsModule,
+        ResultsModule,
+        PoliciesModule
     ],
     declarations: [
-        AppComponent,
-        HomeComponent
+        AppComponent
     ],
     bootstrap: [
         AppComponent
     ]
 })
-export class AppModule {
-}
+export class AppModule { }

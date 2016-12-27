@@ -1,12 +1,18 @@
+import { TeetimeComponent } from './teetimes/teetime.component';
+import { ReserveComponent } from './reserve/reserve.component';
+import { RegisterComponent } from './register/register.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { EventComponent } from './event.component';
 import { CalendarComponent } from './calendar/calendar.component';
 
-const routes: Routes = [{
-    path: '', children: [
+const routes: Routes = [
+    { path: 'calendar', component: CalendarComponent },
+    { path: 'event/:id', children: [
         { path: 'detail', component: EventComponent },
-        { path: 'calendar', component: CalendarComponent }
+        { path: 'register', component: RegisterComponent }, 
+        { path: 'reserve', component: ReserveComponent },
+        { path: 'teetimes', component: TeetimeComponent },
     ]}
 ];
 
@@ -15,5 +21,4 @@ const routes: Routes = [{
     exports: [RouterModule]
 })
 
-export class EventsRoutingModule {
-}
+export class EventsRoutingModule { }

@@ -4,7 +4,7 @@ import {PoliciesComponent}    from './policies.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'policies',
     children: [
       { path: 'club', component: PoliciesComponent },
       { path: 'handicaps', component: PoliciesComponent },

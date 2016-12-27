@@ -8,7 +8,7 @@ import {DamCupComponent} from './dam-cup/dam-cup.component';
 
 const routes: Routes = [
   {
-    path: '',  children: [
+    path: 'results',  children: [
       { path: 'league', component: LeagueResultsComponent },
       { path: 'majors', component: MajorResultsComponent },
       { path: 'match-play', component: MatchPlayComponent },
