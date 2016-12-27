@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,45 +7,46 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var policies_module_1 = require('./features/policies/policies.module');
-var results_module_1 = require('./features/results/results.module');
-var events_module_1 = require('./features/events/events.module');
-var directory_module_1 = require('./features/directory/directory.module');
-var contact_module_1 = require('./features/contact/contact.module');
-var core_1 = require('@angular/core');
-var platform_browser_1 = require('@angular/platform-browser');
-var app_component_1 = require('./app.component');
-var layout_module_1 = require('./layout/layout.module');
-var app_routing_module_1 = require('./app-routing.module');
-var core_module_1 = require('./core/core.module');
-var shared_module_1 = require('./shared/shared.module');
-var AppModule = (function () {
+import { HomeModule } from './home/home.module';
+import { PoliciesModule } from './features/policies/policies.module';
+import { ResultsModule } from './features/results/results.module';
+import { EventsModule } from './features/events/events.module';
+import { DirectoryModule } from './features/directory/directory.module';
+import { ContactModule } from './features/contact/contact.module';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppComponent } from './app.component';
+import { LayoutModule } from './layout/layout.module';
+import { AppRoutingModule } from './app-routing.module';
+import { BhmcCoreModule } from './core/core.module';
+import { SharedModule } from './shared/shared.module';
+export var AppModule = (function () {
     function AppModule() {
     }
     AppModule = __decorate([
-        core_1.NgModule({
+        NgModule({
             imports: [
-                platform_browser_1.BrowserModule,
-                app_routing_module_1.AppRoutingModule,
-                core_module_1.BhmcCoreModule,
-                shared_module_1.SharedModule,
-                layout_module_1.LayoutModule,
-                contact_module_1.ContactModule,
-                directory_module_1.DirectoryModule,
-                events_module_1.EventsModule,
-                results_module_1.ResultsModule,
-                policies_module_1.PoliciesModule
+                BrowserModule,
+                AppRoutingModule,
+                BhmcCoreModule,
+                SharedModule,
+                LayoutModule,
+                HomeModule,
+                ContactModule,
+                DirectoryModule,
+                EventsModule,
+                ResultsModule,
+                PoliciesModule
             ],
             declarations: [
-                app_component_1.AppComponent
+                AppComponent
             ],
             bootstrap: [
-                app_component_1.AppComponent
+                AppComponent
             ]
         }), 
         __metadata('design:paramtypes', [])
     ], AppModule);
     return AppModule;
 }());
-exports.AppModule = AppModule;
 //# sourceMappingURL=app.module.js.map

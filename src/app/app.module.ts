@@ -1,3 +1,4 @@
+import { HomeModule } from './home/home.module';
 import { PoliciesModule } from './features/policies/policies.module';
 import { ResultsModule } from './features/results/results.module';
 import { EventsModule } from './features/events/events.module';
@@ -10,7 +11,6 @@ import { LayoutModule } from './layout/layout.module';
 import { AppRoutingModule } from './app-routing.module';
 import { BhmcCoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
-import { HomeComponent } from './home/home.component';
 
 @NgModule({
     imports: [
@@ -19,6 +19,7 @@ import { HomeComponent } from './home/home.component';
         BhmcCoreModule,
         SharedModule,
         LayoutModule,
+        HomeModule,
         ContactModule,
         DirectoryModule,
         EventsModule,

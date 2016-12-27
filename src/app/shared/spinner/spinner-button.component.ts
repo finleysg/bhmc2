@@ -17,12 +17,12 @@ export class SpinnerButtonComponent implements OnInit {
     @Input() sendingText: string;
     @Input() completeText: string;
     @Input() failureText: string;
+    public pending: boolean;
+    public sending: boolean;
+    public complete: boolean;
+    public failure: boolean;
+    public disabled: boolean;
     private spinner: any;
-    private pending: boolean;
-    private sending: boolean;
-    private complete: boolean;
-    private failure: boolean;
-    private disabled: boolean;
 
     constructor(private spinnerElement: ElementRef) {
         this.pending = true;

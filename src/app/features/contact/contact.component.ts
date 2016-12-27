@@ -12,8 +12,8 @@ import { SpinnerButtonComponent } from '../../shared/spinner/spinner-button.comp
 export class ContactComponent implements OnInit {
 
     @ViewChild(SpinnerButtonComponent)
-    private spinnerButton: SpinnerButtonComponent;
-    private message: ContactMessage;
+    public spinnerButton: SpinnerButtonComponent;
+    public message: ContactMessage;
 
     constructor(private contactService: ContactService,
                 private toaster: ToasterService) {

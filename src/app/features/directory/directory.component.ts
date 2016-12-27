@@ -14,8 +14,8 @@ export class DirectoryComponent implements OnInit {
 
     private members: PublicMember[];
     private friends: PublicMember[];
-    private results: PublicMember[];
-    private search: any;
+    public results: PublicMember[];
+    public search: any;
 
     constructor(private memberService: MemberService,
                 private toaster: ToasterService) {
