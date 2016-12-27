@@ -1,33 +1,48 @@
-import {Member} from './member';
+import { PrivateMember } from './member';
 
 export class User {
 
-  id: number;
-  username: string;
-  first_name: string;
-  last_name: string ;
-  email: string ;
-  member: Member;
-  is_authenticated: boolean = false;
-  is_staff: boolean = false;
-  is_active: boolean = false;
+    id: number;
+    username: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    member: PrivateMember;
+    isAuthenticated: boolean = false;
+    isStaff: boolean = false;
+    isActive: boolean = false;
 
-  constructor() {
-  }
-
-  get name() {
-    if (!this.is_authenticated) {
-      return 'Guest';
+    constructor() {
     }
-    return this.first_name + ' ' + this.last_name;
-  };
 
-  // TODO: this is temporary
-  isInRole(role: string) {
-    let result = true;
-    if (this.is_staff && role) {
-      result = false;
+    get name() {
+        if (!this.isAuthenticated) {
+            return 'Guest';
+        }
+        return this.firstName + ' ' + this.lastName;
+    };
+
+    // TODO: this is temporary
+    isInRole(role: string) {
+        let result = true;
+        if (this.isStaff && role) {
+            result = false;
+        }
+        return result;
     }
-    return result;
-  }
+
+    fromJson(json: any): User {
+        if (json) {
+            this.id = json.id;
+            this.username = json.username;
+            this.firstName = json.first_name;
+            this.lastName = json.last_name;
+            this.email = json.email;
+            this.isAuthenticated = json.is_authenticated;
+            this.isStaff = json.is_staff;
+            this.isActive = json.is_active;
+            this.member = new PrivateMember().fromJson(json.member);
+        }
+        return this;
+    }
 }

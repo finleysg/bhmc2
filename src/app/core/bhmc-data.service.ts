@@ -60,8 +60,8 @@ export class BhmcDataService {
 
     private postRequest(url: string, data: any) {
         return this.http.post(url, JSON.stringify(data), this.createOptions())
-            .map((response: Response) => {
-                if (response.totalBytes > 0) { // TODO: undefined when no response body -- make sure this works with body
+            .map((response: any) => { // TODO: Response or any?
+                if (response._body && response._body.length > 0) {
                     return response.json() || {};
                 }
                 return {}; // empty response

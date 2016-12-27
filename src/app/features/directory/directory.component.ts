@@ -1,18 +1,70 @@
 import { Component, OnInit } from '@angular/core';
+import { PublicMember } from '../../core/member';
+import { MemberService } from '../../core/member.service';
+import { ToasterService } from 'angular2-toaster';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/forkJoin';
 
 @Component({
-  moduleId: module.id,
-  selector: 'bhmc-directory',
-  templateUrl: 'directory.component.html',
-  styleUrls: ['directory.component.css']
+    moduleId: module.id,
+    templateUrl: 'directory.component.html',
+    styleUrls: ['directory.component.css']
 })
-
 export class DirectoryComponent implements OnInit {
 
-  name: string = 'directory';
+    private members: PublicMember[];
+    private friends: PublicMember[];
+    private results: PublicMember[];
+    private search: any;
 
-  constructor() { }
+    constructor(private memberService: MemberService,
+                private toaster: ToasterService) {
+        this.search = {
+            text: ''
+        };
+    }
 
-  ngOnInit(): void {
-  }
+    ngOnInit() {
+        Observable.forkJoin([
+            this.memberService.getMembers(),
+            this.memberService.friends()
+        ]).subscribe(
+            results => {
+                this.members = results[0];
+                this.friends = results[1];
+                this.members.forEach(m => {
+                    m.isFriend = this.friends.some(f => {
+                        return f.id === m.id;
+                    });
+                });
+            }
+        );
+    }
+
+    doFilter(pattern: string) {
+        if (pattern && pattern.length > 1) {
+            pattern = pattern.toLowerCase();
+            this.results = this.members.filter(m => {
+                return m.name().toLowerCase().indexOf(pattern) >= 0;
+            });
+        }
+    }
+
+    toggleFriendship(member: PublicMember) {
+        if (member.isFriend) {
+            this.memberService.removeFriend(member).then(
+                () => {
+                    member.isFriend = false;
+                    this.toaster.pop('info', 'Friends List', `${member.name()} has been removed from your friends list`);
+                }
+            );
+        } else {
+            this.memberService.addFriend(member).then(
+                () => {
+                    member.isFriend = true;
+                    this.toaster.pop('info', 'Friends List', `${member.name()} has been added to your friends list`);
+                }
+            );
+        }
+    }
 }

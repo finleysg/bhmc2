@@ -1,6 +1,6 @@
 <aside id="sidebar" [class.toggled]="isOpen" *ngIf="user">
   <div class="sidebar-inner mCustomScrollbar c-overflow">
-    <div class="profile-menu clickable" *ngIf="user.is_authenticated">
+    <div class="profile-menu clickable" *ngIf="user.isAuthenticated">
       <a toggle-submenu>
         <div class="profile-pic">
           <img src="../../../assets/img/logo.png" alt="">
@@ -19,7 +19,7 @@
         </li>
       </ul>
     </div>
-    <div class="profile-menu" *ngIf="!user.is_authenticated">
+    <div class="profile-menu" *ngIf="!user.isAuthenticated">
       <a>
         <div class="profile-pic">
           <img src="../../../assets/img/logo.png" alt="">
@@ -38,7 +38,7 @@
         <a [routerLink]="['/events/calendar']" (click)="close()"><i class="zmdi zmdi-calendar"></i>
           Event Calendar</a>
       </li>
-      <li class="sub-menu clickable" *ngIf="user.is_authenticated" [routerLinkActive]="['active']">
+      <li class="sub-menu clickable" *ngIf="user.isAuthenticated" [routerLinkActive]="['active']">
         <a toggle-submenu><i class="zmdi zmdi-format-list-numbered"></i> Event Results</a>
         <ul>
           <li><a [routerLink]="['/results/league']" routerLinkActive="active" (click)="close()">Wednesday Night League</a></li>
@@ -56,16 +56,16 @@
           <li><a [routerLink]="['/policies/handicaps']" routerLinkActive="active" (click)="close()">Handicaps</a></li>
         </ul>
       </li>
-      <li [routerLinkActive]="['active']" *ngIf="user.is_authenticated">
+      <li [routerLinkActive]="['active']" *ngIf="user.isAuthenticated">
         <a [routerLink]="['/directory']" (click)="close()"><i class="zmdi zmdi-accounts-outline"></i> Member Directory</a>
       </li>
       <li [routerLinkActive]="['active']">
         <a [routerLink]="['/contact']" (click)="close()"><i class="zmdi zmdi-help"></i> Contact Us</a>
       </li>
-      <li *ngIf="user.is_staff">
+      <li *ngIf="user.isStaff">
         <a href="{{adminUrl}}" target="_blank"><i class="zmdi zmdi-wrench"></i> Administration</a>
       </li>
-      <li [routerLinkActive]="['active']" *ngIf="!user.is_authenticated">
+      <li [routerLinkActive]="['active']" *ngIf="!user.isAuthenticated">
         <a [routerLink]="['/member/login']" (click)="close()"> Login</a>
       </li>
     </ul>

@@ -1,3 +1,39 @@
 <div class="block-header">
-  <h2>{{name}}e</h2>
+    <h2>Member Directory</h2>
+</div>
+<div class="row">
+    <div class="col-md-3 col-sm-6">
+        <div class="card">
+            <div class="card-header">
+                <h2>Search</h2>
+            </div>
+            <div class="card-body card-padding">
+                <div class="input-group">
+                    <div class="fg-line">
+                        <input type="text" class="form-control" placeholder="Member name" [(ngModel)]="search.text"
+                               (keyup)="doFilter(search.text)"/>
+                    </div>
+                    <span class="input-group-addon last"><i class="zmdi zmdi-search"></i></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <div class="card">
+            <div class="card-header">
+                <h2>Results</h2>
+            </div>
+            <div class="card-body card-padding">
+                <p *ngFor="let m of results">
+                    <a (click)="toggleFriendship(m)" class="friend-star">
+                        <i class="zmdi zmdi-hc-lg m-r-10"
+                           [class.friend]="m.isFriend" [class.zmdi-star]="m.isFriend"
+                           [class.zmdi-star-outline]="!m.isFriend"></i>
+                    </a>
+                    <span>{{ m.name() }}</span>
+                    <span class="m-l-20"><a [href]="'mailto:' + m.email">{{ m.email }}</a></span>
+                </p>
+            </div>
+        </div>
+    </div>
 </div>

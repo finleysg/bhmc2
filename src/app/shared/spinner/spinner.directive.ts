@@ -26,7 +26,6 @@ export class SpinnerDirective implements OnInit, OnDestroy {
     }
 
     private initSpinner() {
-        // http://spin.js.org/#?lines=17&length=0&width=10&radius=25&scale=0.50&corners=1.0&opacity=0.05&rotate=0&direction=1&speed=0.7&trail=60&top=50&left=50
         let options = {
             lines: 17,
             length: 0,

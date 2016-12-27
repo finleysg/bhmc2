@@ -1,32 +1,46 @@
-/**
- "id": 1,
- "address1": "2740 Pilgrim Ln",
- "address2": "",
- "city": "Plymouth",
- "state": "MN",
- "zip": "55441",
- "phone_number": "612-723-1335",
- "handicap": "3.0",
- "handicap_revision_date": "2016-06-15",
- "birth_date": "1960-10-27",
- "status": "",
- "summary": "Now is the winter of our discontent made glorious summer by this son of York.",
- "stripe_customer_id": "cus_9gnzzbgmY7ywkn",
- "dues_paid": false
- */
-export class Member {
-  id: number;
-  address1: string;
-  address2: string;
-  city: string;
-  state: string;
-  zip: string;
-  phone_number: string;
-  handicap: number;
-  handicap_revision_date: string;
-  birth_date: string;
-  status: string;
-  summary: string;
-  stripe_customer_id: string;
-  dues_paid: boolean;
+export class PublicMember {
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    birthDate: string;
+    isFriend: boolean; // only in client
+
+    name() {
+        return `${this.firstName} ${this.lastName}`;
+    }
+    
+    fromJson(json: any): PublicMember {
+        this.id = json.id;
+        this.firstName = json.first_name;
+        this.lastName = json.last_name;
+        this.email = json.email;
+        this.birthDate = json.birth_date;
+        return this;
+    }
+}
+
+export class PrivateMember {
+    id: number;
+    birthDate: string;
+    stripeCustomerId: string;
+    duesPaid: boolean;
+    
+    fromJson(json: any): PrivateMember {
+        this.id = json.id;
+        this.birthDate = json.birth_date;
+        this.stripeCustomerId = json.stripe_customer_id;
+        this.duesPaid = json.dues_paid;
+        return this;
+    }
+    //
+    // toJson(): any {
+    //     const json = {
+    //         'id': this.id.toString(),
+    //         'birth_date': this.birthDate.toString(),
+    //         'stripe_customer_id': this.stripeCustomerId,
+    //         'dues_paid': this.duesPaid
+    //     };
+    //     return json;
+    // }
 }
