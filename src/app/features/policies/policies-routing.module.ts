@@ -6,9 +6,9 @@ const routes: Routes = [
   {
     path: 'policies',
     children: [
-      { path: 'club', component: PoliciesComponent },
-      { path: 'handicaps', component: PoliciesComponent },
-      { path: 'rules', component: PoliciesComponent },
+      { path: ':category', component: PoliciesComponent },
+      //{ path: 'handicaps', component: PoliciesComponent },
+      //{ path: 'rules', component: PoliciesComponent },
     ]
   }
 ];

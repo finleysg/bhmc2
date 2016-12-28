@@ -6,6 +6,7 @@ import { PaymentComponent } from './payments/payment.component';
 import { SpinnerDirective } from './spinner/spinner.directive';
 import { SpinnerService } from './spinner/spinner.service';
 import { SpinnerButtonComponent } from './spinner/spinner-button.component';
+import { MarkdownDirective } from './markdown/markdown.directive';
 
 @NgModule({
     imports: [
@@ -16,7 +17,8 @@ import { SpinnerButtonComponent } from './spinner/spinner-button.component';
     declarations: [
         PaymentComponent,
         SpinnerDirective,
-        SpinnerButtonComponent
+        SpinnerButtonComponent,
+        MarkdownDirective
     ],
     providers: [
         SpinnerService
@@ -27,7 +29,8 @@ import { SpinnerButtonComponent } from './spinner/spinner-button.component';
         RouterModule,
         PaymentComponent,
         SpinnerDirective,
-        SpinnerButtonComponent
+        SpinnerButtonComponent,
+        MarkdownDirective
     ]
 })
 export class SharedModule { }
