@@ -1,4 +1,6 @@
-import { EventDocument } from './event-document';
+import { EventRegistration } from './event-registration';
+import { DocumentType, EventDocument } from './event-document';
+import * as moment from 'moment';
 
 export class EventDetail {
     id: number;
@@ -13,19 +15,99 @@ export class EventDetail {
     startType: StartType;
     canSignupGroup: boolean;
     canChooseHole: boolean;
-    registrationWindow: string;
+    registrationWindow: RegistrationWindowType;
     externalUrl: string;
     eventType: EventType;
     skinsType: SkinsType;
     seasonPoints: number;
     requiresRegistration: boolean;
-    startDate: string;
+    startDate: moment.Moment;
     startTime: string;
     enablePayments: boolean;
-    signupStart: string;
-    signupEnd: string;
+    signupStart: moment.Moment;
+    signupEnd: moment.Moment;
     registrationMaximum: number;
     documents: EventDocument[];
+    registrations: EventRegistration[];
+
+    isRegistered(memberId: number): boolean {
+        return this.registrations.some(r => r.memberId === memberId);
+    }
+
+    canRegister(memberId: number): boolean {
+        return !this.isRegistered &&
+               this.requiresRegistration &&
+               this.registrationWindow === RegistrationWindowType.Registering;
+    }
+
+    get canViewRegistrations(): boolean {
+        return this.requiresRegistration &&
+               this.registrationWindow !== RegistrationWindowType.Future;
+    }
+
+    get teeTimes(): EventDocument {
+        if (this.documents) {
+            let document = this.documents.filter( e => {
+                return e.type === DocumentType.Teetimes;
+            });
+            //TODO: what if there are more than one?
+            if (document && document.length === 1) {
+                return document[0];
+            }
+        }
+        return undefined;
+    }
+
+    get results(): EventDocument {
+        if (this.documents) {
+            let document = this.documents.filter( e => {
+                return e.type === DocumentType.Results;
+            });
+            //TODO: what if there are more than one?
+            if (document && document.length === 1) {
+                return document[0];
+            }
+        }
+        return undefined;
+    }
+
+    fromJson(json: any): EventDetail {
+        this.id = json.id;
+        this.name = json.name;
+        this.description = json.description;
+        this.notes = json.notes;
+        this.holesPerRound = json.holes_per_round;
+        this.eventFee = json.event_fee;
+        this.skinsFee = json.skins_fee;
+        this.groupSize = json.group_size;
+        this.startType = EventDetail.getStartType(json.start_type);
+        this.canSignupGroup = json.can_signup_group;
+        this.canChooseHole = json.can_choose_hole;
+        this.registrationWindow = json.registration_window;
+        this.externalUrl = json.external_url;
+        this.eventType = EventDetail.getEventType(json.event_type);
+        this.skinsType = EventDetail.getSkinsType(json.skins_type);
+        this.seasonPoints = json.season_points;
+        this.requiresRegistration = json.requires_registration;
+        this.startDate = moment(json.start_date);
+        this.startTime = json.start_time;
+        this.enablePayments = json.enable_payments;
+        this.signupStart = moment(json.signup_start);
+        this.signupEnd = moment(json.signup_end);
+        this.registrationMaximum = json.registration_maximum;
+
+        if (json.documents && json.documents.length > 0) {
+            this.documents = [];
+            json.documents.forEach((d: any) => this.documents.push(new EventDocument().fromJson(d)));
+        }
+
+        if (json.registrations && json.registrations.length > 0) {
+            this.registrations = [];
+            json.registrations.forEach((r: any) => this.registrations.push(new EventRegistration().fromJson(r)));
+        }
+
+        return this;
+    }
 
     static getEventType(shortType: string): EventType {
         let eventType = EventType.Other;
@@ -66,6 +148,15 @@ export class EventDetail {
         }
         return startType;
     }
+}
+
+// No friendly name - used for logic, not display
+export enum RegistrationWindowType {
+    Future = <any>"future",
+    Registering = <any>"registration", // in the registration window
+    Pending = <any>"pending", // between signup end and the event
+    Past = <any>"past",
+    NA = <any>"n/a"
 }
 
 export enum StartType {

@@ -1,0 +1,52 @@
+<div class="block-header">
+    <h2>{{ eventDetail.name }} ({{ eventDetail.eventType }})</h2>
+</div>
+<div class="row">
+    <div class="col-md-9">
+        <div class="card event-card">
+            <div class="card-header">
+                <h2>Event Details</h2>
+                <div *ngIf="currentUser.isAuthenticated">
+                    <a *ngIf="eventDetail.canRegister(currentUser.member.id)" (click)="register()" class="btn btn-warning event-button">Register Now</a>
+                    <a *ngIf="eventDetail.canViewRegistrations" (click)="viewRegistrations()" class="btn btn-info event-button m-r-10">Participants</a>
+                    <a *ngIf="eventDetail.teeTimes" [href]="eventDetail.teeTimes.url" target="_blank" class="btn btn-info event-button m-r-10">Tee Times</a>
+                    <a *ngIf="eventDetail.results" [href]="eventDetail.results.url" target="_blank" class="btn btn-info event-button m-r-10">Results</a>
+                </div>
+            </div>
+            <div class="card-body card-padding">
+                <p><strong>Event date:</strong>{{ eventDetail.startDate.format('dddd, MMMM Do') }}</p>
+                <p><strong>Start time:</strong>{{ eventDetail.startTime }} {{ eventDetail.startType }}</p>
+                <p><strong>Registration open:</strong>
+                    {{ eventDetail.signupStart.format('dddd, MMMM Do, h:mm a') }} - {{ eventDetail.signupEnd.format('dddd, MMMM Do, h:mm a') }}
+                </p>
+                <div [markdown]="eventDetail.description"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card event-card">
+            <div class="card-header">
+                <h2>Fees and Points</h2>
+            </div>
+            <div class="card-body card-padding">
+                <p><strong>Event fee:</strong> {{ eventDetail.eventFee | currency:'USD':true }}</p>
+                <p *ngIf="eventDetail.skinsType !== 'None'"><strong>{{ eventDetail.skinsType }} Skins:</strong>
+                    {{ eventDetail.skinsFee | currency:'USD':true }}</p>
+                <p><strong>Group size:</strong> {{ eventDetail.groupSize }}</p>
+                <p><strong>Season long points:</strong> {{ eventDetail.seasonPoints }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card event-card">
+            <div class="card-header">
+                <h2>Notes</h2>
+            </div>
+            <div class="card-body card-padding">
+                <div [markdown]="eventDetail.notes"></div>
+            </div>
+        </div>
+    </div>
+</div>

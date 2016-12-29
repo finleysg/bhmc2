@@ -34,6 +34,10 @@ export class AuthenticationService {
         this.currentUser$ = this.currentUserSource.asObservable();
     }
 
+    get user(): User {
+        return this._currentUser;
+    }
+    
     login(username: string, password: string): Promise<void> {
 
         let email = '';

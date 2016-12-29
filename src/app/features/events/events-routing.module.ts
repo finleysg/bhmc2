@@ -1,24 +1,26 @@
+import { AuthGuard } from '../../core';
+import { EventDetailResolver } from './event-detail-resolver.service';
 import { TeetimeComponent } from './teetimes/teetime.component';
 import { ReserveComponent } from './reserve/reserve.component';
 import { RegisterComponent } from './register/register.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { EventComponent } from './event.component';
+import { EventComponent } from './detail/event.component';
 import { CalendarComponent } from './calendar/calendar.component';
 
 const routes: Routes = [
     { path: 'calendar/:year/:month', component: CalendarComponent },
-    { path: 'event/:id', children: [
+    { path: 'events/:id', resolve: { eventDetail: EventDetailResolver }, children: [
         { path: 'detail', component: EventComponent },
-        { path: 'register', component: RegisterComponent }, 
-        { path: 'reserve', component: ReserveComponent },
-        { path: 'teetimes', component: TeetimeComponent },
+        { path: 'register', canActivate: [AuthGuard], component: RegisterComponent }, 
+        { path: 'reserve', canActivate: [AuthGuard], component: ReserveComponent },
+        { path: 'teetimes', canActivate: [AuthGuard], component: TeetimeComponent },
     ]}
 ];
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+    exports: [RouterModule],
+    providers: [EventDetailResolver]
 })
-
 export class EventsRoutingModule { }
