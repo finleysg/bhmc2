@@ -7,7 +7,7 @@ import { EventComponent } from './event.component';
 import { CalendarComponent } from './calendar/calendar.component';
 
 const routes: Routes = [
-    { path: 'calendar', component: CalendarComponent },
+    { path: 'calendar/:year/:month', component: CalendarComponent },
     { path: 'event/:id', children: [
         { path: 'detail', component: EventComponent },
         { path: 'register', component: RegisterComponent }, 

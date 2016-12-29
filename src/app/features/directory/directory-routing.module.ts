@@ -1,9 +1,10 @@
+import { AuthGuard } from '../../core/auth-guard.service';
 import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DirectoryComponent } from './directory.component';
 
 const routes: Routes = [
-    {path: 'directory', component: DirectoryComponent}
+    {path: 'directory', component: DirectoryComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

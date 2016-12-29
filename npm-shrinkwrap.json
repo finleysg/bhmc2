@@ -1893,10 +1893,9 @@
       }
     },
     "moment": {
-      "version": "2.17.1",
-      "from": "moment@>=2.11.2 <3.0.0",
-      "resolved": "./node_shrinkwrap/moment-2.17.1.tar",
-      "dev": true
+      "version": "2.13.0",
+      "from": "moment@2.13.0",
+      "resolved": "./node_shrinkwrap/moment-2.13.0.tar"
     },
     "ms": {
       "version": "0.7.1",

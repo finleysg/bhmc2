@@ -32,10 +32,10 @@
 
     <ul class="main-menu">
       <li [routerLinkActive]="['active']">
-        <a [routerLink]="['/home']" (click)="close()"><i class="zmdi zmdi-home"></i> Home</a>
+        <a [routerLink]="['/']" (click)="close()"><i class="zmdi zmdi-home"></i> Home</a>
       </li>
       <li [routerLinkActive]="['active']">
-        <a [routerLink]="['/calendar']" (click)="close()"><i class="zmdi zmdi-calendar"></i>
+        <a [routerLink]="['calendar', currentMonth.year, currentMonth.month]" (click)="close()"><i class="zmdi zmdi-calendar"></i>
           Event Calendar</a>
       </li>
       <li class="sub-menu clickable" *ngIf="user.isAuthenticated" [routerLinkActive]="['active']">

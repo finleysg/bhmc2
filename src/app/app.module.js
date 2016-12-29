@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var member_module_1 = require('./features/member/member.module');
 var home_module_1 = require('./home/home.module');
 var policies_module_1 = require('./features/policies/policies.module');
 var results_module_1 = require('./features/results/results.module');
@@ -33,6 +34,7 @@ var AppModule = (function () {
                 shared_module_1.SharedModule,
                 layout_module_1.LayoutModule,
                 home_module_1.HomeModule,
+                member_module_1.MemberModule,
                 contact_module_1.ContactModule,
                 directory_module_1.DirectoryModule,
                 events_module_1.EventsModule,

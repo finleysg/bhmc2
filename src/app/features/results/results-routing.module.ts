@@ -1,3 +1,4 @@
+import { AuthGuard } from '../../core/auth-guard.service';
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {MajorResultsComponent} from './major/major-results.component';
@@ -8,7 +9,7 @@ import {DamCupComponent} from './dam-cup/dam-cup.component';
 
 const routes: Routes = [
   {
-    path: 'results',  children: [
+    path: 'results', canActivate: [AuthGuard], children: [
       { path: 'league', component: LeagueResultsComponent },
       { path: 'majors', component: MajorResultsComponent },
       { path: 'match-play', component: MatchPlayComponent },

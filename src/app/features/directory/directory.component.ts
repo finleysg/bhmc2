@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PublicMember } from '../../core/member';
+import { PublicMember } from '../../core/models/member';
 import { MemberService } from '../../core/member.service';
 import { ToasterService } from 'angular2-toaster';
 import { Observable } from 'rxjs/Observable';

@@ -1,3 +1,4 @@
+import { MemberModule } from './features/member/member.module';
 import { HomeModule } from './home/home.module';
 import { PoliciesModule } from './features/policies/policies.module';
 import { ResultsModule } from './features/results/results.module';
@@ -20,6 +21,7 @@ import { SharedModule } from './shared/shared.module';
         SharedModule,
         LayoutModule,
         HomeModule,
+        MemberModule,
         ContactModule,
         DirectoryModule,
         EventsModule,

@@ -1,8 +1,10 @@
+import { Calendar } from '../../core/models/calendar';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { User } from '../../core/user';
+import { User } from '../../core/models/user';
 import { LayoutService } from '../../core/layout.service';
 import { AuthenticationService } from '../../core/authentication.service';
+import * as moment from 'moment';
 
 @Component({
     moduleId: module.id,
@@ -14,8 +16,9 @@ import { AuthenticationService } from '../../core/authentication.service';
 export class SidebarComponent implements OnInit, AfterViewInit {
 
     user: User;
-    isOpen: boolean;
-    adminUrl: string;
+    public isOpen: boolean;
+    public adminUrl: string;
+    public currentMonth: any;
 
     constructor(private _router: Router,
                 private _route: ActivatedRoute,
@@ -29,6 +32,11 @@ export class SidebarComponent implements OnInit, AfterViewInit {
         this._authService.currentUser$.subscribe(user => {
             this.user = user;
         });
+        let today = moment();
+        this.currentMonth = {
+            year: today.year(),
+            month: today.format('MMMM').toLowerCase()
+        };
     }
 
     ngAfterViewInit(): void {
@@ -48,7 +56,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
 
     logout(): void {
         this._authService.logout().then( () => {
-            this._router.navigate(['home']);
+            this._router.navigate(['/']);
         });
     }
 }
