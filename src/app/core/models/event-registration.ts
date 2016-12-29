@@ -18,17 +18,18 @@ export class EventRegistration {
     isNetSkinsFeePaid: boolean;
     isGreensFeePaid: boolean;
     isCartFeePaid: boolean;
+    status: string;
     expires: moment.Moment;
 
     fromJson(json: any): EventRegistration {
         this.id = json.id;
-        this.courseName = json.course;
-        this.courseSetupId = json.course_setup_id;
+        this.courseName = json.course ? json.course : 'TBD';
+        this.courseSetupId = json.course_setup_id ? json.course_setup_id : -1;
         this.holeNumber = json.hole_number;
         this.holeId = json.hole_id;
-        this.groupId = json.registration_group;
-        this.memberId = json.member;
-        this.memberName = `${json.member_first_name} ${json.member_last_name}`;
+        this.groupId = json.registration_group ? json.registration_group : -1;
+        this.memberId = json.member ? json.member : -1;
+        this.memberName = json.member ? `${json.member_first_name} ${json.member_last_name}` : '';
         this.slotId = json.slot;
         this.startingOrder = json.starting_order;
         this.isEventFeePaid = json.is_event_fee_paid;
@@ -36,6 +37,7 @@ export class EventRegistration {
         this.isNetSkinsFeePaid = json.is_net_skins_paid;
         this.isGreensFeePaid = json.is_greens_fee_paid;
         this.isCartFeePaid = false; // TODO
+        this.status = json.status;
         if (json.expires) {
             this.expires = moment(json.expires);
         }

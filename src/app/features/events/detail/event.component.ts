@@ -25,14 +25,13 @@ export class EventComponent implements OnInit {
         this.route.data
             .subscribe((data: {eventDetail: EventDetail}) => {
                 this.eventDetail = data.eventDetail;
-            })
+            });
     }
 
     register(): void {
         if (this.eventDetail.eventType === EventType.League) {
             this.router.navigate(['reserve'], {relativeTo: this.route.parent});
-        }
-        else {
+        } else {
             // TODO: how to resolve this (as compared to a league registration)
             // this.eventService.reserve(this.eventDetail.id).then( group => {
             //     group.registrations.forEach( s => {

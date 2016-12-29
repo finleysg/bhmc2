@@ -6,7 +6,7 @@ export { EventRegistration } from './models/event-registration';
 export { EventRegistrationGroup } from './models/event-registration-group';
 export { PublicMember, PrivateMember } from './models/member';
 export { RegistrationRow } from './models/registration-row';
-export { RegistrationSlot } from './models/registration-slot';
+export { RegistrationSlot, SlotStatus } from './models/registration-slot';
 export { User } from './models/user';
 export { AuthGuard } from './auth-guard.service';
 export { AuthenticationService } from './authentication.service';

@@ -1,3 +1,35 @@
-<div class="block-header">
-  <h2>{{name}}</h2>
+<div class="block-header" *ngIf="eventDetail">
+    <h2>{{ eventDetail.name }} ({{ eventDetail.startDate.format('dddd, MMMM Do') }}): Reserve</h2>
+</div>
+<div class="card" *ngIf="eventDetail">
+    <div class="card-header">
+        <div class="btn-group btn-group-justified">
+            <div class="btn-group" *ngFor="let table of tables">
+                <button class="btn btn-default">{{table.courseName}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card event-card" *ngFor="let table of tables">
+    <div class="card-header">
+        <h2>{{ table.courseName }}</h2>
+    </div>
+    <div class="card-body card-padding">
+        <div class="row" *ngFor="let row of table.rows">
+            <div class="col-md-2 col-xs-12 registration-hole">
+                <span>{{ row.name }}</span>
+                <button class="btn btn-sm btn-warning" *ngIf="row.hasOpenings"
+                        (click)="register(table, row)"
+                        [disabled]="row.isDisabled">Reserve
+                </button>
+                <button class="btn btn-sm btn-success" *ngIf="row.hasOpenings"
+                        (click)="selectRow(table, row)">Select
+                </button>
+            </div>
+            <div class="col-md-2 col-xs-12 registration-slot" *ngFor="let slot of row.slots"
+                 [ngClass]="slotClass(slot)"
+                 (click)="selectSlot(table, row, slot)">{{ slot.displayText }}
+            </div>
+        </div>
+    </div>
 </div>

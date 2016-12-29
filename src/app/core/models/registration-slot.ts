@@ -1,5 +1,6 @@
 import { RegistrationRow } from './registration-row';
 import * as moment from 'moment';
+import { EventRegistration } from './event-registration';
 
 export class RegistrationSlot {
 
@@ -8,18 +9,17 @@ export class RegistrationSlot {
     row: RegistrationRow;
     memberId: number;
     memberName: string;
-    slotNumber: number;
+    // slotNumber: number;
     status: SlotStatus;
     selected: boolean;
-    
-    static create(parent: RegistrationRow, slot: any): RegistrationSlot {
+
+    static create(parent: RegistrationRow, slot: EventRegistration): RegistrationSlot {
         let newSlot = new RegistrationSlot();
         newSlot.expires = slot.expires;
         newSlot.id = slot.id;
         newSlot.row = parent;
-        newSlot.memberId = slot.member ? slot.member.id : -1;
-        newSlot.memberName = slot.member ? `${slot.member_first_name} ${slot.member_last_name}` : '';
-        newSlot.slotNumber = slot.slot;
+        newSlot.memberId = slot.memberId;
+        newSlot.memberName = slot.memberName;
         newSlot.selected = false;
         newSlot.updateStatus(slot.status);
         return newSlot;
@@ -29,7 +29,7 @@ export class RegistrationSlot {
         return this.memberId === memberId;
     };
 
-    displayText(): string {
+    get displayText(): string {
         if (this.selected && this.status === SlotStatus.Available) {
             return 'Selected';
         } else if (this.status === SlotStatus.Reserved) {
@@ -39,7 +39,7 @@ export class RegistrationSlot {
         }
     }
 
-    canSelect(): boolean {
+    get canSelect(): boolean {
         return this.status === SlotStatus.Available;
     }
 
@@ -56,8 +56,8 @@ export class RegistrationSlot {
 }
 
 export enum SlotStatus {
-    Available = <any>"Available",
-    Reserved = <any>"Reserved",
-    Pending = <any>"Pending",
-    Unavailable = <any>"Unavailable"
+    Available = <any>'Available',
+    Reserved = <any>'Reserved',
+    Pending = <any>'Pending',
+    Unavailable = <any>'Unavailable'
 }
