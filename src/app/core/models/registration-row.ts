@@ -1,7 +1,7 @@
 import { RegistrationSlot, SlotStatus } from './registration-slot';
 
 export class RegistrationRow {
-    
+
     holeNumber: number;
     holeId: number;
     name: string;
@@ -49,23 +49,7 @@ export class RegistrationRow {
         });
     }
 
-    get slotsSelected(): number {
-        let selected = 0;
-        this.slots.forEach( s => {
-            if (s.selected && s.status === SlotStatus.Available) {
-                selected += 1;
-            }
-        });
-        return selected;
-    }
-
-    get slotsAvailable(): number {
-        let available = 0;
-        this.slots.forEach( s => {
-            if (!s.selected && s.status === SlotStatus.Available) {
-                available += 1;
-            }
-        });
-        return available;
+    get selectedSlotIds(): number[] {
+        return this.slots.filter(s => s.selected).map(s => { return s.id; });
     }
 }

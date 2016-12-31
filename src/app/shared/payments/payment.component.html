@@ -14,7 +14,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12">
-                <div class="form-group fg-line" [class.has-error]="!card.number.isValid">
+                <div class="form-registrationGroup fg-line" [class.has-error]="!card.number.isValid">
                     <label>Card Number</label>
                     <input name="cardNumber"
                            type="text"
@@ -30,7 +30,7 @@
         </div>
         <div class="row">
             <div class="col-xs-7">
-                <div class="form-group fg-line" [class.has-error]="!card.exp.isValid">
+                <div class="form-registrationGroup fg-line" [class.has-error]="!card.exp.isValid">
                     <label>Exp Date</label>
                     <input name="cardExpiry"
                            type="text"
@@ -43,7 +43,7 @@
                 </div>
             </div>
             <div class="col-xs-5 pull-right" [class.has-error]="!card.cvc.isValid">
-                <div class="form-group fg-line">
+                <div class="form-registrationGroup fg-line">
                     <label>CV Code</label>
                     <input name="cardCvc"
                            type="tel"

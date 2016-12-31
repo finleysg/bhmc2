@@ -5,11 +5,13 @@ export class PublicMember {
     email: string;
     birthDate: string;
     isFriend: boolean; // only in client
+    isSelected: boolean; // only in client
+    isRegistered: boolean; // only in client
 
     name() {
         return `${this.firstName} ${this.lastName}`;
     }
-    
+
     fromJson(json: any): PublicMember {
         this.id = json.id;
         this.firstName = json.first_name;
@@ -25,7 +27,7 @@ export class PrivateMember {
     birthDate: string;
     stripeCustomerId: string;
     duesPaid: boolean;
-    
+
     fromJson(json: any): PrivateMember {
         this.id = json.id;
         this.birthDate = json.birth_date;

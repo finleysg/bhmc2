@@ -18,16 +18,21 @@ export class EventRegistration {
     isNetSkinsFeePaid: boolean;
     isGreensFeePaid: boolean;
     isCartFeePaid: boolean;
+    totalFees: number;
     status: string;
     expires: moment.Moment;
+
+    get hasMember(): boolean {
+        return this.memberId > 0;
+    }
 
     fromJson(json: any): EventRegistration {
         this.id = json.id;
         this.courseName = json.course ? json.course : 'TBD';
-        this.courseSetupId = json.course_setup_id ? json.course_setup_id : -1;
+        this.courseSetupId = json.course_setup_id ? +json.course_setup_id : -1;
         this.holeNumber = json.hole_number;
         this.holeId = json.hole_id;
-        this.groupId = json.registration_group ? json.registration_group : -1;
+        this.groupId = json.registration_group ? +json.registration_group : -1;
         this.memberId = json.member ? json.member : -1;
         this.memberName = json.member ? `${json.member_first_name} ${json.member_last_name}` : '';
         this.slotId = json.slot;

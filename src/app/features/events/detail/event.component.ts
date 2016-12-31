@@ -32,14 +32,11 @@ export class EventComponent implements OnInit {
         if (this.eventDetail.eventType === EventType.League) {
             this.router.navigate(['reserve'], {relativeTo: this.route.parent});
         } else {
-            // TODO: how to resolve this (as compared to a league registration)
-            // this.eventService.reserve(this.eventDetail.id).then( group => {
-            //     group.registrations.forEach( s => {
-            //         s.isEventFeePaid = true;
-            //     });
-            // });
-            this.router.navigate(['register'], {relativeTo: this.route.parent});
-        }
+            // The group created is saved on the service
+            this.eventService.reserve(this.eventDetail.id).then(() => {
+                this.router.navigate(['register'], {relativeTo: this.route.parent});
+            });
+       }
     }
 
     viewRegistrations(): void {

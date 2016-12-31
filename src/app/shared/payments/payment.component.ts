@@ -21,7 +21,7 @@ export class PaymentComponent {
     //     this.processing = false;
     //     this.submitText = 'Submit Payment';
     //     this.event = this.resolve.event;
-    //     this.group = this.resolve.group;
+    //     this.registrationGroup = this.resolve.registrationGroup;
     //     this.amount = this.resolve.amount;
     //     this._memberService.stripeDetails().then( (customer) => {
     //         this.customer = customer;
@@ -36,7 +36,7 @@ export class PaymentComponent {
     //
     // processPayment = () => {
     //     if (this.submitText === 'Continue') {
-    //         this.close({$value: this.group});
+    //         this.close({$value: this.registrationGroup});
     //     } else {
     //         this.processing = true;
     //         if (this.useSavedCard) {
@@ -53,8 +53,8 @@ export class PaymentComponent {
     // quickPayment = () => {
     //     this.messages.length = 0;
     //     this.messages.push({class: 'text-info', text: 'Charging card...'});
-    //     this._eventService.register(this.group, this.amount).then( group => {
-    //         this.successState(group);
+    //     this._eventService.register(this.registrationGroup, this.amount).then( registrationGroup => {
+    //         this.successState(registrationGroup);
     //     }).catch( response => {
     //         this.errorState(response);
     //     });
@@ -65,20 +65,20 @@ export class PaymentComponent {
     //     this.messages.push({class: 'text-info', text: 'Validating card...'});
     //     this.card.createToken().then(token => {
     //         this.messages.push({class: 'text-info', text: 'Charging card...'});
-    //         return this._eventService.register(this.group, this.amount, token);
-    //     }).then(group => {
-    //         this.successState(group);
+    //         return this._eventService.register(this.registrationGroup, this.amount, token);
+    //     }).then(registrationGroup => {
+    //         this.successState(registrationGroup);
     //     }).catch(response => {
     //         this.errorState(response);
     //     });
     // };
     //
-    // successState = (group) => {
+    // successState = (registrationGroup) => {
     //     this._toaster.success('Payment Complete');
-    //     this.group = group;
+    //     this.registrationGroup = registrationGroup;
     //     this.messages.length = 0;
     //     this.messages.push({class: 'text-success', text: 'Payment complete'});
-    //     this.messages.push({class: 'text-success', text: 'Confirmation #: ' + group.payment_confirmation_code});
+    //     this.messages.push({class: 'text-success', text: 'Confirmation #: ' + registrationGroup.payment_confirmation_code});
     //     this.submitText = 'Continue';
     //     this.processing = false;
     // };

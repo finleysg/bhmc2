@@ -12,6 +12,9 @@ import { LayoutModule } from './layout/layout.module';
 import { AppRoutingModule } from './app-routing.module';
 import { BhmcCoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
+import { TypeaheadModule } from 'ng2-bootstrap/typeahead';
+import { ModalModule } from 'ng2-bootstrap/modal';
+import { DropdownModule } from 'ng2-bootstrap/dropdown';
 
 @NgModule({
     imports: [
@@ -26,7 +29,10 @@ import { SharedModule } from './shared/shared.module';
         DirectoryModule,
         EventsModule,
         ResultsModule,
-        PoliciesModule
+        PoliciesModule,
+        TypeaheadModule.forRoot(),
+        ModalModule.forRoot(),
+        DropdownModule.forRoot()
     ],
     declarations: [
         AppComponent

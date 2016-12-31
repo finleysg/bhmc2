@@ -36,6 +36,6 @@ export class PoliciesComponent implements OnInit {
     }
     // this.policies = this.policyService.loadPolicies(policyCategory);
     this.policies = [];
-    this.policyService.loadPolicies(policyCategory).subscribe(p => this.policies.push(p))
+    this.policyService.loadPolicies(policyCategory).subscribe(p => this.policies.push(p));
   }
 }

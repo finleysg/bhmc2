@@ -7,6 +7,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { EventsRoutingModule } from './events-routing.module';
 import { CalendarComponent } from './calendar/calendar.component';
 import { EventComponent } from './detail/event.component';
+import { ReserveTableComponent } from './reserve/reserve-table.component';
 
 @NgModule({
     imports: [
@@ -18,6 +19,7 @@ import { EventComponent } from './detail/event.component';
         EventComponent,
         RegisterComponent,
         ReserveComponent,
+        ReserveTableComponent,
         TeetimeComponent
     ],
     providers: [

@@ -7,13 +7,16 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { EventComponent } from './detail/event.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { ReserveTableComponent } from './reserve/reserve-table.component';
 
 const routes: Routes = [
     { path: 'calendar/:year/:month', component: CalendarComponent },
     { path: 'events/:id', resolve: { eventDetail: EventDetailResolver }, children: [
         { path: 'detail', component: EventComponent },
-        { path: 'register', canActivate: [AuthGuard], component: RegisterComponent }, 
-        { path: 'reserve', canActivate: [AuthGuard], component: ReserveComponent },
+        { path: 'register', canActivate: [AuthGuard], component: RegisterComponent },
+        { path: 'reserve', canActivate: [AuthGuard], component: ReserveComponent, children: [
+            { path: ':course', component: ReserveTableComponent }
+        ]},
         { path: 'teetimes', canActivate: [AuthGuard], component: TeetimeComponent },
     ]}
 ];

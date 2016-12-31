@@ -1,3 +1,109 @@
 <div class="block-header">
-  <h2>{{name}}</h2>
+    <h2>{{ eventDetail.name }} ({{ eventDetail.startDate.format('dddd, MMMM Do') }}) Registration</h2>
+</div>
+<div class="row">
+    <div class="col-lg-6 col-md-8 col-xs-12">
+        <div class="card event-card">
+            <div class="card-header">
+                <h2>{{ registrationGroup.registrations[0].courseName }} {{ registrationGroup.startingHoleName }}</h2>
+            </div>
+            <div class="card-body card-padding">
+                <div class="row hidden-xs">
+                    <div class="col-md-6">Member</div>
+                    <div class="col-md-1">Gross Skins</div>
+                    <div class="col-md-1">Net Skins</div>
+                    <div class="col-md-1">Greens Fee</div>
+                    <div class="col-md-3 text-right">Total</div>
+                </div>
+                <div class="row m-t-10" *ngFor="let slot of registrationGroup.registrations">
+                    <div class="col-md-6 col-xs-12">
+                        <div class="input-group">
+                            <div>
+                                <template #memberTemplate let-model="item" let-index="index">
+                                    <h5>{{ item.fullName }}</h5>
+                                </template>
+                                <input [(ngModel)]="slot.memberId"
+                                       [typeahead]="members"
+                                       [typeaheadItemTemplate]="memberTemplate"
+                                       [typeaheadOptionField]="'fullName'"
+                                       (typeaheadOnSelect)="updatePayment($event)"
+                                       class="form-control input-sm" placeholder="Member name">
+                            </div>
+                            <span (click)="removeFriend(slot)" *ngIf="slot.hasMember" class="input-group-addon last">
+                                <i class="zmdi zmdi-close-circle c-red"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-1 col-xs-3">
+                        <div class="checkbox">
+                            <label class="visible-xs-inline">Event</label>
+                            <input type="checkbox" [(ngModel)]="slot.isGrossSkinsFeePaid" (click)="updatePayment()"><i class="input-helper"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-1 col-xs-3">
+                        <div class="checkbox">
+                            <label class="visible-xs-inline">Gross</label>
+                            <input type="checkbox" [(ngModel)]="slot.isNetSkinsFeePaid" (click)="updatePayment()"><i class="input-helper"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-1 col-xs-3">
+                        <div class="checkbox">
+                            <label class="visible-xs-inline">Net</label>
+                            <input type="checkbox" [(ngModel)]="slot.isGreensFeePaid" (click)="updatePayment()"><i class="input-helper"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-xs-3 text-right">{{ slot.totalFees | currency:'USD':true }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-xs-8 text-right"><strong>Group total:</strong></div>
+                    <div class="col-md-2 col-xs-4 text-right"><strong>{{ registrationGroup.payment.subtotal | currency:'USD':true }}</strong>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-xs-8 text-right">Transaction fee:</div>
+                    <div class="col-md-2 col-xs-4 text-right">{{ registrationGroup.payment.transactionFee | currency:'USD':true }}</div>
+                </div>
+                <!--
+                                <div class="row">
+                                    <div class="col-md-10 col-xs-8 text-right">Stripe fee (2.9%):</div>
+                                    <div class="col-md-2 col-xs-4 text-right">{{ vm.payment.transactionPercentage | currency }}</div>
+                                </div>
+                -->
+                <div class="row m-t-5">
+                    <div class="col-md-10 col-xs-8 text-right"><h4>Amount due:</h4></div>
+                    <div class="col-md-2 col-xs-4 text-right"><h4>{{ registrationGroup.payment.total | currency }}</h4></div>
+                </div>
+                <div class="row">
+                    <div class="btn-group pull-right m-t-20">
+                        <div class="pull-right">
+                            <button class="btn btn-warning" (click)="cancelReservation()">Cancel</button>
+                        </div>
+                        <div class="pull-right">
+                            <button [disabled]="!registrationGroup.canRegister" class="btn btn-primary" (click)="openPayment()">Pay Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-4 col-xs-12">
+        <div class="card event-card">
+            <div class="card-header">
+                <h2>Friends</h2>
+            </div>
+            <div class="card-body card-padding" *ngIf="friends.length === 0">
+                <p>You can manage your friends from your profile page.</p>
+                <p>Anyone you sign up for an event will automatically be added to your Friends list.</p>
+            </div>
+            <div class="card-body card-padding" *ngIf="friends.length > 0">
+                <div class="list-group">
+                    <button class="list-group-item list-group-item-action"
+                            *ngFor="let friend of friends"
+                            [class.disabled]="friend.isRegistered || friend.isSelected"
+                            (click)="add(friend)">{{ friend.fullName }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
