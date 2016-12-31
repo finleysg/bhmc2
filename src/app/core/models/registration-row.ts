@@ -4,30 +4,28 @@ export class RegistrationRow {
 
     holeNumber: number;
     holeId: number;
-    name: string;
     startingOrder: number;
     slots: RegistrationSlot[];
 
-    static create(holeNumber: number, startingOrder: number, slots: any[]): RegistrationRow {
+    static create(registrations: any[]): RegistrationRow {
         let row = new RegistrationRow();
-        row.holeNumber = holeNumber;
-        row.holeId = slots[0] ? slots[0].hole_id : 0;
-        row.startingOrder = startingOrder;
-        row.slots = slots.map(s => RegistrationSlot.create(row, s));
-        row.name = row.deriveName(holeNumber, startingOrder);
+        row.holeNumber = registrations[0] ? registrations[0].holeNumber : -1;
+        row.holeId = registrations[0] ? registrations[0].holeId : -1;
+        row.startingOrder = registrations[0] ? registrations[0].startingOrder : -1;
+        row.slots = registrations.map(reg => RegistrationSlot.create(row, reg));
         return row;
     }
 
     // derives the hole name from the starting order
-    private deriveName(holeNumber: number, startingOrder: number): string {
-        if (startingOrder === 0) {
-            return `${holeNumber}A`;
-        } else if (startingOrder === 1) {
-            return `${holeNumber}B`;
-        } else if (startingOrder === 2) {
-            return `${holeNumber}C`;
+    get name(): string {
+        if (this.startingOrder === 0) {
+            return `${this.holeNumber}A`;
+        } else if (this.startingOrder === 1) {
+            return `${this.holeNumber}B`;
+        } else if (this.startingOrder === 2) {
+            return `${this.holeNumber}C`;
         } else {
-            throw('Are you crazy?? No more than 3 groups on a hole.');
+            return 'Insanity!';
         }
     };
 

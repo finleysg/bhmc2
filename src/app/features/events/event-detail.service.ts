@@ -79,14 +79,14 @@ export class EventDetailService {
         // each table is a hierarchy: course --> rows --> slots
         let table = new EventSignupTable(course.id, course.name);
         for (let h = 1; h <= eventDetail.holesPerRound; h++) {
-            const aGroups = eventDetail.registrations.filter( s => {
-                return s.courseSetupId === course.id && s.startingOrder === 0 && s.holeNumber === h;
+            const aGroups = eventDetail.registrations.filter( reg => {
+                return reg.courseSetupId === course.id && reg.startingOrder === 0 && reg.holeNumber === h;
             });
-            const bGroups = eventDetail.registrations.filter( s => {
-                return s.courseSetupId === course.id && s.startingOrder === 1 && s.holeNumber === h;
+            const bGroups = eventDetail.registrations.filter( reg => {
+                return reg.courseSetupId === course.id && reg.startingOrder === 1 && reg.holeNumber === h;
             });
-            table.rows.push(RegistrationRow.create(h, 0, aGroups));
-            table.rows.push(RegistrationRow.create(h, 1, bGroups));
+            table.rows.push(RegistrationRow.create(aGroups));
+            table.rows.push(RegistrationRow.create(bGroups));
         }
         return table;
     }

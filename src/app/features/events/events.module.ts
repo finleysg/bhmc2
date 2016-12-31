@@ -8,11 +8,13 @@ import { EventsRoutingModule } from './events-routing.module';
 import { CalendarComponent } from './calendar/calendar.component';
 import { EventComponent } from './detail/event.component';
 import { ReserveTableComponent } from './reserve/reserve-table.component';
+import { TypeaheadModule } from 'ng2-bootstrap';
 
 @NgModule({
     imports: [
         EventsRoutingModule,
-        SharedModule
+        SharedModule,
+        TypeaheadModule
     ],
     declarations: [
         CalendarComponent,
