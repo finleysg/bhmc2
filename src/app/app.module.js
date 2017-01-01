@@ -39,7 +39,7 @@ var AppModule = (function () {
                 directory_module_1.DirectoryModule,
                 events_module_1.EventsModule,
                 results_module_1.ResultsModule,
-                policies_module_1.PoliciesModule
+                policies_module_1.PoliciesModule,
             ],
             declarations: [
                 app_component_1.AppComponent

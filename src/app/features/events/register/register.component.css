@@ -7,3 +7,19 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
+
+.friend-item {
+    width: 100%;
+    text-align: left;
+}
+
+span.read-only {
+    font-style: italic;
+    margin: 0;
+    float: left;
+}
+
+.find-partner {
+    float: right;
+    margin-top: -15px;
+}

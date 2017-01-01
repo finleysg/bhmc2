@@ -32,6 +32,14 @@ export class EventDetailService {
             .toPromise();
     }
 
+    getRegistrationGroup(id: number): Promise<EventRegistrationGroup> {
+        return this.dataService.getApiRequest(`registration-groups/${id}`)
+            .map((data: any) => {
+                return new EventRegistrationGroup().fromJson(data);
+            })
+            .toPromise();
+    }
+
     reserve(id: number, row: RegistrationRow = null): Promise<EventRegistrationGroup> {
         let payload: any = {
             event_id: id
@@ -49,6 +57,15 @@ export class EventDetailService {
                 return this.registrationGroup;
             })
             .toPromise();
+    }
+
+
+    register(group: EventRegistrationGroup) {
+        return this.dataService.postApiRequest('registration/register', group.toJson()).toPromise();
+    }
+
+    cancelReservation(group: EventRegistrationGroup) {
+        return this.dataService.postApiRequest('registration/cancel', {group_id: group.id}).toPromise();
     }
 
     signupTable(id: number): Observable<EventSignupTable> {
@@ -77,7 +94,7 @@ export class EventDetailService {
 
     createSignupTable(eventDetail: EventDetail, course: any): EventSignupTable {
         // each table is a hierarchy: course --> rows --> slots
-        let table = new EventSignupTable(course.id, course.name);
+        let table = new EventSignupTable(course.id, course.name.replace('League', ''));
         for (let h = 1; h <= eventDetail.holesPerRound; h++) {
             const aGroups = eventDetail.registrations.filter( reg => {
                 return reg.courseSetupId === course.id && reg.startingOrder === 0 && reg.holeNumber === h;

@@ -9,6 +9,7 @@ import { PublicMember } from '../../../core/models/member';
 import { MemberService } from '../../../core/member.service';
 import { Observable } from 'rxjs/Observable';
 import { EventRegistration } from '../../../core/models/event-registration';
+import { TypeaheadMatch } from 'ng2-bootstrap';
 
 @Component({
     moduleId: module.id,
@@ -23,6 +24,7 @@ export class RegisterComponent implements OnInit {
     public currentUser: User;
     private members: PublicMember[];
     private friends: PublicMember[];
+    public selectedMemberName: string;
 
     constructor(
         private route: ActivatedRoute,
@@ -33,26 +35,29 @@ export class RegisterComponent implements OnInit {
 
     ngOnInit(): void {
         this.currentUser = this.authService.user;
-        this.registrationGroup = this.eventService.registrationGroup; // TODO: set defaults, and add guard
+        // this.registrationGroup = this.eventService.registrationGroup; // TODO: set defaults, and add guard
         this.route.data
             .subscribe((data: {eventDetail: EventDetail}) => {
                 this.eventDetail = data.eventDetail;
-                this.registrationGroup.updatePayment(this.eventDetail);
+                // this.registrationGroup.updatePayment(this.eventDetail);
             });
         Observable.forkJoin([
             this.memberService.getMembers(),
-            this.memberService.friends()
+            this.memberService.friends(),
+            this.eventService.getRegistrationGroup(this.route.snapshot.params['groupId'])
         ]).subscribe(
             results => {
-                this.members = results[0].filter(m => {
+                this.members = results[0].filter((m: PublicMember) => {
                     if (!this.eventDetail.isRegistered(m.id)) {
                         return m;
                     }
                 });
                 this.friends = results[1];
                 this.friends.forEach(f => {
-                    f.isRegistered = this.eventDetail.isRegistered(m.id);
+                    f.isRegistered = this.eventDetail.isRegistered(f.id);
                 });
+                this.registrationGroup = results[2];
+                this.registrationGroup.updatePayment(this.eventDetail);
             }
         );
     }
@@ -71,12 +76,21 @@ export class RegisterComponent implements OnInit {
                 f.isRegistered = false;
             }
         });
-        this.registrationGroup.removeRegistration(reg);
+        this.registrationGroup.clearRegistration(reg.id);
         this.registrationGroup.updatePayment(this.eventDetail);
     }
 
-    updatePayment(evt: any) {
-        window.alert(evt);
+    updatePayment() {
+        this.registrationGroup.updatePayment(this.eventDetail);
+    }
+
+    selectMember($event: TypeaheadMatch) {
+        // The value in the match here is the member name (not an object)
+        let member = this.members.find(m => {
+            return m.name === $event.value;
+        });
+        this.add(member);
+        this.selectedMemberName = '';
     }
 
     openPayment(): void {

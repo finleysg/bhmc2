@@ -7,12 +7,14 @@ import { SpinnerDirective } from './spinner/spinner.directive';
 import { SpinnerService } from './spinner/spinner.service';
 import { SpinnerButtonComponent } from './spinner/spinner-button.component';
 import { MarkdownDirective } from './markdown/markdown.directive';
+import { TypeaheadModule } from 'ng2-bootstrap';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
-        RouterModule
+        RouterModule,
+        TypeaheadModule.forRoot()
     ],
     declarations: [
         PaymentComponent,
@@ -30,7 +32,8 @@ import { MarkdownDirective } from './markdown/markdown.directive';
         PaymentComponent,
         SpinnerDirective,
         SpinnerButtonComponent,
-        MarkdownDirective
+        MarkdownDirective,
+        TypeaheadModule
     ]
 })
 export class SharedModule { }

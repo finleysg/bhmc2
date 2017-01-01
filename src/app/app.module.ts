@@ -26,7 +26,7 @@ import { SharedModule } from './shared/shared.module';
         DirectoryModule,
         EventsModule,
         ResultsModule,
-        PoliciesModule
+        PoliciesModule,
     ],
     declarations: [
         AppComponent

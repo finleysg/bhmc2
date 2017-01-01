@@ -76,8 +76,8 @@ export class ReserveTableComponent implements OnInit {
     register = (row: RegistrationRow) => {
         // The group created is saved on the service
         let eventId = this.route.snapshot.parent.parent.params['id'];
-        this.eventService.reserve(eventId, row).then(() => {
-            this.router.navigate(['register'], {relativeTo: this.route.parent});
+        this.eventService.reserve(eventId, row).then((group) => {
+            this.router.navigate(['register', group.id], {relativeTo: this.route.parent});
         });
     }
 }

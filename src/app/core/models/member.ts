@@ -8,7 +8,7 @@ export class PublicMember {
     isSelected: boolean; // only in client
     isRegistered: boolean; // only in client
 
-    name() {
+    get name(): string {
         return `${this.firstName} ${this.lastName}`;
     }
 

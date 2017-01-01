@@ -13,7 +13,7 @@ const routes: Routes = [
     { path: 'calendar/:year/:month', component: CalendarComponent },
     { path: 'events/:id', resolve: { eventDetail: EventDetailResolver }, children: [
         { path: 'detail', component: EventComponent },
-        { path: 'register', canActivate: [AuthGuard], component: RegisterComponent },
+        { path: 'register/:groupId', canActivate: [AuthGuard], component: RegisterComponent },
         { path: 'reserve', canActivate: [AuthGuard], component: ReserveComponent, children: [
             { path: ':course', component: ReserveTableComponent }
         ]},

@@ -12,6 +12,7 @@ export class EventRegistrationGroup {
     startingHole: number;
     startingOrder: number;
     notes: string;
+    cardVerificationToken: string;
     paymentConfirmationCode: string;
     paymentAmount: number;
     payment: EventPayment = new EventPayment();
@@ -33,6 +34,7 @@ export class EventRegistrationGroup {
         this.startingHole = json.starting_hole;
         this.startingOrder = json.starting_order;
         this.notes = json.notes;
+        this.cardVerificationToken = json.card_verification_token;
         this.paymentConfirmationCode = json.payment_confirmation_code;
         this.paymentAmount = json.payment_amount;
 
@@ -43,19 +45,46 @@ export class EventRegistrationGroup {
         return this;
     }
 
-    registerMember(friend: PublicMember): void {
+    toJson(): any {
+        return {
+            id: this.id,
+            event: this.eventId,
+            course_setup: this.courseSetupId,
+            signed_up_by: this.registrantId,
+            starting_hole: this.startingHole,
+            starting_order: this.startingOrder,
+            notes: this.notes,
+            card_verification_token: this.cardVerificationToken,
+            payment_amount: this.paymentAmount,
+            slots: this.registrations.map(r => r.toJson())
+        };
+    }
+
+    registerMember(member: PublicMember): void {
         let done = false;
         this.registrations.forEach( s => {
             if (!s.hasMember && !done) {
-                friend.isRegistered = true;
-                s.memberId = friend.id;
+                member.isRegistered = true;
+                s.memberId = member.id;
+                s.memberName = member.name;
+                s.isEventFeePaid = true;
                 done = true;
             }
         });
     };
 
-    removeRegistration(reg: EventRegistration): void {
-        reg.memberId = -1;
+    clearRegistration(registrationId: number): void {
+        this.registrations.forEach(reg => {
+            if (reg.id === registrationId) {
+                reg.memberId = -1;
+                reg.isEventFeePaid = false;
+                reg.isGrossSkinsFeePaid = false;
+                reg.isNetSkinsFeePaid = false;
+                reg.isGreensFeePaid = false;
+                reg.isCartFeePaid = false;
+                reg.totalFees = 0.0;
+            }
+        });
     };
 
     updatePayment(event: EventDetail) {
@@ -70,10 +99,10 @@ export class EventRegistrationGroup {
                     fee += event.skinsFee;
                 }
                 if (reg.isGreensFeePaid) {
-                    fee += 18.0; // TODO: configure greens fees and cart fees
+                    fee += event.greensFee;
                 }
                 if (reg.isCartFeePaid) {
-                    fee += 9.0;
+                    fee += event.cartFee;
                 }
                 reg.totalFees = fee;
                 subtotal += fee;

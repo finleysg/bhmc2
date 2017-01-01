@@ -1,6 +1,6 @@
 import * as moment from 'moment';
 
-// Registration record as received from the api (not a "slot" object)
+// Registration record as received from the api
 export class EventRegistration {
 
     id: number;
@@ -37,15 +37,29 @@ export class EventRegistration {
         this.memberName = json.member ? `${json.member_first_name} ${json.member_last_name}` : '';
         this.slotId = json.slot;
         this.startingOrder = json.starting_order;
-        this.isEventFeePaid = json.is_event_fee_paid;
+        this.isEventFeePaid = json.member; // default to true if member is present
         this.isGrossSkinsFeePaid = json.is_gross_skins_paid;
         this.isNetSkinsFeePaid = json.is_net_skins_paid;
         this.isGreensFeePaid = json.is_greens_fee_paid;
-        this.isCartFeePaid = false; // TODO
+        this.isCartFeePaid = json.is_cart_fee_paid;
         this.status = json.status;
         if (json.expires) {
             this.expires = moment(json.expires);
         }
         return this;
+    }
+
+    toJson(): any {
+        // return only what the client has updated
+        return {
+            id: this.id,
+            member: this.memberId,
+            member_name: this.memberName, // To expedite potential troubleshooting
+            is_event_fee_paid: this.isEventFeePaid,
+            is_gross_skins_paid: this.isGrossSkinsFeePaid,
+            is_net_skins_paid: this.isNetSkinsFeePaid,
+            is_greens_fee_paid: this.isGreensFeePaid,
+            is_cart_fee_paid: this.isCartFeePaid
+        };
     }
 }
