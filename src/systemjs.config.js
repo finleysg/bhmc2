@@ -31,7 +31,7 @@
             'angular2-toaster': 'npm:angular2-toaster/bundles/angular2-toaster.umd.js',
             'showdown': 'npm:showdown/dist',
             'moment': 'npm:moment',
-            'ng2-bootstrap': 'npm:ng2-bootstrap/bundles/ng2-bootstrap.umd.js'
+            'ng2-bootstrap': 'npm:ng2-bootstrap/bundles/ng2-bootstrap.umd.js',
         },
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {

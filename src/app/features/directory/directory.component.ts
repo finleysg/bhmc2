@@ -45,7 +45,7 @@ export class DirectoryComponent implements OnInit {
         if (pattern && pattern.length > 1) {
             pattern = pattern.toLowerCase();
             this.results = this.members.filter(m => {
-                return m.name().toLowerCase().indexOf(pattern) >= 0;
+                return m.name.toLowerCase().indexOf(pattern) >= 0;
             });
         }
     }
@@ -55,14 +55,14 @@ export class DirectoryComponent implements OnInit {
             this.memberService.removeFriend(member).then(
                 () => {
                     member.isFriend = false;
-                    this.toaster.pop('info', 'Friends List', `${member.name()} has been removed from your friends list`);
+                    this.toaster.pop('info', 'Friends List', `${member.name} has been removed from your friends list`);
                 }
             );
         } else {
             this.memberService.addFriend(member).then(
                 () => {
                     member.isFriend = true;
-                    this.toaster.pop('info', 'Friends List', `${member.name()} has been added to your friends list`);
+                    this.toaster.pop('info', 'Friends List', `${member.name} has been added to your friends list`);
                 }
             );
         }

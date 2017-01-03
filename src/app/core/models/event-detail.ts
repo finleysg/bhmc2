@@ -73,6 +73,9 @@ export class EventDetail {
     }
 
     isRegistered(memberId: number): boolean {
+        if (!this.registrations) {
+            return false;
+        }
         return this.registrations.some(r => r.memberId === memberId);
     }
 

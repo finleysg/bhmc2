@@ -8,6 +8,7 @@ import { EventsRoutingModule } from './events-routing.module';
 import { CalendarComponent } from './calendar/calendar.component';
 import { EventComponent } from './detail/event.component';
 import { ReserveTableComponent } from './reserve/reserve-table.component';
+import { PaymentTestComponent } from './test/payment-test.component';
 
 @NgModule({
     imports: [
@@ -20,7 +21,8 @@ import { ReserveTableComponent } from './reserve/reserve-table.component';
         RegisterComponent,
         ReserveComponent,
         ReserveTableComponent,
-        TeetimeComponent
+        TeetimeComponent,
+        PaymentTestComponent
     ],
     providers: [
         EventDetailService

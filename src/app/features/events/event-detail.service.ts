@@ -1,4 +1,4 @@
-import { BhmcDataService, EventRegistrationGroup, EventDetail, RegistrationRow } from '../../core';
+import { BhmcDataService, EventRegistrationGroup, EventDetail, RegistrationRow, EventType } from '../../core';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -19,14 +19,16 @@ export class EventDetailService {
         return this.dataService.getApiRequest(`events/${id}`)
             .map((data: any) => {
                 let event = new EventDetail().fromJson(data);
-                let courses = this.eventCourses(event);
-                this.signupTableSources = new Map<number, BehaviorSubject<EventSignupTable>>();
-                this.signupTables = new Map<number, Observable<EventSignupTable>>();
-                courses.forEach(c => {
-                    let table = new BehaviorSubject(this.createSignupTable(event, c));
-                    this.signupTableSources.set(c.id, table);
-                    this.signupTables.set(c.id, table.asObservable());
-                });
+                if (event.eventType === EventType.League) {
+                    let courses = this.eventCourses(event);
+                    this.signupTableSources = new Map<number, BehaviorSubject<EventSignupTable>>();
+                    this.signupTables = new Map<number, Observable<EventSignupTable>>();
+                    courses.forEach(c => {
+                        let table = new BehaviorSubject(this.createSignupTable(event, c));
+                        this.signupTableSources.set(c.id, table);
+                        this.signupTables.set(c.id, table.asObservable());
+                    });
+                }
                 return event;
             })
             .toPromise();
@@ -60,8 +62,13 @@ export class EventDetailService {
     }
 
 
-    register(group: EventRegistrationGroup) {
-        return this.dataService.postApiRequest('registration/register', group.toJson()).toPromise();
+    register(group: EventRegistrationGroup): Promise<EventRegistrationGroup> {
+        return this.dataService.postApiRequest('registration/register', {'group': group.toJson()})
+            .map((data: any) => {
+                this.registrationGroup = new EventRegistrationGroup().fromJson(data);
+                return this.registrationGroup;
+            })
+            .toPromise();
     }
 
     cancelReservation(group: EventRegistrationGroup) {
@@ -75,18 +82,19 @@ export class EventDetailService {
     eventCourses(eventDetail: EventDetail): any[] {
         // pull all the courses out of the existing registrations
         let tmp = {};
-        let courses = eventDetail.registrations.reduce((result, item) => {
-            if (!tmp[item.courseSetupId]) {
-                tmp[item.courseSetupId] = item.courseName;
-                result.push({
-                    id: +item.courseSetupId,
-                    name: item.courseName
-                });
-            }
-            return result;
-        }, []);
-        if (!courses) {
-            courses = [];
+        let courses: any[]  = [];
+        if (eventDetail.registrations) {
+            courses = eventDetail.registrations.reduce((result, item) => {
+                if (!tmp[item.courseSetupId]) {
+                    tmp[item.courseSetupId] = item.courseName;
+                    result.push({
+                        id: +item.courseSetupId,
+                        name: item.courseName
+                    });
+                }
+                return result;
+            }, []);
+        } else {
             courses.push({id: 0, name: 'TBD'});
         }
         return courses;

@@ -14,7 +14,7 @@ export class EventRegistrationGroup {
     notes: string;
     cardVerificationToken: string;
     paymentConfirmationCode: string;
-    paymentAmount: number;
+    // paymentAmount: number;
     payment: EventPayment = new EventPayment();
     registrations: EventRegistration[];
 
@@ -36,7 +36,7 @@ export class EventRegistrationGroup {
         this.notes = json.notes;
         this.cardVerificationToken = json.card_verification_token;
         this.paymentConfirmationCode = json.payment_confirmation_code;
-        this.paymentAmount = json.payment_amount;
+        this.payment.total = json.payment_amount;
 
         if (json.slots) {
             this.registrations = [];
@@ -55,7 +55,7 @@ export class EventRegistrationGroup {
             starting_order: this.startingOrder,
             notes: this.notes,
             card_verification_token: this.cardVerificationToken,
-            payment_amount: this.paymentAmount,
+            payment_amount: this.payment.total,
             slots: this.registrations.map(r => r.toJson())
         };
     }

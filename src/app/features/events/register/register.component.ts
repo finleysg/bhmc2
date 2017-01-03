@@ -1,15 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { EventRegistrationGroup } from '../../../core/models/event-registration-group';
-import { EventDetail } from '../../../core/models/event-detail';
-import { User } from '../../../core/models/user';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Location } from '@angular/common';
+import { EventRegistrationGroup, EventDetail, User, AuthenticationService,
+         PublicMember, MemberService, EventRegistration} from '../../../core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventDetailService } from '../event-detail.service';
-import { AuthenticationService } from '../../../core/authentication.service';
-import { PublicMember } from '../../../core/models/member';
-import { MemberService } from '../../../core/member.service';
 import { Observable } from 'rxjs/Observable';
-import { EventRegistration } from '../../../core/models/event-registration';
 import { TypeaheadMatch } from 'ng2-bootstrap';
+import { PaymentComponent } from '../../../shared/payments/payment.component';
 
 @Component({
     moduleId: module.id,
@@ -19,27 +16,28 @@ import { TypeaheadMatch } from 'ng2-bootstrap';
 
 export class RegisterComponent implements OnInit {
 
-    private registrationGroup: EventRegistrationGroup;
+    @ViewChild(PaymentComponent) private paymentComponent: PaymentComponent;
+
+    public registrationGroup: EventRegistrationGroup;
     public eventDetail: EventDetail;
     public currentUser: User;
-    private members: PublicMember[];
-    private friends: PublicMember[];
+    public members: PublicMember[];
+    public friends: PublicMember[];
     public selectedMemberName: string;
 
     constructor(
         private route: ActivatedRoute,
         private router: Router,
+        private location: Location,
         private eventService: EventDetailService,
         private memberService: MemberService,
         private authService: AuthenticationService) { }
 
     ngOnInit(): void {
         this.currentUser = this.authService.user;
-        // this.registrationGroup = this.eventService.registrationGroup; // TODO: set defaults, and add guard
         this.route.data
             .subscribe((data: {eventDetail: EventDetail}) => {
                 this.eventDetail = data.eventDetail;
-                // this.registrationGroup.updatePayment(this.eventDetail);
             });
         Observable.forkJoin([
             this.memberService.getMembers(),
@@ -94,31 +92,19 @@ export class RegisterComponent implements OnInit {
     }
 
     openPayment(): void {
-    //     let modal = this.modalService.open({
-    //         size: 'sm',
-    //         backdrop: 'static',
-    //         component: 'payment',
-    //         resolve: {
-    //             event: this.eventDetail,
-    //             group: this.registrationGroup
-    //         }
-    //     });
-    //     modal.result.then( (value: EventRegistrationGroup) => {
-    //         // redirect at this point
-    //         this.registrationGroup = value;
-    //         this.router.navigate(['reserve'], {relativeTo: this.route}); // TODO: readonly view
-    //     }).catch( () => {
-    //         // do nothing (modal canceled)
-    //     });
+        this.paymentComponent.open();
+    }
+
+    paymentComplete(result: boolean): void {
+        if (result) {
+            // TODO: readonly reserve view
+            // this.router.navigate(['reserve'], { relativeTo: this.route.parent });
+        }
     }
 
     cancelReservation(): void {
-        // this.eventService.cancelReservation(this.group).then( () => {
-        //     if (this.event.event_type === 'L') {
-        //         this.$state.go('event.reserve', { id: this.event.id });
-        //     } else {
-        //         this.$state.go('event.detail', { id: this.event.id });
-        //     }
-        // });
+        this.eventService.cancelReservation(this.registrationGroup).then( () => {
+            this.location.back();
+        });
     }
 }

@@ -8,9 +8,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { EventComponent } from './detail/event.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { ReserveTableComponent } from './reserve/reserve-table.component';
+import { PaymentTestComponent } from './test/payment-test.component';
 
 const routes: Routes = [
     { path: 'calendar/:year/:month', component: CalendarComponent },
+    { path: 'payment-test', component: PaymentTestComponent },
     { path: 'events/:id', resolve: { eventDetail: EventDetailResolver }, children: [
         { path: 'detail', component: EventComponent },
         { path: 'register/:groupId', canActivate: [AuthGuard], component: RegisterComponent },

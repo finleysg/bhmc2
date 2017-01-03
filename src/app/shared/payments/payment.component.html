@@ -1,77 +1,84 @@
-<!--
-<div class="modal-header bgm-teal">
-    <h3 class="modal-title">Payment: {{ amount | currency }}</h3>
-    <small>{{ event.name }} ({{ event.start_date | date: 'mediumDate' }})</small>
+<div>
+<div bsModal #paymentModal="bs-modal" class="modal fade">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" *ngIf="registrationGroup && eventDetail">
+            <div class="modal-header bgm-teal">
+                <h3 class="modal-title">Payment: {{ registrationGroup.payment.total | currency:'USD':true }}</h3>
+                <small>{{ eventDetail.name }} ({{ eventDetail.startDate.format('MMM D') }})</small>
+                <span id="spinner-span" class="pull-right"></span>
+            </div>
+            <div class="modal-body">
+                <form role="form" #cardForm="ngForm" novalidate>
+                    <div class="row">
+                        <div class="toggle-switch col-xs-12 m-t-20 m-b-30" data-ts-color="teal">
+                            <label for="pmt-switch" class="ts-label">Use {{ savedCard }}</label>
+                            <input id="pmt-switch" type="checkbox" hidden="hidden" name="useSavedCard"
+                                   [disabled]="!hasSavedCard"
+                                   [(ngModel)]="useSavedCard">
+                            <label for="pmt-switch" class="ts-helper"></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group" [class.has-error]="!card.number.isValid">
+                                <label>Card Number</label>
+                                <input name="cardNumber" type="text" class="form-control input-lg"
+                                       #cardNumber="ngModel"
+                                       [(ngModel)]="card.number.value"
+                                       (change)="card.validateCardNumber(cardForm, cardNumber)"
+                                       [disabled]="useSavedCard"
+                                       placeholder="Credit Card Number">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-7">
+                            <div class="form-group fg-line" [class.has-error]="!card.exp.isValid">
+                                <label>Exp Date</label>
+                                <input name="cardExpiry" type="text" class="form-control input-lg"
+                                       #cardExpiry="ngModel"
+                                       [(ngModel)]="card.exp.value"
+                                       (change)="card.validateExpiry()"
+                                       [disabled]="useSavedCard"
+                                       placeholder="MM/YY">
+                            </div>
+                        </div>
+                        <div class="col-xs-5 pull-right" [class.has-error]="!card.cvc.isValid">
+                            <div class="form-registrationGroup fg-line">
+                                <label>CV Code</label>
+                                <input name="cardCvc" type="tel" class="form-control input-lg"
+                                       #cardCvc="ngModel"
+                                       [(ngModel)]="card.cvc.value"
+                                       (change)="card.validateCVC()"
+                                       [disabled]="useSavedCard"
+                                       placeholder="CVC">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 message-pane">
+                            <ul class="clist clist-error">
+                                <li *ngIf="!card.number.isValid" class="text-danger">{{ card.number.errorMessage }}</li>
+                                <li *ngIf="!card.exp.isValid" class="text-danger">{{ card.exp.errorMessage }}</li>
+                                <li *ngIf="!card.cvc.isValid" class="text-danger">{{ card.cvc.errorMessage }}</li>
+                            </ul>
+                            <ul class="clist clist-check">
+                                <li *ngFor="let msg of messages" class="{{ msg.class }}">{{ msg.text }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <!--<button class="btn btn-primary" type="button" (click)="processPayment()" [disabled]="processing" >{{ submitText }}</button>-->
+                <button class="btn btn-relative btn-icon-text" [ngClass]="currentState.style"
+                        [disabled]="currentState.disabled"
+                        (click)="processPayment()">
+                    <i class="zmdi" [ngClass]="currentState.icon"></i> {{currentState.text}}
+                </button>
+                <button class="btn btn-warning" type="button" (click)="cancelPayment()" *ngIf="!currentState.complete">Cancel</button>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="modal-body">
-    <form role="form" id="paymentForm" novalidate>
-        <div class="row">
-            <div class="toggle-switch col-xs-12 m-t-20 m-b-30" data-ts-color="teal">
-                <label for="pmt-switch" class="ts-label">Use {{ customer.card }}</label>
-                <input id="pmt-switch" type="checkbox" hidden="hidden" [disabled]="!hasSavedCard" [(ngModel)]="useSavedCard">
-                <label for="pmt-switch" class="ts-helper"></label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="form-registrationGroup fg-line" [class.has-error]="!card.number.isValid">
-                    <label>Card Number</label>
-                    <input name="cardNumber"
-                           type="text"
-                           class="form-control input-lg"
-                           &lt;!&ndash;[(ngModel)]-options="{ updateOn: 'blur' }"&ndash;&gt;
-                           [(ngModel)]="card.number.value"
-                           (change)="card.validateCardNumber()"
-                           &lt;!&ndash;cc-number cc-format&ndash;&gt;
-                           [disabled]="useSavedCard"
-                           placeholder="Credit Card Number">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-7">
-                <div class="form-registrationGroup fg-line" [class.has-error]="!card.exp.isValid">
-                    <label>Exp Date</label>
-                    <input name="cardExpiry"
-                           type="text"
-                           class="form-control input-lg"
-                           &lt;!&ndash;[(ngModel)]-options="{ updateOn: 'blur' }"&ndash;&gt;
-                           [(ngModel)]="card.exp.value"
-                           (change)="card.validateExpiry()"
-                           [disabled]="useSavedCard"
-                           placeholder="MM/YY">
-                </div>
-            </div>
-            <div class="col-xs-5 pull-right" [class.has-error]="!card.cvc.isValid">
-                <div class="form-registrationGroup fg-line">
-                    <label>CV Code</label>
-                    <input name="cardCvc"
-                           type="tel"
-                           class="form-control input-lg"
-                           &lt;!&ndash;[(ngModel)]-options="{ updateOn: 'blur' }"&ndash;&gt;
-                           [(ngModel)]="card.cvc.value"
-                           (change)="card.validateCVC()"
-                           [disabled]="useSavedCard"
-                           placeholder="CVC">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 message-pane">
-                <ul class="clist clist-error">
-                    <li *ngIf="card.number.isValid" class="text-danger">{{ card.number.errorMessage }}</li>
-                    <li *ngIf="card.exp.isValid" class="text-danger">{{ card.exp.errorMessage }}</li>
-                    <li *ngIf="card.cvc.isValid" class="text-danger">{{ card.cvc.errorMessage }}</li>
-                </ul>
-                <ul class="clist clist-check">
-                    <li *ngFor="msg of messages" class="{{ msg.class }}">{{ msg.text }}</li>
-                </ul>
-            </div>
-        </div>
-    </form>
 </div>
-<div class="modal-footer">
-    <button class="btn btn-primary" type="button" (click)="processPayment()" [disabled]="paymentForm.$invalid || processing" >{{ submitText }}</button>
-    <button class="btn btn-warning" type="button" (click)="cancelPayment()" *ngIf="submitText === 'Continue'">Cancel</button>
-</div>
--->

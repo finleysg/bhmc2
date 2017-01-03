@@ -38,4 +38,14 @@ export class MemberService {
     removeFriend(member: PublicMember): Promise<void> {
         return this.dataService.postApiRequest(`friends/remove/${member.id}`, {}).toPromise();
     }
+
+    stripeDetails(): Promise<any> {
+        return this.dataService.getApiRequest('stripe/details').map(data => {
+            return {
+                stripeCustomerId: data.stripe_id,
+                savedCard: data.card
+            };
+        })
+        .toPromise();
+    }
 }
