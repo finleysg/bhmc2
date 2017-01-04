@@ -1,9 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
-import { EventDetailService } from '../../features/events/event-detail.service';
+import { EventDetailService } from '../services/event-detail.service';
 import { ToasterService } from 'angular2-toaster';
-import { CreditCard } from './credit-card';
-import { EventRegistrationGroup, EventDetail, MemberService } from '../../core';
+import { CreditCard } from '../models/credit-card';
 import { ModalDirective } from 'ng2-bootstrap';
+import { EventRegistrationGroup } from '../models/event-registration-group';
+import { EventDetail } from '../models/event-detail';
+import { MemberService } from '../../../core';
 
 declare const Spinner: any;
 
@@ -27,6 +29,7 @@ class ProcessingState {
 class ProcessingResult {
     text: string;
     style: string;
+
     constructor(text: string, style: string) {
         this.text = text;
         this.style = style;
@@ -35,7 +38,7 @@ class ProcessingResult {
 
 @Component({
     moduleId: module.id,
-    selector: 'payment-modal',
+    selector: 'payment',
     templateUrl: 'payment.component.html',
     styleUrls: ['payment.component.css']
 })
@@ -56,11 +59,10 @@ export class PaymentComponent implements OnInit {
     private spinner: any;
     private spinnerElement: any;
 
-    constructor(
-        private eventService: EventDetailService,
-        private memberService: MemberService,
-        private elementRef: ElementRef,
-        private toaster: ToasterService) {
+    constructor(private eventService: EventDetailService,
+                private memberService: MemberService,
+                private elementRef: ElementRef,
+                private toaster: ToasterService) {
     }
 
     ngOnInit() {
@@ -78,7 +80,7 @@ export class PaymentComponent implements OnInit {
     open(): void {
         this.messages.length = 0;
         this.processStatus = ProcessingStatus.Pending;
-        this.paymentModal.config = {backdrop: 'static', keyboard: false};
+        this.paymentModal.config = { backdrop: 'static', keyboard: false };
         this.spinnerElement = this.elementRef.nativeElement.querySelector('#spinner-span');
         this.paymentModal.show();
     }
@@ -97,7 +99,7 @@ export class PaymentComponent implements OnInit {
                 this.quickPayment();
             } else {
                 if (!this.card.isValid()) {
-                   return;
+                    return;
                 }
                 this.fullPayment();
             }
@@ -107,9 +109,9 @@ export class PaymentComponent implements OnInit {
     quickPayment(): void {
         this.processStatus = ProcessingStatus.Processing;
         this.spinner.spin(this.spinnerElement);
-        this.eventService.register(this.registrationGroup).then( group => {
+        this.eventService.register(this.registrationGroup).then(group => {
             this.successState(group);
-        }).catch( response => {
+        }).catch(response => {
             this.errorState(response);
         });
     };
@@ -138,21 +140,16 @@ export class PaymentComponent implements OnInit {
         this.toaster.pop('success', 'Payment Complete', `Your payment for ${group.payment.total} has been processed.`);
     };
 
-    errorState(response: any): void {
+    errorState(message: any): void {
         this.spinner.stop();
         this.processStatus = ProcessingStatus.Failure;
         this.messages.length = 0;
-        if (!response) {
+        if (!message) {
             this.messages.push(new ProcessingResult('Connection failure or timeout', 'text-danger'));
             this.toaster.pop('error', 'Connection Problem', 'Your internet connection is down or unavailable');
-        } else if (response.message) {
-            this.processStatus = ProcessingStatus.Invalid;
-            this.messages.push(new ProcessingResult(response.message, 'text-warning'));
-            this.toaster.pop('warning', 'Invalid Card', response.message);
         } else {
-            let text = response.detail ? response.detail : 'Payment processing error';
-            this.messages.push(new ProcessingResult(text, 'text-danger'));
-            this.toaster.pop('error', 'Payment Error', text);
+            this.messages.push(new ProcessingResult(message, 'text-danger'));
+            this.toaster.pop('error', 'Payment Error', message);
         }
     }
 
@@ -214,7 +211,6 @@ export class PaymentComponent implements OnInit {
             speed: 0.7,
             trail: 60,
             zIndex: 2e9, // Artificially high z-index to keep on top
-            // left: '15px'
         };
         this.spinner = new Spinner(options);
     }

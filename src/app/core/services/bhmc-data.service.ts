@@ -18,10 +18,10 @@ export class BhmcDataService {
 
     constructor(private http: Http) {
         this._isLocal = window.location.hostname.indexOf('localhost') >= 0;
-        // if (this._isLocal) {
-        //     this._authUrl = 'http://localhost:8000/rest-auth/';
-        //     this._apiUrl = 'http://localhost:8000/api/';
-        // }
+        if (this._isLocal) {
+            this._authUrl = 'http://localhost:8000/rest-auth/';
+            this._apiUrl = 'http://localhost:8000/api/';
+        }
     }
 
     getAuthRequest(resource: string, data?: any): Observable<any> {
@@ -60,7 +60,7 @@ export class BhmcDataService {
 
     private postRequest(url: string, data: any) {
         return this.http.post(url, JSON.stringify(data), this.createOptions())
-            .map((response: any) => { // TODO: Response or any?
+            .map((response: any) => {
                 if (response._body && response._body.length > 0) {
                     return response.json() || {};
                 }
@@ -85,14 +85,24 @@ export class BhmcDataService {
 
     private handleError(error: Response | any) {
         let errMsg: string;
+        let publicMessage: string;
         if (error instanceof Response) {
-            const body = error.json() || '';
-            const err = body.error || JSON.stringify(body);
-            errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+            // timeout or no response
+            if (error.status === 0) {
+                errMsg = `Could not reach the bhmc server because your internet connection 
+                          was lost, the connection timed out, or the server is not responding.`;
+                publicMessage = errMsg;
+            } else {
+                const body = error.json() || '';
+                const err = body.detail || JSON.stringify(body);
+                errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+                publicMessage = err;
+            }
         } else {
             errMsg = error.message ? error.message : error.toString();
+            publicMessage = errMsg;
         }
         console.error(errMsg);
-        return Observable.throw(errMsg);
+        return Observable.throw(publicMessage);
     }
 }

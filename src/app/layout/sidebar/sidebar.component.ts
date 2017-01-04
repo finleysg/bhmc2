@@ -2,8 +2,8 @@ import { Calendar } from '../../core/models/calendar';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { User } from '../../core/models/user';
-import { LayoutService } from '../../core/layout.service';
-import { AuthenticationService } from '../../core/authentication.service';
+import { LayoutService } from '../../core/services/layout.service';
+import { AuthenticationService } from '../../core/services/authentication.service';
 import * as moment from 'moment';
 
 @Component({

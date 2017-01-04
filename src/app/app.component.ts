@@ -1,5 +1,5 @@
 import {Component, HostBinding} from '@angular/core';
-import {LayoutService} from './core/layout.service';
+import {LayoutService} from './core/services/layout.service';
 
 @Component({
   moduleId: module.id,

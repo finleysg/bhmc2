@@ -63,14 +63,13 @@
                                 <li *ngIf="!card.cvc.isValid" class="text-danger">{{ card.cvc.errorMessage }}</li>
                             </ul>
                             <ul class="clist clist-check">
-                                <li *ngFor="let msg of messages" class="{{ msg.class }}">{{ msg.text }}</li>
+                                <li *ngFor="let msg of messages" [ngClass]="msg.style">{{ msg.text }}</li>
                             </ul>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <!--<button class="btn btn-primary" type="button" (click)="processPayment()" [disabled]="processing" >{{ submitText }}</button>-->
                 <button class="btn btn-relative btn-icon-text" [ngClass]="currentState.style"
                         [disabled]="currentState.disabled"
                         (click)="processPayment()">

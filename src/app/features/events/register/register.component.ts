@@ -1,12 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
-import { EventRegistrationGroup, EventDetail, User, AuthenticationService,
-         PublicMember, MemberService, EventRegistration} from '../../../core';
+import { User, AuthenticationService, PublicMember, MemberService} from '../../../core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EventDetailService } from '../event-detail.service';
+import { EventDetailService } from '../services/event-detail.service';
 import { Observable } from 'rxjs/Observable';
 import { TypeaheadMatch } from 'ng2-bootstrap';
-import { PaymentComponent } from '../../../shared/payments/payment.component';
+import { PaymentComponent } from '../payments/payment.component';
+import { EventRegistrationGroup } from '../models/event-registration-group';
+import { EventDetail } from '../models/event-detail';
+import { EventRegistration } from '../models/event-registration';
 
 @Component({
     moduleId: module.id,

@@ -1,14 +1,13 @@
 import { EventDetailService } from './event-detail.service';
-import { EventDetail } from '../../core';
 import { Injectable } from '@angular/core';
-import { Router, Resolve, RouterStateSnapshot,
-         ActivatedRouteSnapshot } from '@angular/router';
+import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
+import { EventDetail } from '../models/event-detail';
 
 @Injectable()
 export class EventDetailResolver implements Resolve<EventDetail> {
 
     constructor(
-        private eventService: EventDetailService, 
+        private eventService: EventDetailService,
         private router: Router) {}
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<EventDetail> {

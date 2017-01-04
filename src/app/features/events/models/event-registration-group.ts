@@ -1,7 +1,7 @@
 import { EventRegistration } from './event-registration';
-import { EventPayment } from '../../features/events/register/event-payment';
+import { EventPayment } from './event-payment';
 import { EventDetail } from './event-detail';
-import { PublicMember } from './member';
+import { PublicMember } from '../../../core/models/member';
 
 export class EventRegistrationGroup {
     id: number;

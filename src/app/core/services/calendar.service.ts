@@ -1,5 +1,5 @@
-import { Calendar } from './models/calendar';
-import { CalendarEvent } from './models/calendar-event';
+import { Calendar } from '../models/calendar';
+import { CalendarEvent } from '../models/calendar-event';
 import { BhmcDataService } from './bhmc-data.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';

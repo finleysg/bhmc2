@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { EventDetailService } from '../event-detail.service';
-import { EventSignupTable } from '../event-signup-table';
-import {
-    RegistrationRow, RegistrationSlot,
-    SlotStatus, AuthenticationService, User
-} from '../../../core';
+import { EventDetailService } from '../services/event-detail.service';
+import { EventSignupTable } from '../models/event-signup-table';
+import { AuthenticationService, User } from '../../../core';
+import { RegistrationSlot, SlotStatus } from '../models/registration-slot';
+import { RegistrationRow } from '../models/registration-row';
 
 @Component({
     moduleId: module.id,
@@ -48,7 +47,7 @@ export class ReserveTableComponent implements OnInit {
             slot.selected = !slot.selected;
             // clear any selections in a different row (TODO: move to class)
             this.table.rows.forEach(r => {
-                r.slots.forEach(s => {
+                r.slots.forEach((s: RegistrationSlot) => {
                     if (s.row.name !== row.name) {
                         s.selected = false;
                     }

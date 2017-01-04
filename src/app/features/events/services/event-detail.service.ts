@@ -1,10 +1,14 @@
-import { BhmcDataService, EventRegistrationGroup, EventDetail, RegistrationRow, EventType } from '../../core';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
-import { EventSignupTable } from './event-signup-table';
+import { EventSignupTable } from '../models/event-signup-table';
+import { EventRegistration } from '../models/event-registration';
+import { EventRegistrationGroup } from '../models/event-registration-group';
+import { BhmcDataService } from '../../../core/services/bhmc-data.service';
+import { EventDetail, EventType } from '../models/event-detail';
+import { RegistrationRow } from '../models/registration-row';
 
 @Injectable()
 export class EventDetailService {
@@ -84,7 +88,7 @@ export class EventDetailService {
         let tmp = {};
         let courses: any[]  = [];
         if (eventDetail.registrations) {
-            courses = eventDetail.registrations.reduce((result, item) => {
+            courses = eventDetail.registrations.reduce((result: any[], item: any) => {
                 if (!tmp[item.courseSetupId]) {
                     tmp[item.courseSetupId] = item.courseName;
                     result.push({
@@ -104,10 +108,10 @@ export class EventDetailService {
         // each table is a hierarchy: course --> rows --> slots
         let table = new EventSignupTable(course.id, course.name.replace('League', ''));
         for (let h = 1; h <= eventDetail.holesPerRound; h++) {
-            const aGroups = eventDetail.registrations.filter( reg => {
+            const aGroups = eventDetail.registrations.filter( (reg: EventRegistration) => {
                 return reg.courseSetupId === course.id && reg.startingOrder === 0 && reg.holeNumber === h;
             });
-            const bGroups = eventDetail.registrations.filter( reg => {
+            const bGroups = eventDetail.registrations.filter( (reg: EventRegistration) => {
                 return reg.courseSetupId === course.id && reg.startingOrder === 1 && reg.holeNumber === h;
             });
             table.rows.push(RegistrationRow.create(aGroups));

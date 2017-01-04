@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthenticationService } from '../../../core/authentication.service';
+import { AuthenticationService } from '../../../core/services/authentication.service';
 import { ToasterService } from 'angular2-toaster';
 
 @Component({

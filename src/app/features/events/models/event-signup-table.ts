@@ -1,4 +1,4 @@
-import { RegistrationRow } from '../../core';
+import { RegistrationRow } from './registration-row';
 
 export class EventSignupTable {
     courseSetupId: number;

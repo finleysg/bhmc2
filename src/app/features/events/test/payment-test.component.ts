@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { EventDetailService } from '../event-detail.service';
-import { PaymentComponent } from '../../../shared/payments/payment.component';
-import { EventRegistrationGroup, EventDetail, PublicMember, MemberService } from '../../../core';
+import { EventDetailService } from '../services/event-detail.service';
+import { PaymentComponent } from '../payments/payment.component';
+import { PublicMember, MemberService } from '../../../core';
 import { Observable } from 'rxjs/Observable';
+import { EventRegistrationGroup } from '../models/event-registration-group';
+import { EventDetail } from '../models/event-detail';
 
 @Component({
     moduleId: module.id,
@@ -23,9 +25,9 @@ export class PaymentTestComponent implements OnInit {
 
     ngOnInit(): void {
         Observable.forkJoin([
-            this.eventService.getEventDetail(46),
+            this.eventService.getEventDetail(40),
             this.memberService.getMembers(),
-    ]).subscribe(
+        ]).subscribe(
             results => {
                 this.eventDetail = results[0];
                 this.members = results[1].filter((m: PublicMember) => {

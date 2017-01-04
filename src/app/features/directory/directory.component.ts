@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PublicMember } from '../../core/models/member';
-import { MemberService } from '../../core/member.service';
+import { MemberService } from '../../core/services/member.service';
 import { ToasterService } from 'angular2-toaster';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/forkJoin';

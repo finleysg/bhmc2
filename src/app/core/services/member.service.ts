@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PublicMember } from './models/member';
+import { PublicMember } from '../models/member';
 import { BhmcDataService } from './bhmc-data.service';
 import { Observable } from 'rxjs/Observable';
 

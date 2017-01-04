@@ -1,4 +1,4 @@
-import { EventDetailService } from './event-detail.service';
+import { EventDetailService } from './services/event-detail.service';
 import { TeetimeComponent } from './teetimes/teetime.component';
 import { ReserveComponent } from './reserve/reserve.component';
 import { RegisterComponent } from './register/register.component';
@@ -9,6 +9,7 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { EventComponent } from './detail/event.component';
 import { ReserveTableComponent } from './reserve/reserve-table.component';
 import { PaymentTestComponent } from './test/payment-test.component';
+import { PaymentComponent } from './payments/payment.component';
 
 @NgModule({
     imports: [
@@ -22,10 +23,11 @@ import { PaymentTestComponent } from './test/payment-test.component';
         ReserveComponent,
         ReserveTableComponent,
         TeetimeComponent,
+        PaymentComponent,
         PaymentTestComponent
     ],
     providers: [
-        EventDetailService
+        EventDetailService,
     ]
 })
 export class EventsModule { }

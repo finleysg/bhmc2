@@ -5,7 +5,7 @@ module.exports = {
         baseDir: ['./', './src'],
         index: 'index.html'
     },
-    files: './**/*.{js, html, css}',
+    files: './src/**/*.{js, html, css}',
     notify: false,
     open: false
 };

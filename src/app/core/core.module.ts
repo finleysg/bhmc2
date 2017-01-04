@@ -1,11 +1,11 @@
-import { CalendarService } from './calendar.service';
-import { AuthGuard } from './auth-guard.service';
+import { CalendarService } from './services/calendar.service';
+import { AuthGuard } from './services/auth-guard.service';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
-import { LayoutService } from './layout.service';
-import { AuthenticationService } from './authentication.service';
-import { BhmcDataService } from './bhmc-data.service';
-import { MemberService } from './member.service';
+import { LayoutService } from './services/layout.service';
+import { AuthenticationService } from './services/authentication.service';
+import { BhmcDataService } from './services/bhmc-data.service';
+import { MemberService } from './services/member.service';
 
 @NgModule({
     imports: [

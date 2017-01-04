@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LayoutService } from '../../core/layout.service';
+import { LayoutService } from '../../core/services/layout.service';
 import { Router } from '@angular/router';
 
 @Component({

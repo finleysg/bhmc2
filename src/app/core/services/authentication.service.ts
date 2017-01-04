@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BhmcDataService } from './bhmc-data.service';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { User } from './models/user';
+import { User } from '../models/user';
 import { Cookie } from 'ng2-cookies';
 
 import 'rxjs/add/operator/map';
@@ -37,7 +37,7 @@ export class AuthenticationService {
     get user(): User {
         return this._currentUser;
     }
-    
+
     login(username: string, password: string): Promise<void> {
 
         let email = '';

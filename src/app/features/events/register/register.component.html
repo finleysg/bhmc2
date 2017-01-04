@@ -90,7 +90,7 @@
                     </div>
                     <div class="pull-right">
                         <button [disabled]="!registrationGroup.canRegister" class="btn btn-primary m-r-10 m-t-10" (click)="openPayment()">Pay Now</button>
-                        <payment-modal [registrationGroup]="registrationGroup" [eventDetail]="eventDetail" (onClose)="paymentComplete($event)"></payment-modal>
+                        <payment [registrationGroup]="registrationGroup" [eventDetail]="eventDetail" (onClose)="paymentComplete($event)"></payment>
                     </div>
                 </div>
             </div>

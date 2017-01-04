@@ -1,4 +1,4 @@
-import { User } from './models/user';
+import { User } from '../models/user';
 import { AuthenticationService } from './authentication.service';
 import { Injectable }       from '@angular/core';
 import {
@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
     private currentUser: User;
 
     constructor(
-        private authService: AuthenticationService, 
+        private authService: AuthenticationService,
         private router: Router) {
         this.authService.currentUser$.subscribe(user => {
             this.currentUser = user;

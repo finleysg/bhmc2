@@ -2,7 +2,6 @@ import { NgModule }      from '@angular/core';
 import { CommonModule }  from '@angular/common';
 import { FormsModule }   from '@angular/forms';
 import { RouterModule }  from '@angular/router';
-import { PaymentComponent } from './payments/payment.component';
 import { SpinnerDirective } from './spinner/spinner.directive';
 import { SpinnerService } from './spinner/spinner.service';
 import { SpinnerButtonComponent } from './spinner/spinner-button.component';
@@ -18,7 +17,6 @@ import { TypeaheadModule, ModalModule } from 'ng2-bootstrap';
         ModalModule.forRoot()
     ],
     declarations: [
-        PaymentComponent,
         SpinnerDirective,
         SpinnerButtonComponent,
         MarkdownDirective
@@ -30,7 +28,6 @@ import { TypeaheadModule, ModalModule } from 'ng2-bootstrap';
         CommonModule,
         FormsModule,
         RouterModule,
-        PaymentComponent,
         SpinnerDirective,
         SpinnerButtonComponent,
         MarkdownDirective,

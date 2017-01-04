@@ -1,6 +1,6 @@
 import { Calendar } from '../../../core/models/calendar';
 import { ActivatedRoute, Params } from '@angular/router';
-import { CalendarService } from '../../../core/calendar.service';
+import { CalendarService } from '../../../core/services/calendar.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
