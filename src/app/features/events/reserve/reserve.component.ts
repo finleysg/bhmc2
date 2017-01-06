@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventDetailService } from '../services/event-detail.service';
 import { EventDetail } from '../models/event-detail';
+import { ToasterService } from 'angular2-toaster';
 
 @Component({
     moduleId: module.id,
@@ -25,8 +26,14 @@ export class ReserveComponent implements OnInit {
                 this.eventDetail = data.eventDetail;
                 this.courses = this.eventService.eventCourses(this.eventDetail);
                 if (!this.route.firstChild) {
-                    this.router.navigate([this.courses[0].id], {relativeTo: this.route, skipLocationChange: true});
+                    this.router.navigate([this.courses[0].id], {relativeTo: this.route});
                 }
             });
+    }
+
+    refresh(): void {
+        this.eventService.refreshEventDetail().then(() => {
+            // TODO: stop spinner
+        });
     }
 }

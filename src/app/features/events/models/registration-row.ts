@@ -25,7 +25,7 @@ export class RegistrationRow {
         } else if (this.startingOrder === 2) {
             return `${this.holeNumber}C`;
         } else {
-            return 'Insanity!';
+            return '';
         }
     };
 

@@ -13,6 +13,7 @@ import { RegistrationRow } from '../models/registration-row';
 @Injectable()
 export class EventDetailService {
 
+    private currentEventId: number;
     private signupTableSources: Map<number, BehaviorSubject<EventSignupTable>>;
     private signupTables: Map<number, Observable<EventSignupTable>>;
     public registrationGroup: EventRegistrationGroup;
@@ -20,6 +21,7 @@ export class EventDetailService {
     constructor(private dataService: BhmcDataService) { }
 
     getEventDetail(id: number): Promise<EventDetail> {
+        this.currentEventId = id;
         return this.dataService.getApiRequest(`events/${id}`)
             .map((data: any) => {
                 let event = new EventDetail().fromJson(data);
@@ -34,6 +36,22 @@ export class EventDetailService {
                     });
                 }
                 return event;
+            })
+            .toPromise();
+    }
+
+    refreshEventDetail(): Promise<void> {
+        return this.dataService.getApiRequest(`events/${this.currentEventId}`)
+            .map((data: any) => {
+                let event = new EventDetail().fromJson(data);
+                if (event.eventType === EventType.League) {
+                    let courses = this.eventCourses(event);
+                    courses.forEach(c => {
+                        let table = this.createSignupTable(event, c);
+                        this.signupTableSources.get(c.id).next(table);
+                    });
+                }
+                return;
             })
             .toPromise();
     }

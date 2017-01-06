@@ -6,7 +6,7 @@ import { SpinnerDirective } from './spinner/spinner.directive';
 import { SpinnerService } from './spinner/spinner.service';
 import { SpinnerButtonComponent } from './spinner/spinner-button.component';
 import { MarkdownDirective } from './markdown/markdown.directive';
-import { TypeaheadModule, ModalModule } from 'ng2-bootstrap';
+import { TypeaheadModule, ModalModule, DropdownModule } from 'ng2-bootstrap';
 
 @NgModule({
     imports: [
@@ -14,12 +14,13 @@ import { TypeaheadModule, ModalModule } from 'ng2-bootstrap';
         FormsModule,
         RouterModule,
         TypeaheadModule.forRoot(),
-        ModalModule.forRoot()
+        ModalModule.forRoot(),
+        DropdownModule.forRoot(),
     ],
     declarations: [
         SpinnerDirective,
         SpinnerButtonComponent,
-        MarkdownDirective
+        MarkdownDirective,
     ],
     providers: [
         SpinnerService
@@ -32,7 +33,8 @@ import { TypeaheadModule, ModalModule } from 'ng2-bootstrap';
         SpinnerButtonComponent,
         MarkdownDirective,
         TypeaheadModule,
-        ModalModule
+        ModalModule,
+        DropdownModule,
     ]
 })
 export class SharedModule { }

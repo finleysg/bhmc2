@@ -5,6 +5,7 @@ import { EventSignupTable } from '../models/event-signup-table';
 import { AuthenticationService, User } from '../../../core';
 import { RegistrationSlot, SlotStatus } from '../models/registration-slot';
 import { RegistrationRow } from '../models/registration-row';
+import { ToasterService } from 'angular2-toaster';
 
 @Component({
     moduleId: module.id,
@@ -18,6 +19,7 @@ export class ReserveTableComponent implements OnInit {
 
     constructor(private eventService: EventDetailService,
                 private authService: AuthenticationService,
+                private toaster: ToasterService,
                 private router: Router,
                 private route: ActivatedRoute) {
     }
@@ -31,10 +33,10 @@ export class ReserveTableComponent implements OnInit {
 
     // TODO: better place for this?
     slotClass(slot: RegistrationSlot): string {
-        let className = '';
+        let className = this.table.courseName.replace(' ', '').toLowerCase();
         if (slot.selected) {
             className = 'bg-warning';
-        } else if (slot.status === SlotStatus.Available) {
+        } else if (slot.status === SlotStatus.Reserved) {
             className = 'text-success';
         } else if (slot.status === SlotStatus.Pending) {
             className = 'bg-danger';
@@ -75,8 +77,13 @@ export class ReserveTableComponent implements OnInit {
     register = (row: RegistrationRow) => {
         // The group created is saved on the service
         let eventId = this.route.snapshot.parent.parent.params['id'];
-        this.eventService.reserve(eventId, row).then((group) => {
-            this.router.navigate(['register', group.id], {relativeTo: this.route.parent});
-        });
+        this.eventService.reserve(eventId, row)
+            .then((group) => {
+                this.router.navigate(['register', group.id], {relativeTo: this.route.parent.parent});
+            })
+            .catch(err => {
+                this.eventService.refreshEventDetail(); // TODO: stop spinning when complete
+                this.toaster.pop('error', 'Reservation Failure', err);
+            });
     }
 }
