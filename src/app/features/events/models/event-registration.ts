@@ -28,8 +28,8 @@ export class EventRegistration {
 
     fromJson(json: any): EventRegistration {
         this.id = json.id;
-        this.courseName = json.course ? json.course : 'TBD';
-        this.courseSetupId = json.course_setup_id ? +json.course_setup_id : -1;
+        this.courseName = json.course ? json.course : 'In the Event';
+        this.courseSetupId = json.course_setup_id ? +json.course_setup_id : 0;
         this.holeNumber = json.hole_number;
         this.holeId = json.hole_id;
         this.groupId = json.registration_group ? +json.registration_group : -1;

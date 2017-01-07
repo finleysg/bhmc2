@@ -32,6 +32,7 @@
             'showdown': 'npm:showdown/dist',
             'moment': 'npm:moment',
             'ng2-bootstrap': 'npm:ng2-bootstrap/bundles/ng2-bootstrap.umd.js',
+            'sweetalert2': 'npm:sweetalert2',
         },
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {
@@ -62,6 +63,10 @@
                 defaultExtension: 'js'
             },
             'ng2-bootstrap': {
+                defaultExtension: 'js'
+            },
+            'sweetalert2': {
+                main: 'dist/sweetalert2.js',
                 defaultExtension: 'js'
             }
         }

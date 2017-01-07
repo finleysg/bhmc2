@@ -22,6 +22,7 @@ var layout_module_1 = require('./layout/layout.module');
 var app_routing_module_1 = require('./app-routing.module');
 var core_module_1 = require('./core/core.module');
 var shared_module_1 = require('./shared/shared.module');
+var calendar_module_1 = require('./features/calendar/calendar.module');
 var AppModule = (function () {
     function AppModule() {
     }
@@ -40,6 +41,7 @@ var AppModule = (function () {
                 events_module_1.EventsModule,
                 results_module_1.ResultsModule,
                 policies_module_1.PoliciesModule,
+                calendar_module_1.CalendarModule,
             ],
             declarations: [
                 app_component_1.AppComponent

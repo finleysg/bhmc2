@@ -1,11 +1,9 @@
-import { Calendar } from '../../../core/models/calendar';
+import { Calendar, CalendarService } from '../../core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { CalendarService } from '../../../core/services/calendar.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
     moduleId: module.id,
-    selector: 'bhmc-calendar',
     templateUrl: 'calendar.component.html',
     styleUrls: ['calendar.component.css']
 })

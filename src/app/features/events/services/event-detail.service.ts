@@ -17,6 +17,7 @@ export class EventDetailService {
     private signupTableSources: Map<number, BehaviorSubject<EventSignupTable>>;
     private signupTables: Map<number, Observable<EventSignupTable>>;
     public registrationGroup: EventRegistrationGroup;
+    public currentEvent: EventDetail;
 
     constructor(private dataService: BhmcDataService) { }
 
@@ -25,16 +26,15 @@ export class EventDetailService {
         return this.dataService.getApiRequest(`events/${id}`)
             .map((data: any) => {
                 let event = new EventDetail().fromJson(data);
-                if (event.eventType === EventType.League) {
-                    let courses = this.eventCourses(event);
-                    this.signupTableSources = new Map<number, BehaviorSubject<EventSignupTable>>();
-                    this.signupTables = new Map<number, Observable<EventSignupTable>>();
-                    courses.forEach(c => {
-                        let table = new BehaviorSubject(this.createSignupTable(event, c));
-                        this.signupTableSources.set(c.id, table);
-                        this.signupTables.set(c.id, table.asObservable());
-                    });
-                }
+                let courses = this.eventCourses(event);
+                this.signupTableSources = new Map<number, BehaviorSubject<EventSignupTable>>();
+                this.signupTables = new Map<number, Observable<EventSignupTable>>();
+                courses.forEach(c => {
+                    let table = new BehaviorSubject(this.createSignupTable(event, c));
+                    this.signupTableSources.set(c.id, table);
+                    this.signupTables.set(c.id, table.asObservable());
+                });
+                this.currentEvent = event;
                 return event;
             })
             .toPromise();
@@ -44,13 +44,12 @@ export class EventDetailService {
         return this.dataService.getApiRequest(`events/${this.currentEventId}`)
             .map((data: any) => {
                 let event = new EventDetail().fromJson(data);
-                if (event.eventType === EventType.League) {
-                    let courses = this.eventCourses(event);
-                    courses.forEach(c => {
-                        let table = this.createSignupTable(event, c);
-                        this.signupTableSources.get(c.id).next(table);
-                    });
-                }
+                let courses = this.eventCourses(event);
+                courses.forEach(c => {
+                    let table = this.createSignupTable(event, c);
+                    this.signupTableSources.get(c.id).next(table);
+                });
+                this.currentEvent = event;
                 return;
             })
             .toPromise();
@@ -117,7 +116,7 @@ export class EventDetailService {
                 return result;
             }, []);
         } else {
-            courses.push({id: 0, name: 'TBD'});
+            courses.push({id: 0, name: 'In the Event'});
         }
         return courses;
     }
@@ -125,15 +124,33 @@ export class EventDetailService {
     createSignupTable(eventDetail: EventDetail, course: any): EventSignupTable {
         // each table is a hierarchy: course --> rows --> slots
         let table = new EventSignupTable(course.id, course.name.replace('League', ''));
-        for (let h = 1; h <= eventDetail.holesPerRound; h++) {
-            const aGroups = eventDetail.registrations.filter( (reg: EventRegistration) => {
-                return reg.courseSetupId === course.id && reg.startingOrder === 0 && reg.holeNumber === h;
-            });
-            const bGroups = eventDetail.registrations.filter( (reg: EventRegistration) => {
-                return reg.courseSetupId === course.id && reg.startingOrder === 1 && reg.holeNumber === h;
-            });
-            table.rows.push(RegistrationRow.create(aGroups));
-            table.rows.push(RegistrationRow.create(bGroups));
+        if (eventDetail.eventType === EventType.League) {
+            for (let h = 1; h <= eventDetail.holesPerRound; h++) {
+                const aGroups = eventDetail.registrations.filter((reg: EventRegistration) => {
+                    return reg.courseSetupId === course.id && reg.startingOrder === 0 && reg.holeNumber === h;
+                });
+                const bGroups = eventDetail.registrations.filter((reg: EventRegistration) => {
+                    return reg.courseSetupId === course.id && reg.startingOrder === 1 && reg.holeNumber === h;
+                });
+                table.rows.push(RegistrationRow.create(aGroups));
+                table.rows.push(RegistrationRow.create(bGroups));
+            }
+        } else {
+            if (eventDetail.registrations) {
+                // Reduce existing registrations to an associative array: groupId -> registrations
+                let groups = eventDetail.registrations.reduce(function (grouped: any, item: EventRegistration) {
+                    let key = item.groupId;
+                    grouped[key] = grouped[key] || [];
+                    grouped[key].push(item);
+                    return grouped;
+                }, {});
+                // Push each group into a row in the table (display only for non-league events)
+                for (let prop in groups) {
+                    if (groups.hasOwnProperty(prop)) {
+                        table.rows.push(RegistrationRow.create(groups[prop]));
+                    }
+                }
+            }
         }
         return table;
     }

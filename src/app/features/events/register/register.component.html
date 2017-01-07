@@ -85,6 +85,7 @@
                     <div class="col-sm-2 col-xs-4 text-right"><h4>{{ registrationGroup.payment.total | currency:'USD':true }}</h4></div>
                 </div>
                 <div class="row">
+                    <timer [expiration]="expires" [expiryMessage]="expiryMessage" (onTimeElapsed)="cancelReservation()"></timer>
                     <div class="pull-right">
                         <button class="btn btn-warning m-t-10" (click)="cancelReservation()">Cancel</button>
                     </div>
@@ -96,7 +97,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" *ngIf="friends">
         <div class="card event-card">
             <div class="card-header">
                 <h2>Friends</h2>

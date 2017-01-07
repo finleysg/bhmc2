@@ -8,3 +8,6 @@ export { BhmcDataService } from './services/bhmc-data.service';
 export { CalendarService } from './services/calendar.service';
 export { LayoutService } from './services/layout.service';
 export { MemberService } from './services/member.service';
+export { DialogService } from './services/dialog.service';
+export { CanDeactivateGuard, CanComponentDeactivate } from './services/can-deactivate-guard.service';
+export { WindowRef } from './services/window-reference.service';

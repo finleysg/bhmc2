@@ -3,6 +3,7 @@ import { AuthenticationService, User } from '../../../core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { EventDetail, EventType } from "../models/event-detail";
+import { EventRegistrationGroup } from '../models/event-registration-group';
 
 @Component({
     moduleId: module.id,
@@ -32,14 +33,13 @@ export class EventComponent implements OnInit {
         if (this.eventDetail.eventType === EventType.League) {
             this.router.navigate(['reserve'], {relativeTo: this.route.parent});
         } else {
-            // The group created is saved on the service
-            this.eventService.reserve(this.eventDetail.id).then(() => {
-                this.router.navigate(['register'], {relativeTo: this.route.parent});
+            this.eventService.reserve(this.eventDetail.id).then((group: EventRegistrationGroup) => {
+                this.router.navigate(['register', group.id], {relativeTo: this.route.parent});
             });
        }
     }
 
-    viewRegistrations(): void {
-        // TODO
+    registered(): void {
+        this.router.navigate(['registered'], {relativeTo: this.route.parent});
     }
 }

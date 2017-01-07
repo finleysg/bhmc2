@@ -6,6 +6,9 @@ import { LayoutService } from './services/layout.service';
 import { AuthenticationService } from './services/authentication.service';
 import { BhmcDataService } from './services/bhmc-data.service';
 import { MemberService } from './services/member.service';
+import { DialogService } from './services/dialog.service';
+import { CanDeactivateGuard } from './services/can-deactivate-guard.service';
+import { WindowRef } from './services/window-reference.service';
 
 @NgModule({
     imports: [
@@ -17,7 +20,10 @@ import { MemberService } from './services/member.service';
         AuthenticationService,
         MemberService,
         CalendarService,
-        AuthGuard
+        DialogService,
+        WindowRef,
+        AuthGuard,
+        CanDeactivateGuard
     ]
 })
 export class BhmcCoreModule {}

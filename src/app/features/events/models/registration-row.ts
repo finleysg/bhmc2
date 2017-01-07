@@ -18,6 +18,9 @@ export class RegistrationRow {
 
     // derives the hole name from the starting order
     get name(): string {
+        if (!this.holeNumber) {
+            return '';
+        }
         if (this.startingOrder === 0) {
             return `${this.holeNumber}A`;
         } else if (this.startingOrder === 1) {

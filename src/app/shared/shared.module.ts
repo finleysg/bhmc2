@@ -7,6 +7,7 @@ import { SpinnerService } from './spinner/spinner.service';
 import { SpinnerButtonComponent } from './spinner/spinner-button.component';
 import { MarkdownDirective } from './markdown/markdown.directive';
 import { TypeaheadModule, ModalModule, DropdownModule } from 'ng2-bootstrap';
+import { TimerComponent } from './timer/timer.component';
 
 @NgModule({
     imports: [
@@ -21,6 +22,7 @@ import { TypeaheadModule, ModalModule, DropdownModule } from 'ng2-bootstrap';
         SpinnerDirective,
         SpinnerButtonComponent,
         MarkdownDirective,
+        TimerComponent,
     ],
     providers: [
         SpinnerService
@@ -32,6 +34,7 @@ import { TypeaheadModule, ModalModule, DropdownModule } from 'ng2-bootstrap';
         SpinnerDirective,
         SpinnerButtonComponent,
         MarkdownDirective,
+        TimerComponent,
         TypeaheadModule,
         ModalModule,
         DropdownModule,

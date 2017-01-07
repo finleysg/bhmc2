@@ -9,7 +9,7 @@ import { MemberService } from '../../../core';
 
 declare const Spinner: any;
 
-enum ProcessingStatus {
+export enum ProcessingStatus {
     Pending,
     Validating,
     Processing,

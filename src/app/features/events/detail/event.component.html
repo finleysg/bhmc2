@@ -8,7 +8,7 @@
                 <h2>Event Details</h2>
                 <div *ngIf="currentUser.isAuthenticated">
                     <a *ngIf="eventDetail.canRegister(currentUser.member.id)" (click)="register()" class="btn btn-warning event-button">Register Now</a>
-                    <a *ngIf="eventDetail.canViewRegistrations" (click)="viewRegistrations()" class="btn btn-info event-button m-r-10">Participants</a>
+                    <a *ngIf="eventDetail.canViewRegistrations" (click)="registered()" class="btn btn-info event-button m-r-10">Registered</a>
                     <a *ngIf="eventDetail.teeTimes" [href]="eventDetail.teeTimes.url" target="_blank" class="btn btn-info event-button m-r-10">Tee Times</a>
                     <a *ngIf="eventDetail.results" [href]="eventDetail.results.url" target="_blank" class="btn btn-info event-button m-r-10">Results</a>
                 </div>

@@ -5,11 +5,12 @@ import { RegisterComponent } from './register/register.component';
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
 import { EventsRoutingModule } from './events-routing.module';
-import { CalendarComponent } from './calendar/calendar.component';
 import { EventComponent } from './detail/event.component';
 import { ReserveTableComponent } from './reserve/reserve-table.component';
 import { PaymentTestComponent } from './test/payment-test.component';
 import { PaymentComponent } from './payments/payment.component';
+import { RegisteredComponent } from './register/registered.component';
+import { ReadonlyTableComponent } from './register/readonly-table.component';
 
 @NgModule({
     imports: [
@@ -17,14 +18,15 @@ import { PaymentComponent } from './payments/payment.component';
         SharedModule
     ],
     declarations: [
-        CalendarComponent,
         EventComponent,
         RegisterComponent,
         ReserveComponent,
         ReserveTableComponent,
         TeetimeComponent,
         PaymentComponent,
-        PaymentTestComponent
+        PaymentTestComponent,
+        RegisteredComponent,
+        ReadonlyTableComponent,
     ],
     providers: [
         EventDetailService,

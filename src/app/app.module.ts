@@ -12,6 +12,7 @@ import { LayoutModule } from './layout/layout.module';
 import { AppRoutingModule } from './app-routing.module';
 import { BhmcCoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
+import { CalendarModule } from './features/calendar/calendar.module';
 
 @NgModule({
     imports: [
@@ -27,6 +28,7 @@ import { SharedModule } from './shared/shared.module';
         EventsModule,
         ResultsModule,
         PoliciesModule,
+        CalendarModule,
     ],
     declarations: [
         AppComponent
