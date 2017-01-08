@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PublicMember } from '../../core/models/member';
-import { MemberService } from '../../core/services/member.service';
+import { PublicMember, MemberService } from '../../core';
 import { ToasterService } from 'angular2-toaster';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/forkJoin';
@@ -55,14 +54,14 @@ export class DirectoryComponent implements OnInit {
             this.memberService.removeFriend(member).then(
                 () => {
                     member.isFriend = false;
-                    this.toaster.pop('info', 'Friends List', `${member.name} has been removed from your friends list`);
+                    this.toaster.pop('warning', 'Friends List', `${member.name} has been removed from your friends list`);
                 }
             );
         } else {
             this.memberService.addFriend(member).then(
                 () => {
                     member.isFriend = true;
-                    this.toaster.pop('info', 'Friends List', `${member.name} has been added to your friends list`);
+                    this.toaster.pop('success', 'Friends List', `${member.name} has been added to your friends list`);
                 }
             );
         }

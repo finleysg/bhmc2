@@ -7,10 +7,10 @@
 
 /* Styling for the Slim Loading Progress Bar container */
 .slim-loading-bar {
-    position: relative;
+    position: fixed;
     margin: 0;
     padding: 0;
-    top: 0;
+    top: 70px;
     left: 0;
     right: 0;
     z-index: 99999;
@@ -32,33 +32,4 @@
     -moz-transition: all 0.5s ease-in-out;
     -o-transition: all 0.5s ease-in-out;
     transition: all 0.5s ease-in-out;
-}
-
-#toast-container > .toast {
-    background-image: none !important;
-}
-
-#toast-container > .toast:before {
-    position: relative;
-    font-family: "Material-Design-Iconic-Font";
-    font-size: 24px;
-    line-height: 18px;
-    float: left;
-    margin-left: -1em;
-    color: #FFF;
-    padding-right: 0.5em;
-    margin-right: 0.5em;
-}
-
-#toast-container > .toast-warning:before {
-    content: "\f003";
-}
-#toast-container > .toast-error:before {
-    content: "\f001";
-}
-#toast-container > .toast-info:before {
-    content: "\f005";
-}
-#toast-container > .toast-success:before {
-    content: "\f002";
 }
