@@ -1,21 +1,17 @@
 import { RegistrationRow } from './registration-row';
-import * as moment from 'moment';
 import { EventRegistration } from './event-registration';
 
 export class RegistrationSlot {
 
     id: number;
-    expires: moment.Moment;
     row: RegistrationRow;
     memberId: number;
     memberName: string;
-    // slotNumber: number;
     status: SlotStatus;
     selected: boolean;
 
     static create(parent: RegistrationRow, slot: EventRegistration): RegistrationSlot {
         let newSlot = new RegistrationSlot();
-        newSlot.expires = slot.expires;
         newSlot.id = slot.id;
         newSlot.row = parent;
         newSlot.memberId = slot.memberId;

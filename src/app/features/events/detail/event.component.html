@@ -14,8 +14,8 @@
                 </div>
             </div>
             <div class="card-body card-padding">
-                <p><strong>Event date:</strong>{{ eventDetail.startDate.format('dddd, MMMM Do') }}</p>
-                <p><strong>Start time:</strong>{{ eventDetail.startTime }} {{ eventDetail.startType }}</p>
+                <p><strong>Event date:</strong> {{ eventDetail.startDate.format('dddd, MMMM Do') }}</p>
+                <p><strong>Start time:</strong> {{ eventDetail.startTime }} {{ eventDetail.startType }}</p>
                 <p><strong>Registration open:</strong>
                     {{ eventDetail.signupStart.format('dddd, MMMM Do, h:mm a') }} - {{ eventDetail.signupEnd.format('dddd, MMMM Do, h:mm a') }}
                 </p>

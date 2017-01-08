@@ -1,5 +1,3 @@
-import * as moment from 'moment';
-
 // Registration record as received from the api
 export class EventRegistration {
 
@@ -20,7 +18,6 @@ export class EventRegistration {
     isCartFeePaid: boolean;
     totalFees: number;
     status: string;
-    expires: moment.Moment;
 
     get hasMember(): boolean {
         return this.memberId > 0;
@@ -43,9 +40,7 @@ export class EventRegistration {
         this.isGreensFeePaid = json.is_greens_fee_paid;
         this.isCartFeePaid = json.is_cart_fee_paid;
         this.status = json.status;
-        if (json.expires) {
-            this.expires = moment(json.expires);
-        }
+
         return this;
     }
 

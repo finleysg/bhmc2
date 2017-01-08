@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions, Headers, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Cookie } from 'ng2-cookies';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -16,7 +17,7 @@ export class BhmcDataService {
     private _authUrl: string = 'https://finleysg.pythonanywhere.com/rest-auth/';
     private _apiUrl: string = 'https://finleysg.pythonanywhere.com/api/';
 
-    constructor(private http: Http) {
+    constructor(private http: Http, private loadingBar: SlimLoadingBarService) {
         this._isLocal = window.location.hostname.indexOf('localhost') >= 0;
         if (this._isLocal) {
             this._authUrl = 'http://localhost:8000/rest-auth/';
@@ -53,14 +54,24 @@ export class BhmcDataService {
             }
             options.search = params;
         }
+        this.loadingBar.color = 'blue';
+        this.loadingBar.start();
         return this.http.get(url, options)
-            .map((r: Response) => r.json() || {})
+            .map((r: Response) => {
+                this.loadingBar.color = 'green';
+                this.loadingBar.complete();
+                return r.json() || {};
+            })
             .catch(this.handleError);
     }
 
     private postRequest(url: string, data: any) {
+        this.loadingBar.color = 'blue';
+        this.loadingBar.start();
         return this.http.post(url, JSON.stringify(data), this.createOptions())
             .map((response: any) => {
+                this.loadingBar.color = 'green';
+                this.loadingBar.complete();
                 if (response._body && response._body.length > 0) {
                     return response.json() || {};
                 }
@@ -86,6 +97,9 @@ export class BhmcDataService {
     private handleError(error: Response | any) {
         let errMsg: string;
         let publicMessage: string;
+
+        this.loadingBar.color = 'red';
+        this.loadingBar.complete();
         if (error instanceof Response) {
             // timeout or no response
             if (error.status === 0) {

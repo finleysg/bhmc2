@@ -2,6 +2,7 @@ import { EventRegistration } from './event-registration';
 import { EventPayment } from './event-payment';
 import { EventDetail } from './event-detail';
 import { PublicMember } from '../../../core/models/member';
+import * as moment from 'moment';
 
 export class EventRegistrationGroup {
     id: number;
@@ -14,9 +15,9 @@ export class EventRegistrationGroup {
     notes: string;
     cardVerificationToken: string;
     paymentConfirmationCode: string;
-    // paymentAmount: number;
     payment: EventPayment = new EventPayment();
     registrations: EventRegistration[];
+    expires: moment.Moment;
 
     get startingHoleName(): string {
         return `${this.startingHole}${this.startingOrder === 0 ? 'A' : 'B' }`;
@@ -37,7 +38,9 @@ export class EventRegistrationGroup {
         this.cardVerificationToken = json.card_verification_token;
         this.paymentConfirmationCode = json.payment_confirmation_code;
         this.payment.total = json.payment_amount;
-
+        if (json.expires) {
+            this.expires = moment(json.expires);
+        }
         if (json.slots) {
             this.registrations = [];
             json.slots.forEach((s: any) => this.registrations.push(new EventRegistration().fromJson(s)));

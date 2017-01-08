@@ -2,8 +2,13 @@
     <h2>{{ eventDetail.name }} ({{ eventDetail.startDate.format('dddd, MMMM Do') }}): Reserve</h2>
     <ul class="actions">
         <li>
-            <a (click)="refresh()">
-                <i class="zmdi zmdi-refresh-alt clickable"></i>
+            <a class="clickable" (click)="refresh()">
+                <i class="zmdi zmdi-refresh-alt"></i>
+            </a>
+        </li>
+        <li>
+            <a [routerLink]="['/events', eventDetail.id, 'detail']">
+                <i class="zmdi zmdi-view-dashboard"></i>
             </a>
         </li>
     </ul>

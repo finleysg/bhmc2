@@ -47,7 +47,7 @@ export class RegisterComponent implements OnInit, CanDeactivate<CanComponentDeac
             .subscribe((data: { eventDetail: EventDetail, registrationGroup: EventRegistrationGroup }) => {
                 this.eventDetail = data.eventDetail;
                 this.registrationGroup = data.registrationGroup;
-                this.expires = this.registrationGroup.registrations[0].expires;
+                this.expires = this.registrationGroup.expires;
                 this.registrationGroup.updatePayment(this.eventDetail);
             });
         Observable.forkJoin([

@@ -4,15 +4,13 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { ChangeLayoutDirective } from './page-header/change-layout.directive';
 import { ToggleSubmenuDirective } from './sidebar/toggle-submenu.directive';
 import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import { LayoutComponent } from './layout.component';
-import { ToasterModule } from 'angular2-toaster';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
     imports: [
         RouterModule,
-        CommonModule,
-        ToasterModule
+        SharedModule,
     ],
     declarations: [
         LayoutComponent,
