@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { AuthenticationService } from '../../../core/services/authentication.service';
+import { Router } from '@angular/router';
+import { AuthenticationService } from '../../../core';
 import { ToasterService } from 'angular2-toaster';
 
 @Component({
@@ -13,8 +13,7 @@ export class LoginComponent implements OnInit {
     loading = false;
     returnUrl: string;
 
-    constructor(private route: ActivatedRoute,
-                private router: Router,
+    constructor(private router: Router,
                 private toaster: ToasterService,
                 private authenticationService: AuthenticationService) {
     }
@@ -28,13 +27,9 @@ export class LoginComponent implements OnInit {
         this.loading = true;
         this.authenticationService.login(this.model.username, this.model.password)
             .then(() => this.router.navigate([this.returnUrl]))
-            .catch( e => {
+            .catch((err: string) => {
                 this.loading = false;
-                if (e.startsWith('400')) {
-                    this.toaster.pop('error', 'Invalid Credentials', 'The username and/or password is no bueno');
-                } else {
-                    this.toaster.pop('error', 'Server Error', e.toString());
-                }
+                this.toaster.pop('error', 'Invalid Credentials', err);
             });
     }
 }

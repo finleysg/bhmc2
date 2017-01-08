@@ -9,6 +9,8 @@ import { MemberService } from './services/member.service';
 import { DialogService } from './services/dialog.service';
 import { CanDeactivateGuard } from './services/can-deactivate-guard.service';
 import { WindowRef } from './services/window-reference.service';
+import { RuntimeSettings } from './services/runtime-settings.service';
+import { BhmcErrorHandler } from './services/bhmc-error-handler.service';
 
 @NgModule({
     imports: [
@@ -23,7 +25,9 @@ import { WindowRef } from './services/window-reference.service';
         DialogService,
         WindowRef,
         AuthGuard,
-        CanDeactivateGuard
+        CanDeactivateGuard,
+        RuntimeSettings,
+        BhmcErrorHandler,
     ]
 })
 export class BhmcCoreModule {}

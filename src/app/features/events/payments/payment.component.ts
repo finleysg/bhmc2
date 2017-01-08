@@ -5,7 +5,7 @@ import { CreditCard } from '../models/credit-card';
 import { ModalDirective } from 'ng2-bootstrap';
 import { EventRegistrationGroup } from '../models/event-registration-group';
 import { EventDetail } from '../models/event-detail';
-import { MemberService } from '../../../core';
+import { MemberService, RuntimeSettings } from '../../../core';
 
 declare const Spinner: any;
 
@@ -62,6 +62,7 @@ export class PaymentComponent implements OnInit {
     constructor(private eventService: EventDetailService,
                 private memberService: MemberService,
                 private elementRef: ElementRef,
+                private settings: RuntimeSettings,
                 private toaster: ToasterService) {
     }
 
@@ -74,7 +75,7 @@ export class PaymentComponent implements OnInit {
             this.useSavedCard = this.hasSavedCard;
         });
         this.initSpinner();
-        Stripe.setPublishableKey('pk_test_huMlHToXOZcuNXb9eQ7viBvY'); // TODO: how or where?
+        Stripe.setPublishableKey(this.settings.stripePublicKey);
     };
 
     open(): void {

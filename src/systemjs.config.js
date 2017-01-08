@@ -33,7 +33,8 @@
             'moment': 'npm:moment',
             'ng2-bootstrap': 'npm:ng2-bootstrap/bundles/ng2-bootstrap.umd.js',
             'sweetalert2': 'npm:sweetalert2',
-            'ng2-slim-loading-bar': 'npm:ng2-slim-loading-bar/bundles/index.umd.js'
+            'ng2-slim-loading-bar': 'npm:ng2-slim-loading-bar/bundles/index.umd.js',
+            'raven-js': 'npm:raven-js'
         },
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {
@@ -68,6 +69,10 @@
             },
             'sweetalert2': {
                 main: 'dist/sweetalert2.js',
+                defaultExtension: 'js'
+            },
+            'raven-js': {
+                main: 'dist/raven.js',
                 defaultExtension: 'js'
             }
         }

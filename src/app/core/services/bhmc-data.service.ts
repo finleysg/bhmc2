@@ -3,6 +3,8 @@ import { Http, Response, RequestOptions, Headers, URLSearchParams } from '@angul
 import { Observable } from 'rxjs/Observable';
 import { Cookie } from 'ng2-cookies';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
+import { RuntimeSettings } from './runtime-settings.service';
+import { BhmcErrorHandler } from './bhmc-error-handler.service';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -13,16 +15,22 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class BhmcDataService {
 
-    private _isLocal: boolean;
+    // private _isLocal: boolean;
     private _authUrl: string = 'https://finleysg.pythonanywhere.com/rest-auth/';
     private _apiUrl: string = 'https://finleysg.pythonanywhere.com/api/';
 
-    constructor(private http: Http, private loadingBar: SlimLoadingBarService) {
-        this._isLocal = window.location.hostname.indexOf('localhost') >= 0;
-        if (this._isLocal) {
-            this._authUrl = 'http://localhost:8000/rest-auth/';
-            this._apiUrl = 'http://localhost:8000/api/';
-        }
+    constructor(
+        private http: Http,
+        private loadingBar: SlimLoadingBarService,
+        private errorHandler: BhmcErrorHandler,
+        private settings: RuntimeSettings) {
+        // this._isLocal = window.location.hostname.indexOf('localhost') >= 0;
+        // if (this._isLocal) {
+        //     this._authUrl = 'http://localhost:8000/rest-auth/';
+        //     this._apiUrl = 'http://localhost:8000/api/';
+        // }
+        this._authUrl = settings.authUrl;
+        this._apiUrl = settings.apiUrl;
     }
 
     getAuthRequest(resource: string, data?: any): Observable<any> {
@@ -62,7 +70,7 @@ export class BhmcDataService {
                 this.loadingBar.complete();
                 return r.json() || {};
             })
-            .catch(this.handleError);
+            .catch((err: any) => this.handleError(err));
     }
 
     private postRequest(url: string, data: any) {
@@ -77,7 +85,7 @@ export class BhmcDataService {
                 }
                 return {}; // empty response
             })
-            .catch(this.handleError);
+            .catch((err: any) => this.handleError(err));
     }
 
     private createOptions(): RequestOptions {
@@ -95,28 +103,32 @@ export class BhmcDataService {
     }
 
     private handleError(error: Response | any) {
-        let errMsg: string;
-        let publicMessage: string;
-
         this.loadingBar.color = 'red';
         this.loadingBar.complete();
+
+        let message: string;
         if (error instanceof Response) {
-            // timeout or no response
+            this.errorHandler.logResponse(error);
             if (error.status === 0) {
-                errMsg = `Could not reach the bhmc server because your internet connection 
-                          was lost, the connection timed out, or the server is not responding.`;
-                publicMessage = errMsg;
+                message = `Could not reach the bhmc server because your internet connection 
+                           was lost, the connection timed out, or the server is not responding.`;
             } else {
-                const body = error.json() || '';
-                const err = body.detail || JSON.stringify(body);
-                errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-                publicMessage = err;
+                const body = error.json() || {};
+                if (body.non_field_errors) {
+                    // django-rest-auth
+                    message = body.non_field_errors[0];
+                } else if (body.detail) {
+                    // django-rest-framework
+                    message = body.detail;
+                } else {
+                    message = JSON.stringify(body);
+                }
             }
         } else {
-            errMsg = error.message ? error.message : error.toString();
-            publicMessage = errMsg;
+            this.errorHandler.logError(error);
+            message = error.message ? error.message : error.toString();
         }
-        console.error(errMsg);
-        return Observable.throw(publicMessage);
+
+        return Observable.throw(message);
     }
 }

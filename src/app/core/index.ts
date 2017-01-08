@@ -11,3 +11,5 @@ export { MemberService } from './services/member.service';
 export { DialogService } from './services/dialog.service';
 export { CanDeactivateGuard, CanComponentDeactivate } from './services/can-deactivate-guard.service';
 export { WindowRef } from './services/window-reference.service';
+export { RuntimeSettings } from './services/runtime-settings.service';
+export { BhmcErrorHandler } from './services/bhmc-error-handler.service';

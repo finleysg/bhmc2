@@ -66,9 +66,7 @@ export class AuthenticationService {
         return this.dataService.postAuthRequest('logout', {})
             .toPromise()
             .then(() => this.resetUser())
-            .catch((err: Error) => {
-                console.error('Error in logout call - probably stale token');
-                console.error(err.toString());
+            .catch(() => {
                 this.resetUser();
             });
     }
@@ -82,8 +80,7 @@ export class AuthenticationService {
             .map((data: any) => {
                 return new User().fromJson(data);
             })
-            .catch((err: Error) => {
-                console.error(err.toString());
+            .catch(() => {
                 localStorage.removeItem('bhmc_token');
                 return Observable.of(new User());
             });
