@@ -15,4 +15,12 @@ export class DialogService {
             showCancelButton: true
         });
     };
+
+    info(title: string, message: string) {
+        return swal({
+            title: title,
+            text: message,
+            type: 'info'
+        });
+    }
 }

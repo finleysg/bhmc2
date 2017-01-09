@@ -26,6 +26,7 @@ export class TimerComponent implements OnInit {
     }
 
     update() {
+        // TODO: stop timer turn red at 0:00
         if (!this.cancel) {
             let remaining = this.expiration.diff(moment(), 'seconds');
             if (remaining === 0) {

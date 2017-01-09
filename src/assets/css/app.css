@@ -10551,7 +10551,7 @@ html:not(.ie9) .select.fg-line:before {
   background-color: #ea1c0d;
 }
 #profile-main {
-  min-height: 560px;
+  min-height: 640px;
   position: relative;
 }
 #profile-main .pm-overview {

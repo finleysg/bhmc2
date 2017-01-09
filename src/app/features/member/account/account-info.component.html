@@ -27,7 +27,7 @@
             </dl>
             <dl class="dl-horizontal">
                 <dt>Birthday</dt>
-                <dd>{{ user.member.birthDate | date : "MM/dd/yyyy" }}</dd>
+                <dd>{{ birthdayDisplay }}</dd>
             </dl>
             <dl class="dl-horizontal">
                 <dt>Location</dt>
@@ -35,39 +35,39 @@
             </dl>
         </div>
 
-        <form role="form" name="infoForm" #infoForm novalidate class="pmbb-edit" *ngIf="editInfo">
-            <dl class="dl-horizontal">
+        <form role="form" #info="ngForm"  novalidate class="pmbb-edit" *ngIf="editInfo">
+            <dl class="dl-horizontal" [class.has-error]="firstName.touched && !firstName.valid">
                 <dt class="p-t-10">First Name</dt>
                 <dd>
-                    <input [(ngModel)]="user.member.firstName" name="firstName" type="text" class="form-control" placeholder="First Name" required>
+                    <input [(ngModel)]="user.firstName" name="firstName" #firstName="ngModel" type="text" class="form-control" placeholder="First Name" required>
                 </dd>
             </dl>
-            <dl class="dl-horizontal">
+            <dl class="dl-horizontal" [class.has-error]="lastName.touched && !lastName.valid">
                 <dt class="p-t-10">Last Name</dt>
                 <dd>
-                    <input [(ngModel)]="user.member.lastName" name="lastName" type="text" class="form-control" placeholder="Last Name" required>
+                    <input [(ngModel)]="user.lastName" name="lastName" #lastName="ngModel" type="text" class="form-control" placeholder="Last Name" required>
                 </dd>
             </dl>
             <dl class="dl-horizontal">
                 <dt class="p-t-10">Birthday</dt>
                 <dd>
                     <div class="dtp-container dropdown">
-                        <input [(ngModel)]="user.member.birthDate" name="birthDate" type='date' class="form-control">
+                        <input [(ngModel)]="birthday" name="birthDate" #birthDate="ngModel" type='date' class="form-control">
                     </div>
                 </dd>
             </dl>
             <dl class="dl-horizontal">
-                <dt class="p-t-10">City</dt>
+                <dt class="p-t-10">Location</dt>
                 <dd>
                     <div class="fg-line">
-                        <input [(ngModel)]="user.member.location" type="text" name="city" class="form-control" placeholder="Location">
+                        <input [(ngModel)]="user.member.location" type="text" name="location" #location="ngModel" class="form-control" placeholder="Location">
                     </div>
                 </dd>
             </dl>
 
             <div class="m-t-30">
-                <button class="btn btn-primary btn-sm" type="submit" (click)="updatePersonalInfo('info', infoForm)">Save</button>
-                <button class="btn btn-link btn-sm" (click)="editInfo = false" >Cancel</button>
+                <button type="button" class="btn btn-primary btn-sm" [disabled]="!info.valid" (click)="updatePersonalInfo()">Save</button>
+                <button type="reset" class="btn btn-link btn-sm" (click)="canceled()" >Cancel</button>
             </div>
         </form>
     </div>
@@ -95,27 +95,27 @@
             </dl>
         </div>
 
-        <form role="form" name="contactForm" #contactForm novalidate class="pmbb-edit" *ngIf="editContact">
+        <form role="form" #contact="ngForm" novalidate class="pmbb-edit" *ngIf="editContact">
             <dl class="dl-horizontal">
                 <dt class="p-t-10">Phone Number</dt>
                 <dd>
                     <div class="fg-line">
-                        <input [(ngModel)]="user.member.phoneNumber" name="phoneNumber" type="text" class="form-control" placeholder="eg. 612-123-4567">
+                        <input [(ngModel)]="user.member.phoneNumber" name="phoneNumber" #phoneNumber="ngModel" type="text" class="form-control" placeholder="eg. 612-123-4567">
                     </div>
                 </dd>
             </dl>
-            <dl class="dl-horizontal">
+            <dl class="dl-horizontal" [class.has-error]="email.touched && !email.valid">
                 <dt class="p-t-10">Email Address</dt>
                 <dd>
                     <div class="fg-line">
-                        <input [(ngModel)]="user.email" name="email" type="email" class="form-control" placeholder="eg. someone@gmail.com" required>
+                        <input [(ngModel)]="user.email" name="email" #email="ngModel" type="email" class="form-control" placeholder="eg. someone@gmail.com" required>
                     </div>
                 </dd>
             </dl>
 
             <div class="m-t-30">
-                <button class="btn btn-primary btn-sm" type="submit" (click)="updatePersonalInfo('contact', contactForm)">Save</button>
-                <button class="btn btn-link btn-sm" (click)="editContact = false" >Cancel</button>
+                <button type="button" class="btn btn-primary btn-sm" [disabled]="!contact.valid" (click)="updateContactInfo()">Save</button>
+                <button type="reset" class="btn btn-link btn-sm" (click)="canceled()">Cancel</button>
             </div>
         </form>
     </div>

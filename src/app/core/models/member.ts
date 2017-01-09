@@ -1,13 +1,14 @@
+import * as moment from 'moment';
+
 export class PublicMember {
     id: number;
     firstName: string;
     lastName: string;
     email: string;
-    birthDate: string;
+    birthDate: moment.Moment;
     location: string;
     phoneNumber: string;
     isFriend: boolean; // only in client
-    isSelected: boolean; // only in client
     isRegistered: boolean; // only in client
 
     get name(): string {
@@ -19,7 +20,7 @@ export class PublicMember {
         this.firstName = json.first_name;
         this.lastName = json.last_name;
         this.email = json.email;
-        this.birthDate = json.birth_date;
+        this.birthDate = moment(json.birth_date);
         this.location = json.city;
         this.phoneNumber = json.phone_number;
         return this;
@@ -28,7 +29,7 @@ export class PublicMember {
 
 export class PrivateMember {
     id: number;
-    birthDate: string;
+    birthDate: moment.Moment;
     ghin: string;
     handicap: number;
     handicapRevisionDate: string;
@@ -39,7 +40,9 @@ export class PrivateMember {
 
     fromJson(json: any): PrivateMember {
         this.id = json.id;
-        this.birthDate = json.birth_date;
+        this.birthDate = moment(json.birth_date);
+        this.location = json.city;
+        this.phoneNumber = json.phone_number;
         this.ghin = json.ghin;
         this.handicap = json.handicap;
         this.handicapRevisionDate = json.handicap_revision_date;
@@ -47,14 +50,4 @@ export class PrivateMember {
         this.duesPaid = json.dues_paid;
         return this;
     }
-    //
-    // toJson(): any {
-    //     const json = {
-    //         'id': this.id.toString(),
-    //         'birth_date': this.birthDate.toString(),
-    //         'stripe_customer_id': this.stripeCustomerId,
-    //         'dues_paid': this.duesPaid
-    //     };
-    //     return json;
-    // }
 }

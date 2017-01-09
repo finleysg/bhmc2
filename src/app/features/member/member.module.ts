@@ -9,6 +9,7 @@ import { ResetPasswordConfirmComponent } from './authentication/reset-password-c
 import { AccountComponent } from './account/account.component';
 import { AccountInfoComponent } from './account/account-info.component';
 import { AccountSettingsComponent } from './account/account-settings.component';
+import { ChangePasswordComponent } from './account/change-password.component';
 
 @NgModule({
     imports: [
@@ -23,7 +24,8 @@ import { AccountSettingsComponent } from './account/account-settings.component';
         ResetPasswordConfirmComponent,
         AccountComponent,
         AccountInfoComponent,
-        AccountSettingsComponent
+        AccountSettingsComponent,
+        ChangePasswordComponent
     ]
 })
 export class MemberModule { }

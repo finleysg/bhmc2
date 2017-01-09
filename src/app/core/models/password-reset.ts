@@ -8,6 +8,10 @@ export class PasswordReset {
         return this.uid && this.token && this.password1 && this.password1 === this.password2;
     }
 
+    get matching(): boolean {
+        return this.password1 && this.password1 === this.password2;
+    }
+
     toJson(): any {
         return {
             'uid': this.uid,

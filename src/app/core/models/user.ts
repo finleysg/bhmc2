@@ -1,5 +1,11 @@
 import { PrivateMember } from './member';
 
+export enum AccountUpdateType {
+    PersonalInfo,
+    ContactInfo,
+    Username
+}
+
 export class User {
 
     id: number;
@@ -44,5 +50,33 @@ export class User {
             this.member = new PrivateMember().fromJson(json.member);
         }
         return this;
+    }
+
+    partialUpdateJson(updateType: AccountUpdateType): any {
+        switch (updateType) {
+            case AccountUpdateType.PersonalInfo:
+                return {
+                    'first_name': this.firstName,
+                    'last_name': this.lastName,
+                    'member': {
+                        'birth_date': this.member.birthDate ? this.member.birthDate.format('YYYY-MM-DD') : null,
+                        'city': this.member.location
+                    }
+                };
+            case AccountUpdateType.ContactInfo:
+                return {
+                    'email': this.email,
+                    'member': {
+                        'phone_number': this.member.phoneNumber
+                    }
+                };
+            case AccountUpdateType.Username:
+                return {
+                    'username': this.username,
+                    'member': { }
+                };
+            default:
+                return {}
+        }
     }
 }

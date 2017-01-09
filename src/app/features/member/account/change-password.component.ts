@@ -5,13 +5,12 @@ import { ToasterService } from 'angular2-toaster';
 
 @Component({
     moduleId: module.id,
-    templateUrl: 'reset-password-confirm.component.html'
+    templateUrl: 'change-password.component.html'
 })
 
-export class ResetPasswordConfirmComponent implements OnInit {
+export class ChangePasswordComponent implements OnInit {
 
     model: PasswordReset;
-    invalid: boolean;
     loading: boolean;
 
     constructor(
@@ -22,21 +21,19 @@ export class ResetPasswordConfirmComponent implements OnInit {
 
     ngOnInit() {
         this.model = new PasswordReset();
-        this.model.uid = this.route.snapshot.params['uid'];
-        this.model.token = this.route.snapshot.params['token'];
     }
 
     updatePassword() {
-        this.invalid = !this.model.isValid;
-        if (!this.invalid) {
+        if (this.model.matching) {
             this.loading = true;
-            this.authService.confirmReset(this.model)
+            this.authService.changePassword(this.model.password1, this.model.password2)
                 .then(() => {
-                    this.router.navigate(['reset-password-complete'], {relativeTo: this.route.parent});
+                    this.toaster.pop('success', 'Password Change Complete', 'Your password has been changed');
+                    this.router.navigate(['settings'], {relativeTo: this.route.parent});
                 })
                 .catch((err: string) => {
                     this.loading = false;
-                    this.toaster.pop('error', 'Password Reset Error', err);
+                    this.toaster.pop('error', 'Password Change Error', err);
                 });
         }
     }

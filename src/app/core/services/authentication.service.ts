@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { User } from '../models/user';
 import { Cookie } from 'ng2-cookies';
+import * as moment from 'moment';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
@@ -31,6 +32,9 @@ export class AuthenticationService {
             } else {
                 this._rememberUser = true;
                 this._currentUser = Object.assign(new User(), JSON.parse(storedUser)); // TODO: IE polyfill
+                if (this._currentUser.member && this._currentUser.member.birthDate) {
+                    this._currentUser.member.birthDate = moment(this._currentUser.member.birthDate);
+                }
             }
         }
         this.currentUserSource = new BehaviorSubject(this._currentUser);
@@ -91,8 +95,28 @@ export class AuthenticationService {
         return this.dataService.postAuthRequest('password/reset/confirm', reset.toJson()).toPromise();
     }
 
-    updateAccount(data: User): Promise<void> {
-        return this.dataService.patchAuthRequest('user', data).toPromise();
+    updateAccount(partial: any): Promise<void> {
+        return this.dataService.patchAuthRequest('user', partial)
+            .map(data => {
+                let user = new User().fromJson(data);
+                this.saveToStorage('bhmc_user', JSON.stringify(user));
+                this._currentUser = user;
+                this.currentUserSource.next(this._currentUser);
+                return;
+            })
+            .toPromise();
+    }
+
+    refreshUser(): void {
+        this.getUser()
+            .map(user => {
+                this.saveToStorage('bhmc_user', JSON.stringify(user));
+                this._currentUser = user;
+                this.currentUserSource.next(this._currentUser);
+                return;
+            })
+            .toPromise()
+            .then(() => {return;}); // no-op - force the call)
     }
 
     getUser(): Observable<User> {

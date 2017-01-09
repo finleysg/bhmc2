@@ -6,6 +6,7 @@ import {
     ActivatedRouteSnapshot,
     RouterStateSnapshot
 }                           from '@angular/router';
+import { BhmcErrorHandler } from './bhmc-error-handler.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -14,6 +15,7 @@ export class AuthGuard implements CanActivate {
 
     constructor(
         private authService: AuthenticationService,
+        private errorHandler: BhmcErrorHandler,
         private router: Router) {
         this.authService.currentUser$.subscribe(user => {
             this.currentUser = user;
@@ -28,6 +30,7 @@ export class AuthGuard implements CanActivate {
         if (this.currentUser.isAuthenticated) { return true; }
 
         // Navigate to the login page
+        this.errorHandler.logWarning(`Unauthorized user tried to reach ${state.url}`);
         this.router.navigate(['/member/login']);
         return false;
     }

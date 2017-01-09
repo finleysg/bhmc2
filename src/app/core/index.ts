@@ -1,7 +1,7 @@
 export { Calendar } from './models/calendar';
 export { CalendarEvent } from './models/calendar-event';
 export { PublicMember, PrivateMember } from './models/member';
-export { User } from './models/user';
+export { User, AccountUpdateType } from './models/user';
 export { PasswordReset } from './models/password-reset';
 export { SavedCard } from './models/saved-card';
 export { AuthGuard } from './services/auth-guard.service';

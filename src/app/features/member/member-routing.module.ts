@@ -9,6 +9,7 @@ import { AuthGuard, StripeDetailsResolver } from '../../core';
 import { AccountComponent } from './account/account.component';
 import { AccountSettingsComponent } from './account/account-settings.component';
 import { AccountInfoComponent } from './account/account-info.component';
+import { ChangePasswordComponent } from './account/change-password.component';
 
 const routes: Routes = [
     {
@@ -21,6 +22,7 @@ const routes: Routes = [
             { path: 'account', canActivate: [AuthGuard], component: AccountComponent, children: [
                 { path: 'info', component: AccountInfoComponent },
                 { path: 'settings', resolve: { savedCard: StripeDetailsResolver }, component: AccountSettingsComponent },
+                { path: 'change-password', component: ChangePasswordComponent },
             ]},
         ]
     }

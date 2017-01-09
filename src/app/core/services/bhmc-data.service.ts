@@ -73,21 +73,6 @@ export class BhmcDataService {
             .catch((err: any) => this.handleError(err));
     }
 
-    // private postRequest(url: string, data: any) {
-    //     this.loadingBar.color = 'blue';
-    //     this.loadingBar.start();
-    //     return this.http.post(url, JSON.stringify(data), this.createOptions())
-    //         .map((response: any) => {
-    //             this.loadingBar.color = 'green';
-    //             this.loadingBar.complete();
-    //             if (response._body && response._body.length > 0) {
-    //                 return response.json() || {};
-    //             }
-    //             return {}; // empty response
-    //         })
-    //         .catch((err: any) => this.handleError(err));
-    // }
-
     private request(method: RequestMethod, url: string, data: any) {
         this.loadingBar.color = 'blue';
         this.loadingBar.start();
@@ -135,6 +120,9 @@ export class BhmcDataService {
                 if (body.non_field_errors) {
                     // django-rest-auth
                     message = body.non_field_errors[0];
+                } else if (body.username) {
+                    // django-rest-auth
+                    message = body.username[0];
                 } else if (body.detail) {
                     // django-rest-framework
                     message = body.detail;
