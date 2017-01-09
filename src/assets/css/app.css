@@ -10304,22 +10304,18 @@ html:not(.ie9) .select.fg-line:before {
   line-height: 30px;
 }
 .lcb-navigation a span {
-  width: 0;
   overflow: hidden;
   display: inline-block;
   line-height: 29px;
   margin-left: -3px;
 }
-.lcb-navigation a:hover span {
-  width: 100%;
-}
-.lcb-navigation a[data-ma-block="#l-register"]:hover {
+.lcb-navigation a[data-ma-block="#l-register"] {
   width: 95px;
 }
-.lcb-navigation a[data-ma-block="#l-forget-password"]:hover {
+.lcb-navigation a[data-ma-block="#l-forget-password"] {
   width: 147px;
 }
-.lcb-navigation a[data-ma-block="#l-login"]:hover {
+.lcb-navigation a[data-ma-block="#l-login"] {
   width: 85px;
 }
 /*-----------------------------

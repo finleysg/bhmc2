@@ -6,14 +6,12 @@
                     <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
                     <input type="text" class="form-control" name="username" [(ngModel)]="model.username"
                            #username="ngModel" placeholder="Username or Email" required>
-                    <div *ngIf="f.submitted && !username.valid" class="help-block">Username or email is required</div>
                 </div>
 
                 <div class="input-group m-b-20" [class.has-error]="f.submitted && !password.valid">
                     <span class="input-group-addon"><i class="zmdi zmdi-help-outline"></i></span>
                     <input type="password" class="form-control" name="password" [(ngModel)]="model.password"
                            #password="ngModel" placeholder="Password" required>
-                    <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
                 </div>
 
                 <div class="checkbox">
@@ -31,9 +29,9 @@
             </div>
         </form>
         <div class="lcb-navigation">
-            <a [routerLink]="['/register']" data-ma-block="#l-register"><i class="zmdi zmdi-plus"></i>
+            <a [routerLink]="['/member/register']" data-ma-block="#l-register"><i class="zmdi zmdi-plus"></i>
                 <span>Register</span></a>
-            <a [routerLink]="['/reset-password']" data-ma-block="#l-forget-password"><i>?</i>
+            <a [routerLink]="['/member/reset-password']" data-ma-block="#l-forget-password"><i>?</i>
                 <span>Forgot Password</span></a>
         </div>
     </div>

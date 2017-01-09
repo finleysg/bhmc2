@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BhmcDataService } from './bhmc-data.service';
+import { PasswordReset } from '../models/password-reset';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { User } from '../models/user';
@@ -15,6 +16,7 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class AuthenticationService {
 
+    private _rememberUser: boolean;
     private currentUserSource: BehaviorSubject<User>;
     public currentUser$: Observable<User>;
     private _currentUser: User;
@@ -22,11 +24,12 @@ export class AuthenticationService {
 
     constructor(private dataService: BhmcDataService) {
         if (!this._currentUser) {
-            let storedUser = localStorage.getItem('bhmc_user');
+            let storedUser = this.getFromStorage('bhmc_user', true);
             if (!storedUser) {
                 this._currentUser = new User();
-                localStorage.setItem('bhmc_user', JSON.stringify(this._currentUser));
+                this.saveToStorage('bhmc_user', JSON.stringify(this._currentUser)); // session storage
             } else {
+                this._rememberUser = true;
                 this._currentUser = Object.assign(new User(), JSON.parse(storedUser)); // TODO: IE polyfill
             }
         }
@@ -38,7 +41,9 @@ export class AuthenticationService {
         return this._currentUser;
     }
 
-    login(username: string, password: string): Promise<void> {
+    login(username: string, password: string, remember: boolean): Promise<void> {
+
+        this._rememberUser = remember;
 
         let email = '';
         if (username.indexOf('@') > 0) {
@@ -49,12 +54,12 @@ export class AuthenticationService {
         return this.dataService.postAuthRequest('login', {username: username, email: email, password: password})
             .flatMap((data: any) => {
                 if (data && data.key) {
-                    localStorage.setItem('bhmc_token', data.key);
+                    this.saveToStorage('bhmc_token', data.key);
                     return this.getUser();
                 }
             })
             .map(user => {
-                localStorage.setItem('bhmc_user', JSON.stringify(user));
+                this.saveToStorage('bhmc_user', JSON.stringify(user));
                 this._currentUser = user;
                 this.currentUserSource.next(this._currentUser);
                 return;
@@ -71,8 +76,23 @@ export class AuthenticationService {
             });
     }
 
-    resetPassword(email: string) {
-        return this.dataService.postAuthRequest('password/reset', {email: email});
+    resetPassword(email: string): Promise<void> {
+        return this.dataService.postAuthRequest('password/reset', {email: email}).toPromise();
+    }
+
+    changePassword(password1: string, password2: string): Promise<void> {
+        return this.dataService.postAuthRequest('password/change', {
+            'new_password1': password1,
+            'new_password2': password2
+        }).toPromise();
+    }
+
+    confirmReset(reset: PasswordReset): Promise<void> {
+        return this.dataService.postAuthRequest('password/reset/confirm', reset.toJson()).toPromise();
+    }
+
+    updateAccount(data: User): Promise<void> {
+        return this.dataService.patchAuthRequest('user', data).toPromise();
     }
 
     getUser(): Observable<User> {
@@ -81,16 +101,38 @@ export class AuthenticationService {
                 return new User().fromJson(data);
             })
             .catch(() => {
-                localStorage.removeItem('bhmc_token');
+                this.removeFromStorage('bhmc_token');
                 return Observable.of(new User());
             });
     }
 
     private resetUser(): void {
         Cookie.delete('crsftoken');
-        localStorage.removeItem('bhmc_token');
+        this.removeFromStorage('bhmc_token');
         this._currentUser = new User();
         this.currentUserSource.next(this._currentUser);
-        localStorage.setItem('bhmc_user', JSON.stringify(this._currentUser));
+        this.saveToStorage('bhmc_user', JSON.stringify(this._currentUser));
+    }
+
+    private getFromStorage(key: string, override: boolean = false): string {
+        if (this._rememberUser || override) {
+            return localStorage.getItem(key);
+        }
+        return sessionStorage.getItem(key);
+    }
+
+    private saveToStorage(key: string, data: string, override: boolean = false): void {
+        if (this._rememberUser || override) {
+            localStorage.setItem(key, data);
+        } else {
+            sessionStorage.setItem(key, data);
+        }
+    }
+
+    private removeFromStorage(key: string, override: boolean = false): void {
+        if (this._rememberUser || override) {
+            localStorage.removeItem(key);
+        }
+        sessionStorage.removeItem(key);
     }
 }

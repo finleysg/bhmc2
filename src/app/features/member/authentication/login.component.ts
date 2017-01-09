@@ -5,11 +5,15 @@ import { ToasterService } from 'angular2-toaster';
 
 @Component({
     moduleId: module.id,
-    templateUrl: 'login.component.html'
+    templateUrl: 'login.component.html',
+    styleUrls: ['login.component.css']
 })
-
 export class LoginComponent implements OnInit {
-    model: any = {};
+    model: any = {
+        username: '',
+        password: '',
+        remember: true
+    };
     loading = false;
     returnUrl: string;
 
@@ -25,7 +29,7 @@ export class LoginComponent implements OnInit {
 
     login() {
         this.loading = true;
-        this.authenticationService.login(this.model.username, this.model.password)
+        this.authenticationService.login(this.model.username, this.model.password, this.model.remember)
             .then(() => this.router.navigate([this.returnUrl]))
             .catch((err: string) => {
                 this.loading = false;

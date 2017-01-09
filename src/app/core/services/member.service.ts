@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
+import { SavedCard } from '../models/saved-card';
 
 @Injectable()
 export class MemberService {
@@ -39,12 +40,9 @@ export class MemberService {
         return this.dataService.postApiRequest(`friends/remove/${member.id}`, {}).toPromise();
     }
 
-    stripeDetails(): Promise<any> {
+    stripeSavedCard(): Promise<SavedCard> {
         return this.dataService.getApiRequest('stripe/details').map(data => {
-            return {
-                stripeCustomerId: data.stripe_id,
-                savedCard: data.card
-            };
+            return new SavedCard().fromJson(data);
         })
         .toPromise();
     }

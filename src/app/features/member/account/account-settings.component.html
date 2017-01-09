@@ -1,0 +1,77 @@
+<div class="pmb-block">
+    <div class="pmbb-header">
+        <h2><i class="zmdi zmdi-comment-outline m-r-5"></i> Account Settings</h2>
+    </div>
+    <div class="pmbb-body p-l-30">
+        <div class="pmbb-view">
+            TODO: info about privacy
+        </div>
+    </div>
+</div>
+<div class="pmb-block">
+    <div class="pmbb-header">
+        <h2><i class="zmdi zmdi-account m-r-5"></i> Identity</h2>
+        <ul class="actions">
+            <li>
+                <a class="clickable" (click)="editIdentity = true" title="Update your username or password" *ngIf="!editIdentity">
+                    <i class="zmdi zmdi-edit"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="pmbb-body p-l-30">
+        <div class="pmbb-view" *ngIf="!editIdentity">
+            <dl class="dl-horizontal">
+                <dt>User Name</dt>
+                <dd>{{ user.username }}</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>Password</dt>
+                <dd>************</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>GHIN</dt>
+                <dd>{{ user.member.ghin }}</dd>
+            </dl>
+        </div>
+
+        <form role="form" name="identityForm" novalidate class="pmbb-edit" *ngIf="editIdentity">
+            <dl class="dl-horizontal">
+                <dt class="p-t-10">First Name</dt>
+                <dd>
+                    <input [(ngModel)]="user.username" name="username" type="text" class="form-control" placeholder="User Name" required>
+                </dd>
+            </dl>
+
+            <div class="m-t-30">
+                <button class="btn btn-primary btn-sm" type="submit" (click)="updateIdentity('identity', identityForm)">Save</button>
+                <button class="btn btn-info btn-sm" (click)="changePassword()">Change Password</button>
+                <button class="btn btn-link btn-sm" (click)="editIdentity = false">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="pmb-block">
+    <div class="pmbb-header">
+        <h2><i class="zmdi zmdi-phone m-r-5"></i> Payment Information</h2>
+        <ul class="actions">
+            <li>
+                <a class="clickable" (click)="openPaymentReport()" title="View your payment history">
+                    <i class="zmdi zmdi-money"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="pmbb-body p-l-30">
+        <div class="pmbb-view">
+            <dl class="dl-horizontal">
+                <dt>Credit Card Saved</dt>
+                <dd>{{ savedCard.description }}</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>Card Expires</dt>
+                <dd>{{ savedCard.expires }}</dd>
+            </dl>
+        </div>
+    </div>
+</div>

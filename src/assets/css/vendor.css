@@ -33,3 +33,9 @@
     -o-transition: all 0.5s ease-in-out;
     transition: all 0.5s ease-in-out;
 }
+
+.has-error .input-group-addon {
+    color: #f6675d;
+    border-color: transparent;
+    background-color: transparent;
+}

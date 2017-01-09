@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, RequestOptions, Headers, URLSearchParams } from '@angular/http';
+import { Http, Response, RequestOptions, Headers, URLSearchParams, RequestMethod } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Cookie } from 'ng2-cookies';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
@@ -15,7 +15,6 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class BhmcDataService {
 
-    // private _isLocal: boolean;
     private _authUrl: string = 'https://finleysg.pythonanywhere.com/rest-auth/';
     private _apiUrl: string = 'https://finleysg.pythonanywhere.com/api/';
 
@@ -24,11 +23,7 @@ export class BhmcDataService {
         private loadingBar: SlimLoadingBarService,
         private errorHandler: BhmcErrorHandler,
         private settings: RuntimeSettings) {
-        // this._isLocal = window.location.hostname.indexOf('localhost') >= 0;
-        // if (this._isLocal) {
-        //     this._authUrl = 'http://localhost:8000/rest-auth/';
-        //     this._apiUrl = 'http://localhost:8000/api/';
-        // }
+
         this._authUrl = settings.authUrl;
         this._apiUrl = settings.apiUrl;
     }
@@ -45,12 +40,17 @@ export class BhmcDataService {
 
     postAuthRequest(resource: string, data: any): Observable<any> {
         const url: string = this._authUrl + resource + '/';
-        return this.postRequest(url, data);
+        return this.request(RequestMethod.Post, url, data);
     }
 
     postApiRequest(resource: string, data: any): Observable<any> {
         const url: string = this._apiUrl + resource + '/';
-        return this.postRequest(url, data);
+        return this.request(RequestMethod.Post, url, data);
+    }
+
+    patchAuthRequest(resource: string, data: any): Observable<any> {
+        const url: string = this._authUrl + resource + '/';
+        return this.request(RequestMethod.Patch, url, data);
     }
 
     private getRequest(url: string, data?: any): Observable<any> {
@@ -73,10 +73,25 @@ export class BhmcDataService {
             .catch((err: any) => this.handleError(err));
     }
 
-    private postRequest(url: string, data: any) {
+    // private postRequest(url: string, data: any) {
+    //     this.loadingBar.color = 'blue';
+    //     this.loadingBar.start();
+    //     return this.http.post(url, JSON.stringify(data), this.createOptions())
+    //         .map((response: any) => {
+    //             this.loadingBar.color = 'green';
+    //             this.loadingBar.complete();
+    //             if (response._body && response._body.length > 0) {
+    //                 return response.json() || {};
+    //             }
+    //             return {}; // empty response
+    //         })
+    //         .catch((err: any) => this.handleError(err));
+    // }
+
+    private request(method: RequestMethod, url: string, data: any) {
         this.loadingBar.color = 'blue';
         this.loadingBar.start();
-        return this.http.post(url, JSON.stringify(data), this.createOptions())
+        return this.http.patch(url, JSON.stringify(data), this.createOptions(method))
             .map((response: any) => {
                 this.loadingBar.color = 'green';
                 this.loadingBar.complete();
@@ -88,18 +103,21 @@ export class BhmcDataService {
             .catch((err: any) => this.handleError(err));
     }
 
-    private createOptions(): RequestOptions {
-        const headers = new Headers({'Content-Type': 'application/json'});
-        const token = localStorage.getItem('bhmc_token');
+    private createOptions(method: RequestMethod = RequestMethod.Get): RequestOptions {
+        let headers = new Headers({'Content-Type': 'application/json'});
+        let token = localStorage.getItem('bhmc_token');
+        if (!token) {
+            token = sessionStorage.getItem('bhmc_token');
+        }
         if (token) {
             headers.append('Authorization', 'Token ' + token);
         }
         // This cookie is added to responses by Django
-        const csrf = Cookie.get('csrftoken');
+        let csrf = Cookie.get('csrftoken');
         if (csrf) {
             headers.append('X-CSRFToken', csrf);
         }
-        return new RequestOptions({headers: headers});
+        return new RequestOptions({method: method, headers: headers});
     }
 
     private handleError(error: Response | any) {

@@ -5,7 +5,7 @@ import { CreditCard } from '../models/credit-card';
 import { ModalDirective } from 'ng2-bootstrap';
 import { EventRegistrationGroup } from '../models/event-registration-group';
 import { EventDetail } from '../models/event-detail';
-import { MemberService, RuntimeSettings } from '../../../core';
+import { MemberService, RuntimeSettings, SavedCard } from '../../../core';
 
 declare const Spinner: any;
 
@@ -69,9 +69,10 @@ export class PaymentComponent implements OnInit {
     ngOnInit() {
         this.messages = [];
         this.card = new CreditCard();
-        this.memberService.stripeDetails().then((details: any) => {
-            this.savedCard = details.savedCard;
-            this.hasSavedCard = details.savedCard.length > 0;
+        this.memberService.stripeSavedCard().then((savedCard: SavedCard) => {
+            // TODO: refactor to use object
+            this.savedCard = savedCard.description;
+            this.hasSavedCard = savedCard.description.length > 0;
             this.useSavedCard = this.hasSavedCard;
         });
         this.initSpinner();

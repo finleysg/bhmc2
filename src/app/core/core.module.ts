@@ -11,6 +11,7 @@ import { CanDeactivateGuard } from './services/can-deactivate-guard.service';
 import { WindowRef } from './services/window-reference.service';
 import { RuntimeSettings } from './services/runtime-settings.service';
 import { BhmcErrorHandler } from './services/bhmc-error-handler.service';
+import { StripeDetailsResolver } from './services/stripe-details-resolver.service';
 
 @NgModule({
     imports: [
@@ -28,6 +29,7 @@ import { BhmcErrorHandler } from './services/bhmc-error-handler.service';
         CanDeactivateGuard,
         RuntimeSettings,
         BhmcErrorHandler,
+        StripeDetailsResolver,
     ]
 })
 export class BhmcCoreModule {}

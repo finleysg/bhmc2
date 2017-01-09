@@ -1,0 +1,122 @@
+<div class="pmb-block">
+    <div class="pmbb-header">
+        <h2><i class="zmdi zmdi-comment-outline m-r-5"></i> My Public Information</h2>
+    </div>
+    <div class="pmbb-body p-l-30">
+        <div class="pmbb-view">
+            TODO: info about current and future plans for account info
+        </div>
+    </div>
+</div>
+<div class="pmb-block">
+    <div class="pmbb-header">
+        <h2><i class="zmdi zmdi-account m-r-5"></i> Basic Information</h2>
+        <ul class="actions">
+            <li>
+                <a class="clickable" (click)="editInfo = true" title="Update your personal information" *ngIf="!editInfo">
+                    <i class="zmdi zmdi-edit"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="pmbb-body p-l-30">
+        <div class="pmbb-view" *ngIf="!editInfo">
+            <dl class="dl-horizontal">
+                <dt>Full Name</dt>
+                <dd>{{ user.name }}</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>Birthday</dt>
+                <dd>{{ user.member.birthDate | date : "MM/dd/yyyy" }}</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>Location</dt>
+                <dd>{{ user.member.location }}</dd>
+            </dl>
+        </div>
+
+        <form role="form" name="infoForm" #infoForm novalidate class="pmbb-edit" *ngIf="editInfo">
+            <dl class="dl-horizontal">
+                <dt class="p-t-10">First Name</dt>
+                <dd>
+                    <input [(ngModel)]="user.member.firstName" name="firstName" type="text" class="form-control" placeholder="First Name" required>
+                </dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt class="p-t-10">Last Name</dt>
+                <dd>
+                    <input [(ngModel)]="user.member.lastName" name="lastName" type="text" class="form-control" placeholder="Last Name" required>
+                </dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt class="p-t-10">Birthday</dt>
+                <dd>
+                    <div class="dtp-container dropdown">
+                        <input [(ngModel)]="user.member.birthDate" name="birthDate" type='date' class="form-control">
+                    </div>
+                </dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt class="p-t-10">City</dt>
+                <dd>
+                    <div class="fg-line">
+                        <input [(ngModel)]="user.member.location" type="text" name="city" class="form-control" placeholder="Location">
+                    </div>
+                </dd>
+            </dl>
+
+            <div class="m-t-30">
+                <button class="btn btn-primary btn-sm" type="submit" (click)="updatePersonalInfo('info', infoForm)">Save</button>
+                <button class="btn btn-link btn-sm" (click)="editInfo = false" >Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="pmb-block">
+    <div class="pmbb-header">
+        <h2><i class="zmdi zmdi-phone m-r-5"></i> Contact Information</h2>
+        <ul class="actions">
+            <li>
+                <a class="clickable" (click)="editContact = true" title="Update your contact information" *ngIf="!editContact">
+                    <i class="zmdi zmdi-edit"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="pmbb-body p-l-30">
+        <div class="pmbb-view" *ngIf="!editContact">
+            <dl class="dl-horizontal">
+                <dt>Phone Number</dt>
+                <dd>{{ user.member.phoneNumber }}</dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt>Email Address</dt>
+                <dd>{{ user.email }}</dd>
+            </dl>
+        </div>
+
+        <form role="form" name="contactForm" #contactForm novalidate class="pmbb-edit" *ngIf="editContact">
+            <dl class="dl-horizontal">
+                <dt class="p-t-10">Phone Number</dt>
+                <dd>
+                    <div class="fg-line">
+                        <input [(ngModel)]="user.member.phoneNumber" name="phoneNumber" type="text" class="form-control" placeholder="eg. 612-123-4567">
+                    </div>
+                </dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt class="p-t-10">Email Address</dt>
+                <dd>
+                    <div class="fg-line">
+                        <input [(ngModel)]="user.email" name="email" type="email" class="form-control" placeholder="eg. someone@gmail.com" required>
+                    </div>
+                </dd>
+            </dl>
+
+            <div class="m-t-30">
+                <button class="btn btn-primary btn-sm" type="submit" (click)="updatePersonalInfo('contact', contactForm)">Save</button>
+                <button class="btn btn-link btn-sm" (click)="editContact = false" >Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
