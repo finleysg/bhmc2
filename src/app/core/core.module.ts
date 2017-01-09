@@ -12,6 +12,7 @@ import { WindowRef } from './services/window-reference.service';
 import { RuntimeSettings } from './services/runtime-settings.service';
 import { BhmcErrorHandler } from './services/bhmc-error-handler.service';
 import { StripeDetailsResolver } from './services/stripe-details-resolver.service';
+import { AnnouncementService } from './services/announcement.service';
 
 @NgModule({
     imports: [
@@ -30,6 +31,7 @@ import { StripeDetailsResolver } from './services/stripe-details-resolver.servic
         RuntimeSettings,
         BhmcErrorHandler,
         StripeDetailsResolver,
+        AnnouncementService
     ]
 })
 export class BhmcCoreModule {}

@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/mergeAll';
+import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class CalendarService {
@@ -31,9 +31,12 @@ export class CalendarService {
             })
     }
 
-    quickEvents(): Observable<CalendarEvent> {
-        return this.dataService.getApiRequest('quick-events')
-            .mergeAll()
-            .map((event: Observable<any>) => new CalendarEvent().fromJson(event));
+    quickEvents(): Promise<CalendarEvent[]> {
+        return this.dataService.getApiRequest('quick-events').map(events => {
+            return events.map((e: any) => {
+                return new CalendarEvent().fromJson(e);
+            });
+        })
+        .toPromise();
     }
 }
