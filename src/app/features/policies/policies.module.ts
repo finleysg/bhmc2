@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { PoliciesRoutingModule } from './policies-routing.module';
 import { PoliciesComponent } from './policies.component';
 import { SharedModule } from '../../shared/shared.module';
+import { AboutUsComponent } from './about-us.component';
 
 @NgModule({
     imports: [
@@ -10,7 +11,8 @@ import { SharedModule } from '../../shared/shared.module';
         SharedModule
     ],
     declarations: [
-        PoliciesComponent
+        PoliciesComponent,
+        AboutUsComponent
     ],
     providers: [
         PolicyService

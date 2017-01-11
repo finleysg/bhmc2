@@ -1,73 +1,90 @@
 <aside id="sidebar" [class.toggled]="isOpen" *ngIf="user">
-  <div class="sidebar-inner mCustomScrollbar c-overflow">
-    <div class="profile-menu clickable" *ngIf="user.isAuthenticated">
-      <a toggle-submenu>
-        <div class="profile-pic">
-          <img src="../../../assets/img/logo.png" alt="">
+    <div class="sidebar-inner mCustomScrollbar c-overflow">
+        <div class="profile-menu clickable" *ngIf="user.isAuthenticated">
+            <a toggle-submenu>
+                <div class="profile-pic">
+                    <img src="../../../assets/img/logo.png" alt="">
+                </div>
+                <div class="profile-info">
+                    {{ user.name }}
+                    <i class="zmdi zmdi-caret-down"></i>
+                </div>
+            </a>
+            <ul class="main-menu">
+                <li>
+                    <a [routerLink]="['/member/account']" (click)="close()"><i class="zmdi zmdi-account"></i> My Account</a>
+                </li>
+                <li>
+                    <a (click)="logout()"><i class="zmdi zmdi-time-restore"></i> Logout</a>
+                </li>
+            </ul>
         </div>
-        <div class="profile-info">
-          {{ user.name }}
-          <i class="zmdi zmdi-caret-down"></i>
+        <div class="profile-menu" *ngIf="!user.isAuthenticated">
+            <a>
+                <div class="profile-pic">
+                    <img src="../../../assets/img/logo.png" alt="">
+                </div>
+                <div class="profile-info">
+                    {{ user.name }}
+                </div>
+            </a>
         </div>
-      </a>
-      <ul class="main-menu">
-        <li>
-          <a [routerLink]="['/member/account']" (click)="close()"><i class="zmdi zmdi-account"></i> My Account</a>
-        </li>
-        <li>
-          <a (click)="logout()"><i class="zmdi zmdi-time-restore"></i> Logout</a>
-        </li>
-      </ul>
-    </div>
-    <div class="profile-menu" *ngIf="!user.isAuthenticated">
-      <a>
-        <div class="profile-pic">
-          <img src="../../../assets/img/logo.png" alt="">
-        </div>
-        <div class="profile-info">
-          {{ user.name }}
-        </div>
-      </a>
-    </div>
 
-    <ul class="main-menu">
-      <li [routerLinkActive]="['active']">
-        <a [routerLink]="['/home']" (click)="close()"><i class="zmdi zmdi-home"></i> Home</a>
-      </li>
-      <li [routerLinkActive]="['active']">
-        <a [routerLink]="['calendar', currentMonth.year, currentMonth.month]" (click)="close()"><i class="zmdi zmdi-calendar"></i>
-          Event Calendar</a>
-      </li>
-      <li class="sub-menu clickable" *ngIf="user.isAuthenticated" [routerLinkActive]="['active']">
-        <a toggle-submenu><i class="zmdi zmdi-format-list-numbered"></i> Event Results</a>
-        <ul>
-          <li><a [routerLink]="['/results/league']" routerLinkActive="active" (click)="close()">Wednesday Night League</a></li>
-          <li><a [routerLink]="['/results/majors']" routerLinkActive="active" (click)="close()">Weekend Majors</a></li>
-          <li><a [routerLink]="['/results/match-play']" routerLinkActive="active" (click)="close()">Match Play Brackets</a></li>
-          <li><a [routerLink]="['/results/season-points']" routerLinkActive="active" (click)="close()">Season Long Points</a></li>
-          <li><a [routerLink]="['/results/dam-cup']" routerLinkActive="active" (click)="close()">Dam Cup Standings</a></li>
+        <ul class="main-menu">
+            <li [routerLinkActive]="['active']">
+                <a [routerLink]="['/home']" (click)="close()"><i class="zmdi zmdi-home"></i> Home</a>
+            </li>
+            <li [routerLinkActive]="['active']">
+                <a [routerLink]="['calendar', currentMonth.year, currentMonth.month]" (click)="close()"><i
+                    class="zmdi zmdi-calendar"></i>
+                    Event Calendar</a>
+            </li>
+            <li class="sub-menu clickable" *ngIf="user.isAuthenticated" [routerLinkActive]="['active']">
+                <a toggle-submenu><i class="zmdi zmdi-format-list-numbered"></i> Event Results</a>
+                <ul>
+                    <li><a [routerLink]="['/results/league']" routerLinkActive="active" (click)="close()">Wednesday
+                        Night League</a></li>
+                    <li><a [routerLink]="['/results/majors']" routerLinkActive="active" (click)="close()">Weekend
+                        Majors</a></li>
+                    <li><a [routerLink]="['/results/match-play']" routerLinkActive="active" (click)="close()">Match Play
+                        Brackets</a></li>
+                    <li><a [routerLink]="['/results/season-points']" routerLinkActive="active" (click)="close()">Season
+                        Long Points</a></li>
+                    <li><a [routerLink]="['/results/dam-cup']" routerLinkActive="active" (click)="close()">Dam Cup
+                        Standings</a></li>
+                </ul>
+            </li>
+            <li class="sub-menu clickable" [routerLinkActive]="['active']">
+                <a toggle-submenu><i class="zmdi zmdi-check-all"></i> Club Policies</a>
+                <ul>
+                    <li><a [routerLink]="['/policies/club']" routerLinkActive="active" (click)="close()">Policies &
+                        Procedures</a></li>
+                    <li><a [routerLink]="['/policies/rules']" routerLinkActive="active" (click)="close()">Local
+                        Rules</a></li>
+                    <li><a [routerLink]="['/policies/handicaps']" routerLinkActive="active"
+                           (click)="close()">Handicaps</a></li>
+                    <li><a [routerLink]="['/policies/payments']" routerLinkActive="active"
+                           (click)="close()">Payment FAQs</a></li>
+                    <li><a [routerLink]="['/policies/new-members']" routerLinkActive="active"
+                           (click)="close()">New Member Info</a></li>
+                </ul>
+            </li>
+            <li [routerLinkActive]="['active']" *ngIf="user.isAuthenticated">
+                <a [routerLink]="['/directory']" (click)="close()"><i class="zmdi zmdi-accounts-outline"></i> Member
+                    Directory</a>
+            </li>
+            <li [routerLinkActive]="['active']">
+                <a [routerLink]="['/contact']" (click)="close()"><i class="zmdi zmdi-phone"></i> Contact Us</a>
+            </li>
+            <li [routerLinkActive]="['active']">
+                <a [routerLink]="['/about-us']" (click)="close()"><i class="zmdi zmdi-help"></i> About Us</a>
+            </li>
+            <li *ngIf="user.isStaff">
+                <a href="{{adminUrl}}" target="_blank"><i class="zmdi zmdi-wrench"></i> Administration</a>
+            </li>
+            <li [routerLinkActive]="['active']" *ngIf="!user.isAuthenticated">
+                <a [routerLink]="['/member/login']" (click)="close()"> Login</a>
+            </li>
         </ul>
-      </li>
-      <li class="sub-menu clickable" [routerLinkActive]="['active']">
-        <a toggle-submenu><i class="zmdi zmdi-check-all"></i> Club Policies</a>
-        <ul>
-          <li><a [routerLink]="['/policies/club']" routerLinkActive="active" (click)="close()">Policies & Procedures</a></li>
-          <li><a [routerLink]="['/policies/rules']" routerLinkActive="active" (click)="close()">Local Rules</a></li>
-          <li><a [routerLink]="['/policies/handicaps']" routerLinkActive="active" (click)="close()">Handicaps</a></li>
-        </ul>
-      </li>
-      <li [routerLinkActive]="['active']" *ngIf="user.isAuthenticated">
-        <a [routerLink]="['/directory']" (click)="close()"><i class="zmdi zmdi-accounts-outline"></i> Member Directory</a>
-      </li>
-      <li [routerLinkActive]="['active']">
-        <a [routerLink]="['/contact']" (click)="close()"><i class="zmdi zmdi-help"></i> Contact Us</a>
-      </li>
-      <li *ngIf="user.isStaff">
-        <a href="{{adminUrl}}" target="_blank"><i class="zmdi zmdi-wrench"></i> Administration</a>
-      </li>
-      <li [routerLinkActive]="['active']" *ngIf="!user.isAuthenticated">
-        <a [routerLink]="['/member/login']" (click)="close()"> Login</a>
-      </li>
-    </ul>
-  </div>
+    </div>
 </aside>
