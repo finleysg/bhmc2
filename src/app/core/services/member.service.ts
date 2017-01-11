@@ -20,6 +20,14 @@ export class MemberService {
         });
     }
 
+    getRegisteredMembers(): Observable<PublicMember[]> {
+        return this.dataService.getApiRequest('registered-members').map( members => {
+            return members.map((m: any) => {
+                return new PublicMember().fromJson(m.member);
+            });
+        });
+    }
+
     getMember(id: number): Observable<PublicMember> {
         return this.dataService.getApiRequest(`members/${id}`).map( m => new PublicMember().fromJson(m));
     }

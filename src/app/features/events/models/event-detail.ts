@@ -10,6 +10,7 @@ export class EventDetail {
     rounds: number;
     holesPerRound: number;
     eventFee: number;
+    eventFeeAlt: number;
     skinsFee: number;
     greensFee: number;
     cartFee: number;
@@ -123,9 +124,10 @@ export class EventDetail {
         this.notes = json.notes;
         this.holesPerRound = json.holes_per_round;
         this.eventFee = +json.event_fee;
+        this.eventFeeAlt = +json.alt_event_fee;
         this.skinsFee = +json.skins_fee;
-        this.greensFee = 18.0; // TODO: configure greens fees and cart fees
-        this.cartFee = 9.0;
+        this.greensFee = +json.green_fee;
+        this.cartFee = +json.cart_fee;
         this.groupSize = +json.group_size;
         this.startType = EventDetail.getStartType(json.start_type);
         this.canSignupGroup = json.can_signup_group;
