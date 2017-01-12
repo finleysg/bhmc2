@@ -3,8 +3,6 @@ import { BhmcDataService } from './bhmc-data.service';
 import { Observable } from 'rxjs/Observable';
 import { Announcement } from '../models/announcement';
 
-import 'rxjs/add/operator/map';
-
 @Injectable()
 export class AnnouncementService {
 

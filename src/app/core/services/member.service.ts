@@ -2,10 +2,8 @@ import { Injectable } from '@angular/core';
 import { PublicMember } from '../models/member';
 import { BhmcDataService } from './bhmc-data.service';
 import { Observable } from 'rxjs/Observable';
-
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/toPromise';
 import { SavedCard } from '../models/saved-card';
+import * as moment from 'moment';
 
 @Injectable()
 export class MemberService {
@@ -25,6 +23,16 @@ export class MemberService {
             return members.map((m: any) => {
                 return new PublicMember().fromJson(m.member);
             });
+        });
+    }
+
+    currentMembershipYear(memberId: number): Observable<number> {
+        return this.dataService.getApiRequest(`registered-members/${memberId}`).map( member => {
+            if (!member) {  // i.e. not registered for the current season
+                return 0;
+            }
+            // receiving a member record means this user is currently a member for this season
+            return moment().year();
         });
     }
 

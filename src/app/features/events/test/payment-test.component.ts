@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { EventDetailService } from '../services/event-detail.service';
-import { PaymentComponent } from '../payments/payment.component';
+import { EventDetailService } from '../../../core/services/event-detail.service';
+import { PaymentComponent } from '../../../shared/payments/payment.component';
 import { PublicMember, MemberService } from '../../../core';
 import { Observable } from 'rxjs/Observable';
-import { EventRegistrationGroup } from '../models/event-registration-group';
-import { EventDetail } from '../models/event-detail';
+import { EventRegistrationGroup } from '../../../core/models/event-registration-group';
+import { EventDetail } from '../../../core/models/event-detail';
 
 @Component({
     moduleId: module.id,

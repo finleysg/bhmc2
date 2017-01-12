@@ -6,6 +6,7 @@ export class RuntimeSettings {
 
     private _isLocal: boolean;
     private _version: string = '1.0.0a';
+    private _adminUrl: string = 'https://finleysg.pythonanywhere.com/admin';
     private _authUrl: string = 'https://finleysg.pythonanywhere.com/rest-auth/';
     private _apiUrl: string = 'https://finleysg.pythonanywhere.com/api/';
     private _stripeKey: string = 'pk_test_huMlHToXOZcuNXb9eQ7viBvY';
@@ -25,6 +26,10 @@ export class RuntimeSettings {
 
     get version(): string {
         return this._version;
+    }
+
+    get adminUrl(): string {
+        return this._adminUrl;
     }
 
     get authUrl(): string {

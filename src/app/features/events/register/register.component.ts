@@ -1,15 +1,11 @@
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { Location } from '@angular/common';
-import { User, AuthenticationService, PublicMember, MemberService,
-         CanComponentDeactivate, DialogService } from '../../../core';
+import { User, AuthenticationService, PublicMember, MemberService, EventDetail, EventType, EventRegistration,
+         CanComponentDeactivate, DialogService, EventDetailService, EventRegistrationGroup } from '../../../core';
 import { ActivatedRoute, Router, CanDeactivate } from '@angular/router';
-import { EventDetailService } from '../services/event-detail.service';
 import { Observable } from 'rxjs/Observable';
 import { TypeaheadMatch } from 'ng2-bootstrap';
-import { PaymentComponent, ProcessingStatus } from '../payments/payment.component';
-import { EventRegistrationGroup } from '../models/event-registration-group';
-import { EventDetail } from '../models/event-detail';
-import { EventRegistration } from '../models/event-registration';
+import { PaymentComponent, ProcessingStatus } from '../../../shared/payments/payment.component';
 import * as moment from 'moment';
 
 @Component({
@@ -106,6 +102,9 @@ export class RegisterComponent implements OnInit, CanDeactivate<CanComponentDeac
     paymentComplete(result: boolean): void {
         if (result) {
             this.eventService.refreshEventDetail().then(() => {
+                if (this.eventDetail.eventType === EventType.Registration) {
+                    this.authService.refreshUser();
+                }
                 let courseId = this.registrationGroup.courseSetupId ? this.registrationGroup.courseSetupId : 0;
                 this.router.navigate(['registered', courseId], { relativeTo: this.route.parent });
             });

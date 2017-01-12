@@ -1,8 +1,6 @@
-import { EventDetailService } from './event-detail.service';
 import { Injectable } from '@angular/core';
 import { Router, RouterStateSnapshot, ActivatedRouteSnapshot, CanActivate } from '@angular/router';
-import { AuthenticationService, BhmcErrorHandler } from '../../../core';
-import { RegistrationWindowType } from '../models/event-detail';
+import { AuthenticationService, BhmcErrorHandler, EventDetailService, RegistrationWindowType } from '../../../core';
 
 @Injectable()
 export class CanReserveGuard implements CanActivate {

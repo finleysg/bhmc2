@@ -1,9 +1,7 @@
-import { EventDetailService } from '../services/event-detail.service';
-import { AuthenticationService, User } from '../../../core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { EventDetail, EventType } from "../models/event-detail";
-import { EventRegistrationGroup } from '../models/event-registration-group';
+import { AuthenticationService, User, EventDetailService,
+    EventDetail, EventType, EventRegistrationGroup } from '../../../core';
 
 @Component({
     moduleId: module.id,

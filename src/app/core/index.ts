@@ -1,5 +1,10 @@
 export { Calendar } from './models/calendar';
 export { CalendarEvent } from './models/calendar-event';
+export { EventDetail, EventType, RegistrationWindowType, SkinsType, StartType } from './models/event-detail';
+export { EventDocument, DocumentType } from './models/event-document';
+export { EventPayment } from './models/event-payment';
+export { EventRegistration } from './models/event-registration';
+export { EventRegistrationGroup } from './models/event-registration-group';
 export { PublicMember, PrivateMember } from './models/member';
 export { User, AccountUpdateType } from './models/user';
 export { PasswordReset } from './models/password-reset';
@@ -18,3 +23,5 @@ export { RuntimeSettings } from './services/runtime-settings.service';
 export { BhmcErrorHandler } from './services/bhmc-error-handler.service';
 export { StripeDetailsResolver } from './services/stripe-details-resolver.service';
 export { AnnouncementService } from './services/announcement.service';
+export { EventDetailService } from './services/event-detail.service';
+export { EventDetailResolver } from './services/event-detail-resolver.service';

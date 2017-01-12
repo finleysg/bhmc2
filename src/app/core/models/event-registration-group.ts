@@ -1,7 +1,7 @@
 import { EventRegistration } from './event-registration';
 import { EventPayment } from './event-payment';
 import { EventDetail } from './event-detail';
-import { PublicMember } from '../../../core/models/member';
+import { PublicMember } from './member';
 import * as moment from 'moment';
 
 export class EventRegistrationGroup {
@@ -90,11 +90,11 @@ export class EventRegistrationGroup {
         });
     };
 
-    updatePayment(event: EventDetail) {
+    updatePayment(event: EventDetail, useAlt: Boolean = false) {
         let subtotal = 0.0;
         this.registrations.forEach(reg => {
             if (reg.hasMember) {
-                let fee = event.eventFee;
+                let fee = useAlt ? event.eventFeeAlt : event.eventFee;
                 if (reg.isGrossSkinsFeePaid) {
                     fee += event.skinsFee;
                 }

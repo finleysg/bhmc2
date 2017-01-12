@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { EventDetailService } from '../services/event-detail.service';
 import { EventSignupTable } from '../models/event-signup-table';
-import { AuthenticationService, User } from '../../../core';
+import { AuthenticationService, User, EventDetailService } from '../../../core';
 import { RegistrationSlot, SlotStatus } from '../models/registration-slot';
-import { RegistrationRow } from '../models/registration-row';
 
 @Component({
     moduleId: module.id,

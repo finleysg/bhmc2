@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/toPromise';
-import { EventSignupTable } from '../models/event-signup-table';
+import { EventSignupTable } from '../../features/events/models/event-signup-table';
 import { EventRegistration } from '../models/event-registration';
 import { EventRegistrationGroup } from '../models/event-registration-group';
-import { BhmcDataService } from '../../../core/services/bhmc-data.service';
+import { BhmcDataService } from './bhmc-data.service';
 import { EventDetail, EventType } from '../models/event-detail';
-import { RegistrationRow } from '../models/registration-row';
+import { RegistrationRow } from '../../features/events/models/registration-row';
 
 @Injectable()
 export class EventDetailService {

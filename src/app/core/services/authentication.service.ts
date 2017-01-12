@@ -5,14 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { User } from '../models/user';
 import { Cookie } from 'ng2-cookies';
+import { MemberService } from './member.service';
 import * as moment from 'moment';
-
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class AuthenticationService {
@@ -23,7 +17,7 @@ export class AuthenticationService {
     private _currentUser: User;
     public redirectUrl: string;
 
-    constructor(private dataService: BhmcDataService) {
+    constructor(private dataService: BhmcDataService, private memberService: MemberService) {
         if (!this._currentUser) {
             let storedUser = this.getFromStorage('bhmc_user', true);
             if (!storedUser) {
@@ -62,11 +56,27 @@ export class AuthenticationService {
                     return this.getUser();
                 }
             })
-            .map(user => {
-                this.saveToStorage('bhmc_user', JSON.stringify(user));
+            .flatMap(user => {
                 this._currentUser = user;
+                return this.memberService.currentMembershipYear(user.member.id);
+            })
+            .map(year => {
+                this._currentUser.member.membershipYear = year;
+                this.saveToStorage('bhmc_user', JSON.stringify(this._currentUser));
                 this.currentUserSource.next(this._currentUser);
                 return;
+            })
+            .toPromise();
+    }
+
+    // during the registration process, we use this login to complete the registration
+    quietLogin(username: string, password: string): Promise<void> {
+        return this.dataService.postAuthRequest('login', {username: username, email: '', password: password})
+            .map((data: any) => {
+                if (data && data.key) {
+                    this.saveToStorage('bhmc_token', data.key);
+                    return;
+                }
             })
             .toPromise();
     }
@@ -95,6 +105,10 @@ export class AuthenticationService {
         return this.dataService.postAuthRequest('password/reset/confirm', reset.toJson()).toPromise();
     }
 
+    createAcount(newUser: any): Promise<void> {
+        return this.dataService.postApiRequest('register-member', newUser).toPromise();
+    }
+
     updateAccount(partial: any): Promise<void> {
         return this.dataService.patchAuthRequest('user', partial)
             .map(data => {
@@ -109,14 +123,18 @@ export class AuthenticationService {
 
     refreshUser(): void {
         this.getUser()
-            .map(user => {
-                this.saveToStorage('bhmc_user', JSON.stringify(user));
+            .flatMap(user => {
                 this._currentUser = user;
+                return this.memberService.currentMembershipYear(user.member.id);
+            })
+            .map(year => {
+                this._currentUser.member.membershipYear = year;
+                this.saveToStorage('bhmc_user', JSON.stringify(this._currentUser));
                 this.currentUserSource.next(this._currentUser);
                 return;
             })
             .toPromise()
-            .then(() => {return;}); // no-op - force the call)
+            .then(() => {return;}); // no-op - force the call
     }
 
     getUser(): Observable<User> {
@@ -130,7 +148,7 @@ export class AuthenticationService {
             });
     }
 
-    private resetUser(): void {
+    resetUser(): void {
         Cookie.delete('crsftoken');
         this.removeFromStorage('bhmc_token');
         this._currentUser = new User();

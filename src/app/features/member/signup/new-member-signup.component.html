@@ -1,0 +1,167 @@
+<div class="block-header">
+    <h2>New Member Registration</h2>
+</div>
+<div class="card">
+    <div class="card-header">
+        <h2>
+            2017 New Member Fees
+            <small>Make sure you have read the new member information and you are not a returning member.</small>
+        </h2>
+    </div>
+    <div class="card-body card-padding">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-8">
+                <div class="row">
+                    <div class="col-xs-9">
+                        <p class="m-b-5">New member registration fee:</p>
+                    </div>
+                    <div class="col-xs-3 text-right">
+                        <p class="m-b-5">{{ paymentCalc.subtotal | currency:'USD':true }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-9">
+                        <p class="m-b-5">Credit card transaction fees:</p>
+                    </div>
+                    <div class="col-xs-3 text-right">
+                        <p class="m-b-5">{{ paymentCalc.transactionFee | currency:'USD':true }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-9">
+                        <p class="m-b-5">Total registration amount:</p>
+                    </div>
+                    <div class="col-xs-3 text-right">
+                        <p class="m-b-5"><strong>{{ paymentCalc.total | currency:'USD':true }}</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body card-padding">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-8">
+                <form role="form" #f="ngForm" (ngSubmit)="f.form.valid && createAccount()" class="form-horizontal" novalidate>
+                    <fieldset [disabled]="registered || loading">
+                        <legend>Personal Information</legend>
+                        <div class="form-group" [class.has-error]="firstName.touched && !firstName.valid">
+                            <label for="firstName" class="col-sm-3 control-label">First name:</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" [(ngModel)]="user.firstName" name="firstName" #firstName="ngModel" id="firstName" placeholder="First name" required>
+                            </div>
+                        </div>
+                        <div class="form-group" [class.has-error]="lastName.touched && !lastName.valid">
+                            <label for="lastName" class="col-sm-3 control-label">First name:</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" [(ngModel)]="user.lastName" name="lastName" #lastName="ngModel" id="lastName" placeholder="Last name" required>
+                            </div>
+                        </div>
+                        <div class="form-group" [class.has-error]="birthDate.touched && !birthDate.valid">
+                            <label for="birthDate" class="col-sm-3 control-label">Birth date:</label>
+                            <div class="col-sm-9">
+                                <input type="date" class="form-control" [(ngModel)]="other.birthday" name="birthDate" #birthDate="ngModel" id="birthDate" required>
+                            </div>
+                        </div>
+                        <div class="form-group" [class.has-error]="address.touched && !address.valid">
+                            <label for="address" class="col-sm-3 control-label">Address:</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" [(ngModel)]="user.member.address" name="address" #address="ngModel" id="address" placeholder="Address">
+                            </div>
+                        </div>
+                        <div class="form-group" [class.has-error]="city.touched && !city.valid">
+                            <label for="city" class="col-sm-3 control-label">City:</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" [(ngModel)]="user.member.location" name="city" #city="ngModel" id="city" placeholder="City">
+                            </div>
+                        </div>
+                        <div class="form-group" [class.has-error]="zipCode.touched && !zipCode.valid">
+                            <label for="zipCode" class="col-sm-3 control-label">Zip code:</label>
+                            <div class="col-sm-9">
+                                <input type="tel" class="form-control" [(ngModel)]="user.member.zipCode" name="zipCode" #zipCode="ngModel" id="zipCode" placeholder="Zip code">
+                            </div>
+                        </div>
+                        <div class="form-group" [class.has-error]="phoneNumber.touched && !phoneNumber.valid">
+                            <label for="phoneNumber" class="col-sm-3 control-label">Phone number:</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" [(ngModel)]="user.member.phoneNumber" name="phoneNumber" #phoneNumber="ngModel" id="phoneNumber" placeholder="Phone number" required>
+                            </div>
+                        </div>
+                        <div class="form-group" [class.has-error]="email.touched && !email.valid">
+                            <label for="email" class="col-sm-3 control-label">Email:</label>
+                            <div class="col-sm-9">
+                                <input type="email" class="form-control" [(ngModel)]="user.email" name="email" #email="ngModel" id="email" placeholder="Email" required>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset [disabled]="registered || loading">
+                        <legend>Former Club Information</legend>
+                        <div class="form-group" [class.has-error]="clubName.touched && !clubName.valid">
+                            <label for="clubName" class="col-sm-3 control-label">Former club:</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" [(ngModel)]="other.name" name="clubName" #clubName="ngModel" id="clubName" placeholder="Former club">
+                            </div>
+                        </div>
+                        <div class="form-group" [class.has-error]="clubNumber.touched && !clubNumber.valid">
+                            <label for="clubNumber" class="col-sm-3 control-label">Club number:</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" [(ngModel)]="other.number" name="clubNumber" #clubNumber="ngModel" id="clubNumber" placeholder="Club number">
+                            </div>
+                        </div>
+                        <div class="form-group" [class.has-error]="ghin.touched && !ghin.valid">
+                            <label for="ghin" class="col-sm-3 control-label">GHIN:</label>
+                            <div class="col-sm-9">
+                                <input type="tel" class="form-control" [(ngModel)]="user.member.ghin" name="ghin" #ghin="ngModel" id="ghin" placeholder="GHIN">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset [disabled]="registered || loading">
+                        <legend>Tee Preference</legend>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Forward tees:</label>
+                            <div class="col-lg-9">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" [(ngModel)]="user.member.forwardTees" name="forwardTees" #forwardTees="ngModel"> I will play forward (gold) tees
+                                </label>
+                                <p class="help-block"><small>* Make sure you qualify for the rule of 78.</small></p>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset [disabled]="registered || loading">
+                        <legend>Log In Credentials</legend>
+                        <div class="form-group" [class.has-error]="username.touched && !username.valid">
+                            <label for="username" class="col-sm-3 control-label">Log in name:</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" [(ngModel)]="user.username" name="username" #username="ngModel" id="username" placeholder="Log in name" required>
+                            </div>
+                        </div>
+                        <div class="form-group" [class.has-error]="password1.touched && !password1.valid">
+                            <label for="password1" class="col-sm-3 control-label">Password:</label>
+                            <div class="col-sm-9">
+                                <input type="password" class="form-control" [(ngModel)]="pw.password1" name="password1" #password1="ngModel" id="password1" placeholder="Password" required>
+                            </div>
+                        </div>
+                        <div class="form-group" [class.has-error]="password2.touched && !password2.valid">
+                            <label for="password2" class="col-sm-3 control-label">Confirm password:</label>
+                            <div class="col-sm-9">
+                                <input type="password" class="form-control" [(ngModel)]="pw.password2" name="password2" #password2="ngModel" id="password2" placeholder="Confirm password" required>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div>
+                        <button [disabled]="registered || loading" type="submit" class="btn btn-primary btn-sm m-t-10 m-l-10 pull-right">Register</button>
+                        <payment [registrationGroup]="group" [eventDetail]="eventDetail" (onClose)="paymentComplete($event)"></payment>
+                    </div>
+                </form>
+                <div class="m-t-30" *ngIf="registered">
+                    <h3 class="text-success">Registration Complete</h3>
+                    <p class="text-success"><strong>Thank you for registering with the Bunker Hills Men's Club! Welcome to the club;
+                        we hope you have a great year.</strong></p>
+                    <p>We have sent an email to the address you entered above. This email will contain a password that you can use
+                        to log into the site. You can change that password after you log in by going to your profile page.</p>
+                    <p>Make sure that you allow emails from bhmc.org to reach your inbox. If you have any trouble, feel free
+                    to contact a Board member.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

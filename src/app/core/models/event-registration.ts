@@ -34,7 +34,7 @@ export class EventRegistration {
         this.memberName = json.member ? `${json.member_first_name} ${json.member_last_name}` : '';
         this.slotId = json.slot;
         this.startingOrder = json.starting_order;
-        this.isEventFeePaid = json.member; // default to true if member is present
+        this.isEventFeePaid = !!json.member; // default to true if member is present
         this.isGrossSkinsFeePaid = json.is_gross_skins_paid;
         this.isNetSkinsFeePaid = json.is_net_skins_paid;
         this.isGreensFeePaid = json.is_greens_fee_paid;

@@ -1,9 +1,6 @@
-import { Calendar } from '../../core/models/calendar';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { User } from '../../core/models/user';
-import { LayoutService } from '../../core/services/layout.service';
-import { AuthenticationService } from '../../core/services/authentication.service';
+import { User, LayoutService, AuthenticationService, RuntimeSettings } from '../../core';
 import * as moment from 'moment';
 
 @Component({
@@ -23,11 +20,12 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     constructor(private _router: Router,
                 private _route: ActivatedRoute,
                 private _layoutService: LayoutService,
-                private _authService: AuthenticationService) {
+                private _authService: AuthenticationService,
+                private _settings: RuntimeSettings) {
     }
 
     ngOnInit(): void {
-        this.adminUrl = 'https://finleysg.pythonanywhere.com/admin';
+        this.adminUrl = this._settings.adminUrl;
         this._layoutService.sidebarToggle.subscribe(value => this.isOpen = value);
         this._authService.currentUser$.subscribe(user => {
             this.user = user;

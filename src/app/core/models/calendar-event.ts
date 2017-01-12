@@ -1,6 +1,5 @@
-// TODO: fix this dependency
-import { EventDetail, StartType } from '../../features/events/models/event-detail';
-import { EventType } from '../../features/events/models/event-detail';
+import { EventDetail, StartType } from './event-detail';
+import { EventType } from './event-detail';
 import * as moment from 'moment';
 
 export class CalendarEvent {

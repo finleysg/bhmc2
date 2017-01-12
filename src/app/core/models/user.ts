@@ -19,6 +19,7 @@ export class User {
     isActive: boolean = false;
 
     constructor() {
+        this.member = new PrivateMember();
     }
 
     get name() {
@@ -50,6 +51,18 @@ export class User {
             this.member = new PrivateMember().fromJson(json.member);
         }
         return this;
+    }
+
+    // used only to create new accounts
+    toJson(password: string): any {
+        return {
+            'username': this.username,
+            'email': this.email,
+            'password': password,
+            'first_name': this.firstName,
+            'last_name': this.lastName,
+            'member': this.member.toJson()
+        };
     }
 
     partialUpdateJson(updateType: AccountUpdateType): any {

@@ -1,11 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
-import { EventDetailService } from '../services/event-detail.service';
 import { ToasterService } from 'angular2-toaster';
-import { CreditCard } from '../models/credit-card';
 import { ModalDirective } from 'ng2-bootstrap';
-import { EventRegistrationGroup } from '../models/event-registration-group';
-import { EventDetail } from '../models/event-detail';
-import { MemberService, RuntimeSettings, SavedCard } from '../../../core';
+import { MemberService, RuntimeSettings, SavedCard, EventDetailService, AuthenticationService,
+    EventDetail, EventRegistrationGroup } from '../../core';
+import { CreditCard } from './credit-card';
 
 declare const Spinner: any;
 
@@ -61,6 +59,7 @@ export class PaymentComponent implements OnInit {
 
     constructor(private eventService: EventDetailService,
                 private memberService: MemberService,
+                private authService: AuthenticationService,
                 private elementRef: ElementRef,
                 private settings: RuntimeSettings,
                 private toaster: ToasterService) {
@@ -69,12 +68,14 @@ export class PaymentComponent implements OnInit {
     ngOnInit() {
         this.messages = [];
         this.card = new CreditCard();
-        this.memberService.stripeSavedCard().then((savedCard: SavedCard) => {
-            // TODO: refactor to use object
-            this.savedCard = savedCard.description;
-            this.hasSavedCard = savedCard.description.length > 0;
-            this.useSavedCard = this.hasSavedCard;
-        });
+        if (this.authService.user.isAuthenticated) {
+            this.memberService.stripeSavedCard().then((savedCard: SavedCard) => {
+                // TODO: refactor to use object
+                this.savedCard = savedCard.description;
+                this.hasSavedCard = savedCard.description.length > 0;
+                this.useSavedCard = this.hasSavedCard;
+            });
+        }
         this.initSpinner();
         Stripe.setPublishableKey(this.settings.stripePublicKey);
     };

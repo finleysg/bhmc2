@@ -1,5 +1,3 @@
-import { AuthGuard } from '../../core';
-import { EventDetailResolver } from './services/event-detail-resolver.service';
 import { TeetimeComponent } from './teetimes/teetime.component';
 import { ReserveComponent } from './reserve/reserve.component';
 import { RegisterComponent } from './register/register.component';
@@ -10,7 +8,7 @@ import { ReserveTableComponent } from './reserve/reserve-table.component';
 import { PaymentTestComponent } from './test/payment-test.component';
 import { RegisteredComponent } from './register/registered.component';
 import { ReadonlyTableComponent } from './register/readonly-table.component';
-import { CanDeactivateGuard } from '../../core/services/can-deactivate-guard.service';
+import { AuthGuard, CanDeactivateGuard, EventDetailResolver } from '../../core';
 import { CanRegisterResolver } from './services/can-register-resolver.service';
 
 const routes: Routes = [

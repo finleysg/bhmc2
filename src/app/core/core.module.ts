@@ -13,6 +13,9 @@ import { RuntimeSettings } from './services/runtime-settings.service';
 import { BhmcErrorHandler } from './services/bhmc-error-handler.service';
 import { StripeDetailsResolver } from './services/stripe-details-resolver.service';
 import { AnnouncementService } from './services/announcement.service';
+import { EventDetailService } from './services/event-detail.service';
+import { EventDetailResolver } from './services/event-detail-resolver.service';
+import './rxjs-extensions';
 
 @NgModule({
     imports: [
@@ -31,7 +34,9 @@ import { AnnouncementService } from './services/announcement.service';
         RuntimeSettings,
         BhmcErrorHandler,
         StripeDetailsResolver,
-        AnnouncementService
+        AnnouncementService,
+        EventDetailService,
+        EventDetailResolver
     ]
 })
 export class BhmcCoreModule {}

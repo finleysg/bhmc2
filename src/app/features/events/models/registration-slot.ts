@@ -1,5 +1,5 @@
 import { RegistrationRow } from './registration-row';
-import { EventRegistration } from './event-registration';
+import { EventRegistration } from '../../../core';
 
 export class RegistrationSlot {
 

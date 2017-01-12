@@ -4,8 +4,6 @@ import { BhmcDataService } from './bhmc-data.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class CalendarService {

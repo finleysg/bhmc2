@@ -2,7 +2,7 @@ import { EventDetailService } from './event-detail.service';
 import { Injectable } from '@angular/core';
 import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { EventDetail, RegistrationWindowType } from '../models/event-detail';
-import { BhmcErrorHandler } from '../../../core/services/bhmc-error-handler.service';
+import { BhmcErrorHandler } from './bhmc-error-handler.service';
 
 @Injectable()
 export class EventDetailResolver implements Resolve<EventDetail> {

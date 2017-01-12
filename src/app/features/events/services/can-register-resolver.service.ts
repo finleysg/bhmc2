@@ -1,8 +1,6 @@
-import { EventDetailService } from './event-detail.service';
 import { Injectable } from '@angular/core';
 import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
-import { EventRegistrationGroup } from '../models/event-registration-group';
-import { AuthenticationService, BhmcErrorHandler } from '../../../core';
+import { AuthenticationService, BhmcErrorHandler, EventRegistrationGroup, EventDetailService } from '../../../core';
 
 @Injectable()
 export class CanRegisterResolver implements Resolve<EventRegistrationGroup> {

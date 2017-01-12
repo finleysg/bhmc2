@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EventDetailService } from '../services/event-detail.service';
-import { EventDetail } from '../models/event-detail';
-import { ToasterService } from 'angular2-toaster';
+import { EventDetailService, EventDetail } from '../../../core';
 
 @Component({
     moduleId: module.id,

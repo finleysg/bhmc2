@@ -1,4 +1,4 @@
-import { NgModule }      from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule }  from '@angular/common';
 import { FormsModule }   from '@angular/forms';
 import { RouterModule }  from '@angular/router';
@@ -10,6 +10,7 @@ import { TypeaheadModule, ModalModule, DropdownModule } from 'ng2-bootstrap';
 import { TimerComponent } from './timer/timer.component';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 import { ToasterModule } from 'angular2-toaster';
+import { PaymentComponent } from './payments/payment.component';
 
 @NgModule({
     imports: [
@@ -23,6 +24,7 @@ import { ToasterModule } from 'angular2-toaster';
         SlimLoadingBarModule.forRoot()
     ],
     declarations: [
+        PaymentComponent,
         SpinnerDirective,
         SpinnerButtonComponent,
         MarkdownDirective,
@@ -30,6 +32,9 @@ import { ToasterModule } from 'angular2-toaster';
     ],
     providers: [
         SpinnerService
+    ],
+    schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
     ],
     exports: [
         CommonModule,
@@ -44,6 +49,7 @@ import { ToasterModule } from 'angular2-toaster';
         ModalModule,
         DropdownModule,
         SlimLoadingBarModule,
+        PaymentComponent
     ]
 })
 export class SharedModule { }

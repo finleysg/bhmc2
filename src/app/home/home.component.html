@@ -10,6 +10,57 @@
                         Announcements
                     </div>
                     <div class="lv-body">
+                        <div class="lv-item" *ngIf="user && !user.isAuthenticated">
+                            <div class="media">
+                                <div class="pull-left">
+                                    <img class="lv-img-sm" src="../../assets/img/QuestionMark.png" alt="Are you a returning member?">
+                                </div>
+                                <div class="media-body">
+                                    <div class="lv-title">Are You a Returning Member?</div>
+                                    <p>If so, then this must look a bit strange to you! Welcome to the new club website. Before you
+                                        can register for events in the upcoming season or view the results of those events,
+                                        we need to update your account. Click on the link below to get more information.
+                                    </p>
+                                    <p>
+                                        <button class="btn btn-sm btn-info" (click)="getPassword()">Returning Members</button>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lv-item" *ngIf="user && !user.isAuthenticated">
+                            <div class="media">
+                                <div class="pull-left">
+                                    <img class="lv-img-sm" src="../../assets/img/RegisterNow.png" alt="Register now!">
+                                </div>
+                                <div class="media-body">
+                                    <div class="lv-title">Welcome to the Bunker Hills Men's Club</div>
+                                    <p>Feel free to look around and get to know us. Visit the
+                                        <a [routerLink]="['/about-us']">About Us</a> page or the
+                                        <a [routerLink]="['/policies', 'new-members']">New Member Info</a>
+                                        page to learn more about the club. If you like what you
+                                        see, register online to join us for the 2017 golf season.
+                                    </p>
+                                    <p>
+                                        <button class="btn btn-sm btn-success" (click)="registerOnline()">Register Online</button>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lv-item" *ngIf="user && user.isAuthenticated && user.member.membershipYear !== 2017">
+                            <div class="media">
+                                <div class="pull-left">
+                                    <img class="lv-img-sm" src="../../assets/img/RegisterNow.png" alt="Register now!">
+                                </div>
+                                <div class="media-body">
+                                    <div class="lv-title">Register for the 2017 Golf Season</div>
+                                    <p>Registration is now open for the 2017 golf season. Don't wait for the last minute!</p>
+                                    <p>
+                                        <button class="btn btn-sm btn-success" (click)="registerOnline()">Register Online</button>
+                                        <button class="btn btn-sm btn-info" [routerLink]="['/events', 46, 'detail']">Registration Form</button>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                         <div class="lv-item" *ngFor="let a of announcements">
                             <div class="media" *ngIf="a.isVisible(user.isAuthenticated)">
                                 <div class="pull-left">
