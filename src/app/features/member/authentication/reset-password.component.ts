@@ -7,9 +7,9 @@ import { ToasterService } from 'angular2-toaster';
     moduleId: module.id,
     templateUrl: 'reset-password.component.html'
 })
-
 export class ResetPasswordComponent implements OnInit {
     model: any = {};
+    returningMember: boolean;
     loading = false;
 
     constructor(private router: Router,
@@ -18,7 +18,10 @@ export class ResetPasswordComponent implements OnInit {
                 private authenticationService: AuthenticationService) {
     }
 
-    ngOnInit() { }
+    ngOnInit() {
+        this.returningMember = this.authenticationService.returningMember;
+        this.authenticationService.returningMember = false;
+    }
 
     resetPassword() {
         this.loading = true;

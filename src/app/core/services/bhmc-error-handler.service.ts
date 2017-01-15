@@ -1,21 +1,27 @@
 import { Injectable, ErrorHandler } from '@angular/core';
-import { RuntimeSettings } from './runtime-settings.service';
 import { Response } from '@angular/http';
+import { ConfigService } from '../../app-config.service';
+import { AppConfig } from '../../app-config';
 import * as Raven from 'raven-js';
 
 @Injectable()
 export class BhmcErrorHandler extends ErrorHandler {
 
-    constructor(private settings: RuntimeSettings) {
+    private config: AppConfig
+
+    constructor(
+        private configService: ConfigService
+    ) {
         super();
-        if (!settings.isLocal) {
-            const options = { 'release': settings.version, 'autoBreadcrumbs': { 'xhr': false }};
-            Raven.config(settings.ravenDsn, options).install();
+        this.config = configService.config;
+        if (!this.config.isLocal) {
+            const options = { 'release': configService.config.version, 'autoBreadcrumbs': { 'xhr': false }};
+            Raven.config(this.config.ravenDsn, options).install();
         }
     }
 
     handleError(err: any): void {
-        if (this.settings.isLocal) {
+        if (this.config.isLocal) {
             super.handleError(err);
         } else {
             Raven.captureException(err.originalError);
@@ -23,7 +29,7 @@ export class BhmcErrorHandler extends ErrorHandler {
     }
 
     logError(err: any): void {
-        if (this.settings.isLocal) {
+        if (this.config.isLocal) {
             console.error(err.toString());
         } else {
             Raven.captureException(err);
@@ -31,7 +37,7 @@ export class BhmcErrorHandler extends ErrorHandler {
     }
 
     logResponse(response: Response) {
-        if (this.settings.isLocal) {
+        if (this.config.isLocal) {
             // TODO: handle text or blob responses
             console.info(`${response.status}: ${JSON.stringify(response.json())}`)
         } else {
@@ -40,7 +46,7 @@ export class BhmcErrorHandler extends ErrorHandler {
     }
 
     logWarning(message: string): void {
-        if (this.settings.isLocal) {
+        if (this.config.isLocal) {
             console.warn(message);
         } else {
             Raven.captureMessage(message, {level: 'warning'});
@@ -48,7 +54,7 @@ export class BhmcErrorHandler extends ErrorHandler {
     }
 
     logMessage(message: string): void {
-        if (this.settings.isLocal) {
+        if (this.config.isLocal) {
             console.info(message);
         }
     }

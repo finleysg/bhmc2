@@ -11,6 +11,7 @@ import { ToasterService } from 'angular2-toaster';
 export class ContactComponent implements OnInit {
 
     public message: ContactMessage;
+    public loading: boolean;
 
     constructor(private contactService: ContactService,
                 private toaster: ToasterService) {
@@ -24,6 +25,7 @@ export class ContactComponent implements OnInit {
         if (!form.valid) {
             return;
         }
+        this.loading = true;
         this.contactService.sendContactUsMessage(this.message)
             .then(
                 () => {
@@ -36,6 +38,7 @@ export class ContactComponent implements OnInit {
             )
             .catch(
                 err => {
+                    this.loading = false;
                     this.toaster.pop(
                         'error',
                         'Message Error',

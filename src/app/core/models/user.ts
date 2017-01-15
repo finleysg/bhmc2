@@ -3,7 +3,8 @@ import { PrivateMember } from './member';
 export enum AccountUpdateType {
     PersonalInfo,
     ContactInfo,
-    Username
+    Username,
+    ForwardTees
 }
 
 export class User {
@@ -87,6 +88,12 @@ export class User {
                 return {
                     'username': this.username,
                     'member': { }
+                };
+            case AccountUpdateType.ForwardTees:
+                return {
+                    'member': {
+                        'forward_tees': this.member.forwardTees
+                    }
                 };
             default:
                 return {}

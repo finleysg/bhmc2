@@ -1,9 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
 import { ModalDirective } from 'ng2-bootstrap';
-import { MemberService, RuntimeSettings, SavedCard, EventDetailService, AuthenticationService,
+import { MemberService, SavedCard, EventDetailService, AuthenticationService,
     EventDetail, EventRegistrationGroup } from '../../core';
 import { CreditCard } from './credit-card';
+import { AppConfig } from '../../app-config';
+import { ConfigService } from '../../app-config.service';
 
 declare const Spinner: any;
 
@@ -54,15 +56,19 @@ export class PaymentComponent implements OnInit {
     public hasSavedCard: boolean;
     public useSavedCard: boolean;
 
+    private config: AppConfig;
     private spinner: any;
     private spinnerElement: any;
 
-    constructor(private eventService: EventDetailService,
-                private memberService: MemberService,
-                private authService: AuthenticationService,
-                private elementRef: ElementRef,
-                private settings: RuntimeSettings,
-                private toaster: ToasterService) {
+    constructor(
+        private eventService: EventDetailService,
+        private memberService: MemberService,
+        private authService: AuthenticationService,
+        private elementRef: ElementRef,
+        private configService: ConfigService,
+        private toaster: ToasterService
+    ) {
+        this.config = configService.config;
     }
 
     ngOnInit() {
@@ -77,7 +83,7 @@ export class PaymentComponent implements OnInit {
             });
         }
         this.initSpinner();
-        Stripe.setPublishableKey(this.settings.stripePublicKey);
+        Stripe.setPublishableKey(this.config.stripePublicKey);
     };
 
     open(): void {

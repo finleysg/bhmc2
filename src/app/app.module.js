@@ -24,6 +24,8 @@ var core_module_1 = require('./core/core.module');
 var shared_module_1 = require('./shared/shared.module');
 var calendar_module_1 = require('./features/calendar/calendar.module');
 var bhmc_error_handler_service_1 = require('./core/services/bhmc-error-handler.service');
+var app_config_service_1 = require('./app-config.service');
+var http_1 = require('@angular/http');
 var AppModule = (function () {
     function AppModule() {
     }
@@ -48,7 +50,14 @@ var AppModule = (function () {
                 app_component_1.AppComponent
             ],
             providers: [
-                { provide: core_1.ErrorHandler, useClass: bhmc_error_handler_service_1.BhmcErrorHandler }
+                { provide: core_1.ErrorHandler, useClass: bhmc_error_handler_service_1.BhmcErrorHandler },
+                app_config_service_1.ConfigService,
+                {
+                    provide: core_1.APP_INITIALIZER,
+                    useFactory: app_config_service_1.ConfigLoader,
+                    deps: [app_config_service_1.ConfigService, http_1.Http],
+                    multi: true
+                }
             ],
             bootstrap: [
                 app_component_1.AppComponent

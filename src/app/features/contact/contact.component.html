@@ -162,7 +162,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <button (click)="sendMessage(contactForm)" class="btn btn-primary">Send Message</button>
+                        <button [disabled]="loading" (click)="sendMessage(contactForm)" class="btn btn-primary">Send Message</button>
                     </div>
                 </form>
             </div>

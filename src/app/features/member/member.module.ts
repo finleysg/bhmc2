@@ -10,7 +10,6 @@ import { AccountComponent } from './account/account.component';
 import { AccountInfoComponent } from './account/account-info.component';
 import { AccountSettingsComponent } from './account/account-settings.component';
 import { ChangePasswordComponent } from './account/change-password.component';
-import { FetchPasswordComponent } from './authentication/fetch-password.component';
 import { NewMemberSignupComponent } from './signup/new-member-signup.component';
 
 @NgModule({
@@ -28,7 +27,6 @@ import { NewMemberSignupComponent } from './signup/new-member-signup.component';
         AccountInfoComponent,
         AccountSettingsComponent,
         ChangePasswordComponent,
-        FetchPasswordComponent,
         NewMemberSignupComponent
     ]
 })

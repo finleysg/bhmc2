@@ -1,6 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService, User, EventDetailService,
+import { AuthenticationService, User, EventDetailService, EventDocument, DocumentType,
     EventDetail, EventType, EventRegistrationGroup } from '../../../core';
 
 @Component({
@@ -12,6 +12,8 @@ export class EventComponent implements OnInit {
 
     public eventDetail: EventDetail;
     public currentUser: User;
+    public results: EventDocument;
+    public teetimes: EventDocument;
 
     constructor(
         private route: ActivatedRoute,
@@ -24,6 +26,8 @@ export class EventComponent implements OnInit {
         this.route.data
             .subscribe((data: {eventDetail: EventDetail}) => {
                 this.eventDetail = data.eventDetail;
+                this.results = this.eventDetail.getDocument(DocumentType.Results);
+                this.teetimes = this.eventDetail.getDocument(DocumentType.Teetimes);
             });
     }
 

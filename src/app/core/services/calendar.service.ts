@@ -30,7 +30,7 @@ export class CalendarService {
     }
 
     quickEvents(): Promise<CalendarEvent[]> {
-        return this.dataService.getApiRequest('quick-events').map(events => {
+        return this.dataService.getApiRequest('events/current').map(events => {
             return events.map((e: any) => {
                 return new CalendarEvent().fromJson(e);
             });

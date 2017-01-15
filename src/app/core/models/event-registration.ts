@@ -10,7 +10,7 @@ export class EventRegistration {
     memberId: number;
     memberName: string;
     startingOrder: number;
-    slotId: number;
+    slotNumber: number;
     isEventFeePaid: boolean;
     isGrossSkinsFeePaid: boolean;
     isNetSkinsFeePaid: boolean;
@@ -30,9 +30,9 @@ export class EventRegistration {
         this.holeNumber = json.hole_number;
         this.holeId = json.hole_id;
         this.groupId = json.registration_group ? +json.registration_group : -1;
-        this.memberId = json.member ? json.member : -1;
-        this.memberName = json.member ? `${json.member_first_name} ${json.member_last_name}` : '';
-        this.slotId = json.slot;
+        this.memberId = json.member ? json.member.id : -1;
+        this.memberName = json.member ? `${json.member.first_name} ${json.member.last_name}` : '';
+        this.slotNumber = json.slot;
         this.startingOrder = json.starting_order;
         this.isEventFeePaid = !!json.member; // default to true if member is present
         this.isGrossSkinsFeePaid = json.is_gross_skins_paid;

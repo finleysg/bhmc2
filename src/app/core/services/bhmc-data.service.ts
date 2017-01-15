@@ -3,33 +3,33 @@ import { Http, Response, RequestOptions, Headers, URLSearchParams, RequestMethod
 import { Observable } from 'rxjs/Observable';
 import { Cookie } from 'ng2-cookies';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
-import { RuntimeSettings } from './runtime-settings.service';
 import { BhmcErrorHandler } from './bhmc-error-handler.service';
+import { ConfigService } from '../../app-config.service';
 
 @Injectable()
 export class BhmcDataService {
 
-    private _authUrl: string = 'https://finleysg.pythonanywhere.com/rest-auth/';
-    private _apiUrl: string = 'https://finleysg.pythonanywhere.com/api/';
+    private _authUrl: string ;
+    private _apiUrl: string;
 
     constructor(
         private http: Http,
         private loadingBar: SlimLoadingBarService,
         private errorHandler: BhmcErrorHandler,
-        private settings: RuntimeSettings) {
+        private configService: ConfigService) {
 
-        this._authUrl = settings.authUrl;
-        this._apiUrl = settings.apiUrl;
+        this._authUrl = configService.config.authUrl;
+        this._apiUrl = configService.config.apiUrl;
     }
 
     getAuthRequest(resource: string, data?: any): Observable<any> {
         const url: string = this._authUrl + resource + '/';
-        return this.getRequest(url, data);
+        return this.request(RequestMethod.Get, url, data);
     }
 
     getApiRequest(resource: string, data?: any): Observable<any> {
         const url: string = this._apiUrl + resource + '/';
-        return this.getRequest(url, data);
+        return this.request(RequestMethod.Get, url, data);
     }
 
     postAuthRequest(resource: string, data: any): Observable<any> {
@@ -47,34 +47,16 @@ export class BhmcDataService {
         return this.request(RequestMethod.Patch, url, data);
     }
 
-    private getRequest(url: string, data?: any): Observable<any> {
-        let options = this.createOptions();
-        let params = new URLSearchParams();
-        if (data) {
-            for (let key in data) {
-                params.set(key, data[key]);
-            }
-            options.search = params;
-        }
+    private request(method: RequestMethod, url: string, data?: any) {
         this.loadingBar.color = 'blue';
         this.loadingBar.start();
-        return this.http.get(url, options)
-            .map((r: Response) => {
+        let options = this.createOptions(method, data);
+        return this.http.request(url, options)
+            .map((response: Response) => {
                 this.loadingBar.color = 'green';
                 this.loadingBar.complete();
-                return r.json() || {};
-            })
-            .catch((err: any) => this.handleError(err));
-    }
-
-    private request(method: RequestMethod, url: string, data: any) {
-        this.loadingBar.color = 'blue';
-        this.loadingBar.start();
-        return this.http.patch(url, JSON.stringify(data), this.createOptions(method))
-            .map((response: any) => {
-                this.loadingBar.color = 'green';
-                this.loadingBar.complete();
-                if (response._body && response._body.length > 0) {
+                // TODO: get location from a 201?
+                if (response.status !== 204 && response.status !== 201) {
                     return response.json() || {};
                 }
                 return {}; // empty response
@@ -82,7 +64,7 @@ export class BhmcDataService {
             .catch((err: any) => this.handleError(err));
     }
 
-    private createOptions(method: RequestMethod = RequestMethod.Get): RequestOptions {
+    private createOptions(method: RequestMethod = RequestMethod.Get, data: any = {}): RequestOptions {
         let headers = new Headers({'Content-Type': 'application/json'});
         let token = localStorage.getItem('bhmc_token');
         if (!token) {
@@ -96,7 +78,21 @@ export class BhmcDataService {
         if (csrf) {
             headers.append('X-CSRFToken', csrf);
         }
-        return new RequestOptions({method: method, headers: headers});
+        let options = new RequestOptions({method: method, headers: headers});
+        if (method === RequestMethod.Get) {
+            let params = new URLSearchParams();
+            if (Object.getOwnPropertyNames(data).length === 0) {
+                for (let key in data) {
+                    if (data.hasOwnProperty(key)) {
+                        params.set(key, data[key]);
+                    }
+                }
+                options.search = params;
+            }
+        } else {
+            options.body = JSON.stringify(data);
+        }
+        return options;
     }
 
     private handleError(error: Response | any) {

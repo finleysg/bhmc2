@@ -86,6 +86,23 @@ export class EventDetail {
                this.registrationWindow === RegistrationWindowType.Registering;
     }
 
+    getDocument(type: DocumentType): EventDocument {
+        if (this.documents && this.documents.length > 0) {
+            let docs = this.documents.filter(d => d.type === type);
+            if (docs && docs.length === 1) {
+                return docs[0];
+            }
+        }
+        return null;
+    }
+
+    getDocuments(type: DocumentType): EventDocument[] {
+        if (this.documents && this.documents.length > 0) {
+            return this.documents.filter(d => d.type === type);
+        }
+        return null;
+    }
+
     get canViewRegistrations(): boolean {
         return this.requiresRegistration &&
                this.registrationWindow !== RegistrationWindowType.Future;

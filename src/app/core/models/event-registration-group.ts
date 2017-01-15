@@ -3,6 +3,7 @@ import { EventPayment } from './event-payment';
 import { EventDetail } from './event-detail';
 import { PublicMember } from './member';
 import * as moment from 'moment';
+import { User } from './user';
 
 export class EventRegistrationGroup {
     id: number;
@@ -25,6 +26,17 @@ export class EventRegistrationGroup {
 
     get canRegister(): boolean {
         return this.registrations && this.registrations.every( reg => { return reg.hasMember; });
+    }
+
+    static create(user: User): EventRegistrationGroup {
+        let group = new EventRegistrationGroup();
+        let reg = new EventRegistration();
+        reg.isEventFeePaid = true;
+        reg.memberId = user.member.id;
+        reg.memberName = user.name;
+        group.registrations = [];
+        group.registrations.push(reg);
+        return group;
     }
 
     fromJson(json: any): EventRegistrationGroup {

@@ -1,4 +1,3 @@
-import { TeetimeComponent } from './teetimes/teetime.component';
 import { ReserveComponent } from './reserve/reserve.component';
 import { RegisterComponent } from './register/register.component';
 import { NgModule } from '@angular/core';
@@ -9,6 +8,8 @@ import { ReserveTableComponent } from './reserve/reserve-table.component';
 import { PaymentTestComponent } from './test/payment-test.component';
 import { RegisteredComponent } from './register/registered.component';
 import { ReadonlyTableComponent } from './register/readonly-table.component';
+import { SeasonSignupComponent } from './register/season-signup.component';
+import { MatchPlaySignupComponent } from './register/matchplay-signup.component';
 
 @NgModule({
     imports: [
@@ -20,10 +21,11 @@ import { ReadonlyTableComponent } from './register/readonly-table.component';
         RegisterComponent,
         ReserveComponent,
         ReserveTableComponent,
-        TeetimeComponent,
         PaymentTestComponent,
         RegisteredComponent,
         ReadonlyTableComponent,
+        SeasonSignupComponent,
+        MatchPlaySignupComponent
     ],
     providers: [
     ]

@@ -6,8 +6,9 @@
     <div class="col-lg-6 col-md-8 col-xs-12">
         <div class="card event-card">
             <div class="card-header">
-                <h2>{{ registrationGroup.registrations[0].courseName.replace('League', '') }} {{ registrationGroup.startingHoleName }}</h2>
-                <div class="col-sm-4 col-xs-8 input-group find-partner">
+                <h2 *ngIf="!isLeagueEvent">{{ eventDetail.name }}</h2>
+                <h2 *ngIf="isLeagueEvent">{{ registrationGroup.registrations[0].courseName.replace('League', '') }} {{ registrationGroup.startingHoleName }}</h2>
+                <div class="col-sm-4 col-xs-8 input-group find-partner" *ngIf="eventDetail.groupSize > 1">
                     <template #memberTemplate let-model="item" let-index="index">
                         <span>{{ model.name }}</span>
                     </template>
@@ -94,10 +95,20 @@
                         <payment [registrationGroup]="registrationGroup" [eventDetail]="eventDetail" (onClose)="paymentComplete($event)"></payment>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="controls ">
+                            <label>Notes / Special Requests</label>
+                            <textarea class="form-control fc-alt" rows="3"
+                                      name="notes" [(ngModel)]="registrationGroup.notes" #notes="ngModel">
+                            </textarea>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" *ngIf="friends">
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" *ngIf="friends && eventDetail.groupSize > 1">
         <div class="card event-card">
             <div class="card-header">
                 <h2>Friends</h2>

@@ -54,7 +54,7 @@ export class EventDetailService {
     }
 
     getRegistrationGroup(id: number): Promise<EventRegistrationGroup> {
-        return this.dataService.getApiRequest(`registration-groups/${id}`)
+        return this.dataService.getApiRequest(`registration/groups/${id}`)
             .map((data: any) => {
                 return new EventRegistrationGroup().fromJson(data);
             })

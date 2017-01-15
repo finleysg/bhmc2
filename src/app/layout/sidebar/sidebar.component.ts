@@ -1,6 +1,8 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { User, LayoutService, AuthenticationService, RuntimeSettings } from '../../core';
+import { User, LayoutService, AuthenticationService } from '../../core';
+import { AppConfig } from '../../app-config';
+import { ConfigService } from '../../app-config.service';
 import * as moment from 'moment';
 
 @Component({
@@ -12,20 +14,24 @@ import * as moment from 'moment';
 
 export class SidebarComponent implements OnInit, AfterViewInit {
 
-    user: User;
+    public user: User;
     public isOpen: boolean;
     public adminUrl: string;
     public currentMonth: any;
+    public config: AppConfig;
 
-    constructor(private _router: Router,
-                private _route: ActivatedRoute,
-                private _layoutService: LayoutService,
-                private _authService: AuthenticationService,
-                private _settings: RuntimeSettings) {
+    constructor(
+        private _router: Router,
+        private _route: ActivatedRoute,
+        private _layoutService: LayoutService,
+        private _authService: AuthenticationService,
+        private configService: ConfigService
+    ) {
+        this.config = configService.config;
     }
 
     ngOnInit(): void {
-        this.adminUrl = this._settings.adminUrl;
+        this.adminUrl = this.config.adminUrl;
         this._layoutService.sidebarToggle.subscribe(value => this.isOpen = value);
         this._authService.currentUser$.subscribe(user => {
             this.user = user;

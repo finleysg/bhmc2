@@ -41,7 +41,8 @@ export class PrivateMember {
     forwardTees: boolean;
     address: string;
     zipCode: string;
-    membershipYear: number;
+    membershipIsCurrent: boolean;
+    matchplayParticipant: boolean;
 
     fromJson(json: any): PrivateMember {
         this.id = json.id;

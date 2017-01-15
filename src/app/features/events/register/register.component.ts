@@ -26,6 +26,7 @@ export class RegisterComponent implements OnInit, CanDeactivate<CanComponentDeac
     public selectedMemberName: string;
     public expires: moment.Moment;
     public expiryMessage: string = 'Your reservation was cancelled because it was not completed within 10 minutes.';
+    public isLeagueEvent: boolean;
     private cancelling: boolean;
 
     constructor(
@@ -42,6 +43,7 @@ export class RegisterComponent implements OnInit, CanDeactivate<CanComponentDeac
         this.route.data
             .subscribe((data: { eventDetail: EventDetail, registrationGroup: EventRegistrationGroup }) => {
                 this.eventDetail = data.eventDetail;
+                this.isLeagueEvent = this.eventDetail.eventType === EventType.League;
                 this.registrationGroup = data.registrationGroup;
                 this.expires = this.registrationGroup.expires;
                 this.registrationGroup.updatePayment(this.eventDetail);

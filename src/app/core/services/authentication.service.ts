@@ -6,6 +6,8 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { User } from '../models/user';
 import { Cookie } from 'ng2-cookies';
 import { MemberService } from './member.service';
+import { ConfigService } from '../../app-config.service';
+import { AppConfig } from '../../app-config';
 import * as moment from 'moment';
 
 @Injectable()
@@ -16,8 +18,15 @@ export class AuthenticationService {
     public currentUser$: Observable<User>;
     private _currentUser: User;
     public redirectUrl: string;
+    public returningMember: boolean; // temporary hack
+    private config: AppConfig;
 
-    constructor(private dataService: BhmcDataService, private memberService: MemberService) {
+    constructor(
+        private dataService: BhmcDataService,
+        private memberService: MemberService,
+        private configService: ConfigService
+    ) {
+        this.config = this.configService.config;
         if (!this._currentUser) {
             let storedUser = this.getFromStorage('bhmc_user', true);
             if (!storedUser) {
@@ -58,10 +67,14 @@ export class AuthenticationService {
             })
             .flatMap(user => {
                 this._currentUser = user;
-                return this.memberService.currentMembershipYear(user.member.id);
+                return this.memberService.isRegistered(this.config.registrationId, this._currentUser.member.id);
             })
-            .map(year => {
-                this._currentUser.member.membershipYear = year;
+            .flatMap(isCurrent => {
+                this._currentUser.member.membershipIsCurrent = isCurrent;
+                return this.memberService.isRegistered(this.config.matchPlayId, this._currentUser.member.id);
+            })
+            .map(isParticipant => {
+                this._currentUser.member.matchplayParticipant = isParticipant;
                 this.saveToStorage('bhmc_user', JSON.stringify(this._currentUser));
                 this.currentUserSource.next(this._currentUser);
                 return;
@@ -105,8 +118,8 @@ export class AuthenticationService {
         return this.dataService.postAuthRequest('password/reset/confirm', reset.toJson()).toPromise();
     }
 
-    createAcount(newUser: any): Promise<void> {
-        return this.dataService.postApiRequest('register-member', newUser).toPromise();
+    createAccount(newUser: any): Promise<void> {
+        return this.dataService.postApiRequest('members/register', newUser).toPromise();
     }
 
     updateAccount(partial: any): Promise<void> {
@@ -125,10 +138,14 @@ export class AuthenticationService {
         this.getUser()
             .flatMap(user => {
                 this._currentUser = user;
-                return this.memberService.currentMembershipYear(user.member.id);
+                return this.memberService.isRegistered(this.config.registrationId, this._currentUser.member.id);
             })
-            .map(year => {
-                this._currentUser.member.membershipYear = year;
+            .flatMap(isCurrent => {
+                this._currentUser.member.membershipIsCurrent = isCurrent;
+                return this.memberService.isRegistered(this.config.matchPlayId, this._currentUser.member.id);
+            })
+            .map(isParticipant => {
+                this._currentUser.member.matchplayParticipant = isParticipant;
                 this.saveToStorage('bhmc_user', JSON.stringify(this._currentUser));
                 this.currentUserSource.next(this._currentUser);
                 return;
