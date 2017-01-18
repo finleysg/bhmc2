@@ -19,8 +19,9 @@
                         </div>
                     </div>
                 </div>
+                <button *ngIf="!currentUser.isAuthenticated" class="btn btn-primary"
+                        [routerLink]="['/member', 'new-member-signup', config.registrationId]">Sign Up Now</button>
             </div>
         </div>
-        <button class="btn btn-success" [routerLink]="['/member', 'new-member-signup', 46]">Sign Up Now</button>
     </div>
 </div>

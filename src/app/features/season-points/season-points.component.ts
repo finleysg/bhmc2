@@ -9,7 +9,7 @@ import { ConfigService } from '../../app-config.service';
 })
 export class SeasonPointsComponent implements OnInit {
 
-    currentStandings: EventDocument[];
+    currentYear: EventDocument[];
     archives: EventDocument[];
 
     constructor(
@@ -21,7 +21,7 @@ export class SeasonPointsComponent implements OnInit {
     ngOnInit(): void {
         this.documentService.getDocuments(DocumentType.SeasonPoints)
             .subscribe(docs => {
-                this.currentStandings = docs.filter(d => d.year === this.configService.config.year);
+                this.currentYear = docs.filter(d => d.year === this.configService.config.year);
                 this.archives = docs.filter(d => d.year !== this.configService.config.year);
             });
     }

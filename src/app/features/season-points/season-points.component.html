@@ -20,8 +20,8 @@
                 <h2>Current Standings</h2>
             </div>
             <div class="card-body card-padding">
-                <div class="list-group" *ngIf="currentStandings">
-                    <a *ngFor="let doc of currentStandings" class="list-group-item text-center"
+                <div class="list-group" *ngIf="currentYear">
+                    <a *ngFor="let doc of currentYear" class="list-group-item text-center"
                        [href]="doc.url" target="_blank">{{doc.title}}</a>
                 </div>
             </div>

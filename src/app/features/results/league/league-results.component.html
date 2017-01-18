@@ -1,3 +1,32 @@
 <div class="block-header">
-  <h2>{{name}}e</h2>
+    <h2 class="hidden-xs">Wednesday Nights</h2>
+    <h4 class="visible-xs">Wednesday Nights</h4>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <div class="card event-card">
+            <div class="card-header">
+                <h2>Current Season</h2>
+            </div>
+            <div class="card-body card-padding">
+                <div class="list-group" *ngIf="currentYear">
+                    <a *ngFor="let doc of currentYear" class="list-group-item text-center"
+                       [href]="doc.url" target="_blank">{{doc.title}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card event-card">
+            <div class="card-header">
+                <h2>Past Seasons</h2>
+            </div>
+            <div class="card-body card-padding">
+                <div class="list-group" *ngIf="archives">
+                    <a *ngFor="let doc of archives" class="list-group-item text-center"
+                       [href]="doc.url" target="_blank">{{doc.title}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

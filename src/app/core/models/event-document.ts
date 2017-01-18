@@ -36,7 +36,7 @@ export class EventDocument {
         return documentType;
     }
 
-    static getDocType(longType: DocumentType): string {
+    static getDocumentCode(longType: DocumentType): string {
         if (longType === DocumentType.Results) {
             return 'R';
         } else if (longType === DocumentType.Teetimes) {

@@ -53,6 +53,15 @@ export class EventDetail {
         return eventType;
     }
 
+    static getEventCode(eventType: EventType): string {
+        if (eventType === EventType.League) {
+            return 'L';
+        } else if (eventType === EventType.Major) {
+            return 'W';
+        }
+        return 'TODO'; // the rest as a TODO
+    }
+
     static getSkinsType(shortType: string): SkinsType {
         let skinsType = SkinsType.None;
         if (shortType === 'I') {
