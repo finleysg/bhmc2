@@ -34,7 +34,8 @@
             'ng2-bootstrap': 'npm:ng2-bootstrap/bundles/ng2-bootstrap.umd.js',
             'sweetalert2': 'npm:sweetalert2',
             'ng2-slim-loading-bar': 'npm:ng2-slim-loading-bar/bundles/index.umd.js',
-            'raven-js': 'npm:raven-js'
+            'raven-js': 'npm:raven-js',
+            'lodash': 'npm:lodash/lodash.js'
         },
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {

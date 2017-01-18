@@ -71,7 +71,7 @@
                 <div class="row">
                     <div class="pull-right">
                         <button [disabled]="!registrationGroup.canRegister" class="btn btn-primary m-r-10 m-t-10" (click)="registerOnline()">Register Online</button>
-                        <payment [registrationGroup]="registrationGroup" [eventDetail]="eventDetail" (onClose)="paymentComplete($event)"></payment>
+                        <payment [registrationGroup]="paymentGroup" [eventDetail]="eventDetail" (onClose)="paymentComplete($event)"></payment>
                     </div>
                 </div>
                 <div class="row">

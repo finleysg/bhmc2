@@ -16,6 +16,7 @@ import { CalendarModule } from './features/calendar/calendar.module';
 import { BhmcErrorHandler } from './core/services/bhmc-error-handler.service';
 import { ConfigService, ConfigLoader } from './app-config.service';
 import { Http } from '@angular/http';
+import { SeasonPointsModule } from './features/season-points/season-points.module';
 
 @NgModule({
     imports: [
@@ -32,6 +33,7 @@ import { Http } from '@angular/http';
         ResultsModule,
         PoliciesModule,
         CalendarModule,
+        SeasonPointsModule,
     ],
     declarations: [
         AppComponent

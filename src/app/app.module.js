@@ -26,6 +26,7 @@ var calendar_module_1 = require('./features/calendar/calendar.module');
 var bhmc_error_handler_service_1 = require('./core/services/bhmc-error-handler.service');
 var app_config_service_1 = require('./app-config.service');
 var http_1 = require('@angular/http');
+var season_points_module_1 = require('./features/season-points/season-points.module');
 var AppModule = (function () {
     function AppModule() {
     }
@@ -45,6 +46,7 @@ var AppModule = (function () {
                 results_module_1.ResultsModule,
                 policies_module_1.PoliciesModule,
                 calendar_module_1.CalendarModule,
+                season_points_module_1.SeasonPointsModule,
             ],
             declarations: [
                 app_component_1.AppComponent

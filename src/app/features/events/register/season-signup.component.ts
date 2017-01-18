@@ -6,17 +6,18 @@ import { PaymentComponent } from '../../../shared/payments/payment.component';
 import { ToasterService } from 'angular2-toaster';
 import { ConfigService } from '../../../app-config.service';
 import { AppConfig } from '../../../app-config';
+import * as _ from 'lodash';
 
 @Component({
     moduleId: module.id,
     templateUrl: 'season-signup.component.html',
 })
-
 export class SeasonSignupComponent implements OnInit {
 
     @ViewChild(PaymentComponent) private paymentComponent: PaymentComponent;
 
     public registrationGroup: EventRegistrationGroup;
+    public paymentGroup: EventRegistrationGroup;
     public eventDetail: EventDetail;
     public currentUser: User;
     public config: AppConfig;
@@ -67,7 +68,10 @@ export class SeasonSignupComponent implements OnInit {
     registerOnline(): void {
         this.eventService.reserve(this.eventDetail.id)
             .then((group: EventRegistrationGroup) => {
-                Object.assign(this.registrationGroup, group);
+                // preserve the registration choices made
+                let registration = _.merge({}, group.registrations[0], this.registrationGroup.registrations[0]);
+                this.paymentGroup = _.merge({}, group, this.registrationGroup);
+                this.paymentGroup.registrations[0] = registration;
                 this.updatePayment();
                 this.paymentComponent.open();
             })
@@ -87,7 +91,7 @@ export class SeasonSignupComponent implements OnInit {
                     this.toaster.pop('error', 'Error', err);
                 });
         } else {
-            this.eventService.cancelReservation(this.registrationGroup);
+            this.eventService.cancelReservation(this.paymentGroup);
         }
     }
 }

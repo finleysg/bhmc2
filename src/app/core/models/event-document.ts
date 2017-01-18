@@ -35,6 +35,25 @@ export class EventDocument {
         }
         return documentType;
     }
+
+    static getDocType(longType: DocumentType): string {
+        if (longType === DocumentType.Results) {
+            return 'R';
+        } else if (longType === DocumentType.Teetimes) {
+            return 'T'
+        } else if (longType === DocumentType.SeasonPoints) {
+            return 'P'
+        } else if (longType === DocumentType.DamCup) {
+            return 'D'
+        } else if (longType === DocumentType.MatchPlay) {
+            return 'M'
+        } else if (longType === DocumentType.Financial) {
+            return 'F'
+        } else if (longType === DocumentType.SignUp) {
+            return 'S'
+        }
+        return 'O';
+    }
 }
 
 export enum DocumentType {

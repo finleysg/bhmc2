@@ -1,0 +1,43 @@
+<div class="block-header">
+    <h2 class="hidden-xs">Season Long Points</h2>
+    <h4 class="visible-xs">Season Long Points</h4>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card event-card">
+            <div class="card-header">
+                <h2>Notes and Policies</h2>
+            </div>
+            <div class="card-body card-padding">
+                <p>TODO: how season long points works: specific breakdown of point allotment by finish and the
+                handling of ties / tie breakers</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card event-card">
+            <div class="card-header">
+                <h2>Current Standings</h2>
+            </div>
+            <div class="card-body card-padding">
+                <div class="list-group" *ngIf="currentStandings">
+                    <a *ngFor="let doc of currentStandings" class="list-group-item text-center"
+                       [href]="doc.url" target="_blank">{{doc.title}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card event-card">
+            <div class="card-header">
+                <h2>Past Seasons</h2>
+            </div>
+            <div class="card-body card-padding">
+                <div class="list-group" *ngIf="archives">
+                    <a *ngFor="let doc of archives" class="list-group-item text-center"
+                       [href]="doc.url" target="_blank">{{doc.title}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

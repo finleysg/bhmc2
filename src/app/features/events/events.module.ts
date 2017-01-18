@@ -9,7 +9,8 @@ import { PaymentTestComponent } from './test/payment-test.component';
 import { RegisteredComponent } from './register/registered.component';
 import { ReadonlyTableComponent } from './register/readonly-table.component';
 import { SeasonSignupComponent } from './register/season-signup.component';
-import { MatchPlaySignupComponent } from './register/matchplay-signup.component';
+import { MatchPlaySignupComponent } from './match-play/matchplay-signup.component';
+import { MatchPlayComponent } from './match-play/match-play.component';
 
 @NgModule({
     imports: [
@@ -25,6 +26,7 @@ import { MatchPlaySignupComponent } from './register/matchplay-signup.component'
         RegisteredComponent,
         ReadonlyTableComponent,
         SeasonSignupComponent,
+        MatchPlayComponent,
         MatchPlaySignupComponent
     ],
     providers: [

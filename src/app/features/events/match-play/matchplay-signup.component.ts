@@ -4,6 +4,7 @@ import { User, AuthenticationService, EventDetail,
 import { ActivatedRoute, Router } from '@angular/router';
 import { PaymentComponent } from '../../../shared/payments/payment.component';
 import { ToasterService } from 'angular2-toaster';
+import * as _ from 'lodash';
 
 @Component({
     moduleId: module.id,
@@ -15,6 +16,7 @@ export class MatchPlaySignupComponent implements OnInit {
     @ViewChild(PaymentComponent) private paymentComponent: PaymentComponent;
 
     public registrationGroup: EventRegistrationGroup;
+    public paymentGroup: EventRegistrationGroup;
     public eventDetail: EventDetail;
     public currentUser: User;
     public application: EventDocument;
@@ -56,11 +58,14 @@ export class MatchPlaySignupComponent implements OnInit {
         }
         this.eventService.reserve(this.eventDetail.id)
             .then((group: EventRegistrationGroup) => {
-                Object.assign(this.registrationGroup, group);
+                // preserve the registration choices made
+                let registration = _.merge({}, group.registrations[0], this.registrationGroup.registrations[0]);
+                this.paymentGroup = _.merge({}, group, this.registrationGroup);
+                this.paymentGroup.registrations[0] = registration;
                 this.updatePayment();
                 this.paymentComponent.open();
             })
-            .catch(err => {
+            .catch((err: string) => {
                 this.toaster.pop('error', 'Error', err);
             });
     }
@@ -71,11 +76,11 @@ export class MatchPlaySignupComponent implements OnInit {
                 .then(() => {
                     this.router.navigate(['registered'], { relativeTo: this.route.parent });
                 })
-                .catch(err => {
+                .catch((err: string) => {
                     this.toaster.pop('error', 'Error', err);
-                });
+                })
         } else {
-            this.eventService.cancelReservation(this.registrationGroup);
+            this.eventService.cancelReservation(this.paymentGroup);
         }
     }
 }

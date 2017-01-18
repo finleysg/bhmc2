@@ -3,26 +3,10 @@
     <h4 class="visible-xs">{{ eventDetail.name }}</h4>
 </div>
 <div class="row" *ngIf="eventDetail">
-    <div class="col-md-6">
-        <div class="card event-card">
-            <div class="card-header">
-                <h2>Notes and Policies</h2>
-            </div>
-            <div class="card-body card-padding">
-                <p><strong>Registration open:</strong>
-                    {{ eventDetail.signupStart.format('dddd, MMMM Do, h:mm a') }} - {{ eventDetail.signupEnd.format('dddd, MMMM Do, h:mm a') }}
-                </p>
-                <div [markdown]="eventDetail.description"></div>
-                <div>
-                    <a [href]="application.url" target="_blank" class="btn btn-info event-button m-r-10">Offline Application</a>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="col-md-6 col-xs-12">
         <div class="card event-card">
             <div class="card-header">
-                <h2>Online Registration</h2>
+                <h2>Match Play Registration</h2>
             </div>
             <div class="card-body card-padding">
                 <div class="row hidden-xs">
@@ -71,7 +55,7 @@
                 <div class="row">
                     <div class="pull-right">
                         <button [disabled]="!registrationGroup.canRegister" class="btn btn-primary m-r-10 m-t-10" (click)="registerOnline()">Register Online</button>
-                        <payment [registrationGroup]="registrationGroup" [eventDetail]="eventDetail" (onClose)="paymentComplete($event)"></payment>
+                        <payment [registrationGroup]="paymentGroup" [eventDetail]="eventDetail" (onClose)="paymentComplete($event)"></payment>
                     </div>
                 </div>
                 <div class="row">

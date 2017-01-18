@@ -81,14 +81,14 @@ export class BhmcDataService {
         let options = new RequestOptions({method: method, headers: headers});
         if (method === RequestMethod.Get) {
             let params = new URLSearchParams();
-            if (Object.getOwnPropertyNames(data).length === 0) {
+            // if (Object.getOwnPropertyNames(data).length === 0) {
                 for (let key in data) {
                     if (data.hasOwnProperty(key)) {
                         params.set(key, data[key]);
                     }
                 }
                 options.search = params;
-            }
+            // }
         } else {
             options.body = JSON.stringify(data);
         }
