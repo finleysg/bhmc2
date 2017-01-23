@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { User, AuthenticationService, EventDetail, EventDocument, DocumentType } from '../../../core';
+import { User, AuthenticationService, EventDetail, EventDocument, DocumentType, DialogService } from '../../../core';
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 
@@ -17,6 +17,7 @@ export class MatchPlayComponent implements OnInit {
     public canRegister: boolean;
 
     constructor(private route: ActivatedRoute,
+                private dialogService: DialogService,
                 private authService: AuthenticationService) {
     }
 
@@ -28,5 +29,9 @@ export class MatchPlayComponent implements OnInit {
                 this.application = this.eventDetail.getDocument(DocumentType.SignUp);
                 this.canRegister = this.eventDetail.signupEnd.isAfter(moment()) && !this.currentUser.member.matchplayParticipant;
             });
+    }
+
+    showTodo() {
+        this.dialogService.info('Admin Placeholder', 'This will be an admin function where you can upload the latest brackets or standings.');
     }
 }

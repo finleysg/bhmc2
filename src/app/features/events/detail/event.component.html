@@ -1,5 +1,29 @@
 <div class="block-header">
     <h2>{{ eventDetail.name }} ({{ eventDetail.eventType }})</h2>
+    <ul class="actions" *ngIf="currentUser.isStaff">
+        <li class="dropdown" dropdown>
+            <a href="" dropdownToggle="" class="dropdown-toggle" aria-haspopup="true" aria-expanded="true">
+                <i class="zmdi zmdi-wrench"></i>
+            </a>
+            <ul dropdownMenu class="dropdown-menu dropdown-menu-right">
+                <li>
+                    <a class="clickable" (click)="showTodo('add-remove')">Add or Remove Groups</a>
+                </li>
+                <li>
+                    <a class="clickable" (click)="showTodo('report')">Event Report</a>
+                </li>
+                <li>
+                    <a class="clickable" (click)="showTodo('pre-event')">Pre-event Registration</a>
+                </li>
+                <li>
+                    <a class="clickable" (click)="showTodo('teetimes')">Upload Teetimes</a>
+                </li>
+                <li>
+                    <a class="clickable" (click)="showTodo('results')">Upload Results</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
 </div>
 <div class="row">
     <div class="col-md-9">
