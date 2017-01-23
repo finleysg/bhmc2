@@ -4,9 +4,9 @@
 
             <header class="fc-toolbar">
                 <div class="month-title">
-                  <a [routerLink]="['/calendar', calendar.lastMonth().year, calendar.lastMonth().month.toLowerCase()]">&lt;</a>
+                  <a class="month-nav" [routerLink]="['/calendar', calendar.lastMonth().year, calendar.lastMonth().month.toLowerCase()]">&lt;</a>
                   <span>{{calendar.thisMonth().month}} {{calendar.thisMonth().year}}</span>
-                  <a [routerLink]="['/calendar', calendar.nextMonth().year, calendar.nextMonth().month.toLowerCase()]">&gt;</a>
+                  <a class="month-nav" [routerLink]="['/calendar', calendar.nextMonth().year, calendar.nextMonth().month.toLowerCase()]">&gt;</a>
                 </div>
             </header>
 
@@ -28,7 +28,8 @@
                         <div class="date hidden-xs">{{d.day}}</div>
                         <div class="date visible-xs">{{d.date | date: 'fullDate'}}</div>
                         <div *ngFor="let e of d.events" class="event" [ngClass]="e.eventTypeClass()">
-                            <div class="event-desc"><a [routerLink]="['/events', e.id, 'detail']">{{e.name}}</a></div>
+                            <div *ngIf="!e.externalUrl" class="event-desc"><a [routerLink]="['/events', e.id, 'detail']">{{e.name}}</a></div>
+                            <div *ngIf="e.externalUrl" class="event-desc"><a [href]="e.externalUrl" target="_blank">{{e.name}}</a></div>
                         </div>
                     </li>
                 </ul>

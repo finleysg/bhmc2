@@ -10,10 +10,9 @@ import * as _ from 'lodash';
     moduleId: module.id,
     templateUrl: 'matchplay-signup.component.html',
 })
-
 export class MatchPlaySignupComponent implements OnInit {
 
-    @ViewChild(PaymentComponent) private paymentComponent: PaymentComponent;
+    @ViewChild(PaymentComponent) paymentComponent: PaymentComponent;
 
     public registrationGroup: EventRegistrationGroup;
     public paymentGroup: EventRegistrationGroup;

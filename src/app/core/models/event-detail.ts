@@ -1,6 +1,6 @@
 import { EventRegistration } from './event-registration';
 import { DocumentType, EventDocument } from './event-document';
-import * as moment from 'moment';
+import moment from 'moment';
 
 export class EventDetail {
     id: number;

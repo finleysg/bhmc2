@@ -30,7 +30,7 @@
             'ng2-cookies': 'npm:ng2-cookies',
             'angular2-toaster': 'npm:angular2-toaster/bundles/angular2-toaster.umd.js',
             'showdown': 'npm:showdown/dist',
-            'moment': 'npm:moment',
+            'moment': 'npm:moment/moment.js',
             'ng2-bootstrap': 'npm:ng2-bootstrap/bundles/ng2-bootstrap.umd.js',
             'sweetalert2': 'npm:sweetalert2',
             'ng2-slim-loading-bar': 'npm:ng2-slim-loading-bar/bundles/index.umd.js',
@@ -62,7 +62,7 @@
                 defaultExtension: 'js'
             },
             'moment': {
-                main: 'moment',
+                // main: 'moment',
                 defaultExtension: 'js'
             },
             'ng2-bootstrap': {

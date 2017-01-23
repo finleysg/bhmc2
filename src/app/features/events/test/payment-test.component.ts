@@ -12,7 +12,7 @@ import { EventDetail } from '../../../core/models/event-detail';
 })
 export class PaymentTestComponent implements OnInit {
 
-    @ViewChild(PaymentComponent) private paymentComponent: PaymentComponent;
+    @ViewChild(PaymentComponent) paymentComponent: PaymentComponent;
 
     public group: EventRegistrationGroup;
     public eventDetail: EventDetail;

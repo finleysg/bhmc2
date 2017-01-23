@@ -2,7 +2,7 @@ import { EventRegistration } from './event-registration';
 import { EventPayment } from './event-payment';
 import { EventDetail } from './event-detail';
 import { PublicMember } from './member';
-import * as moment from 'moment';
+import moment from 'moment';
 import { User } from './user';
 
 export class EventRegistrationGroup {

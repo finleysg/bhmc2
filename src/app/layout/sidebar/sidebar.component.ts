@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { User, LayoutService, AuthenticationService } from '../../core';
 import { AppConfig } from '../../app-config';
 import { ConfigService } from '../../app-config.service';
-import * as moment from 'moment';
+import moment from 'moment';
 
 @Component({
     moduleId: module.id,

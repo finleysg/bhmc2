@@ -47,7 +47,7 @@ export class PaymentComponent implements OnInit {
     @Input() registrationGroup: EventRegistrationGroup;
     @Input() eventDetail: EventDetail;
     @Output() onClose = new EventEmitter<boolean>();
-    @ViewChild('paymentModal') private paymentModal: ModalDirective;
+    @ViewChild('paymentModal') paymentModal: ModalDirective;
 
     public card: CreditCard;
     public messages: ProcessingResult[];

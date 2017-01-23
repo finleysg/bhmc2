@@ -1,0 +1,8 @@
+
+> BHMC@1.0.0 aot:rollup C:\projects\bhmc2
+> rollup -c rollup.config.js
+
+
+> BHMC@1.0.0 aot:rollup C:\projects\bhmc2
+> rollup -c rollup.config.js
+

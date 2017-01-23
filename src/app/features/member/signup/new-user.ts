@@ -1,5 +1,5 @@
 import { User } from '../../../core';
-import * as moment from 'moment';
+import moment from 'moment';
 
 export class NewUser {
 

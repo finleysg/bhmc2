@@ -8,7 +8,7 @@ import { Cookie } from 'ng2-cookies';
 import { MemberService } from './member.service';
 import { ConfigService } from '../../app-config.service';
 import { AppConfig } from '../../app-config';
-import * as moment from 'moment';
+import moment from 'moment';
 
 @Injectable()
 export class AuthenticationService {

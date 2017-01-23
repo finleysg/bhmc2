@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
 import { NewMemberDataService, CheckType } from './new-member-data.service';
 import * as _ from 'lodash';
-import * as moment from 'moment';
+import moment from 'moment';
 
 @Injectable()
 export class NewMemberForm {
@@ -94,6 +94,7 @@ export class NewMemberForm {
 
     updateValue(user: NewUser): void {
         Object.assign(user, this.userForm.value);
+        user.forwardTees = user.forwardTees || false;
     }
 
     onStatusChanged(): void {

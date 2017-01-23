@@ -6,7 +6,7 @@ import { ToasterService } from 'angular2-toaster';
 import { PaymentComponent } from '../../../shared/payments/payment.component';
 import { ConfigService } from '../../../app-config.service';
 import { AppConfig } from '../../../app-config';
-import {  FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { NewUser } from './new-user';
 import { NewMemberForm } from './new-member-form.service';
 
@@ -17,7 +17,7 @@ import { NewMemberForm } from './new-member-form.service';
 })
 export class NewMemberSignupComponent implements OnInit {
 
-    @ViewChild(PaymentComponent) private paymentComponent: PaymentComponent;
+    @ViewChild(PaymentComponent) paymentComponent: PaymentComponent;
 
     public newUser: NewUser;
     public userForm: FormGroup;

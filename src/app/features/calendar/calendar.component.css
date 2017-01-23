@@ -115,13 +115,13 @@
     background-color: blue;
 }
 #calendar .holiday-pro-shop-event {
-    background-color: green;
+    background-color: purple;
 }
 #calendar .state-tournament {
-    background-color: lightblue;
+    background-color: green;
 }
 #calendar .other {
-    background-color: purple;
+    background-color: lightblue;
 }
 
 #calendar .event-desc {
@@ -139,6 +139,11 @@
     color: #666 !important;
 }
 
+a.month-nav {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+}
 /* ============================
 				Mobile Responsiveness
    ============================*/

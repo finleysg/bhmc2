@@ -54,7 +54,7 @@
             </div>
             <div class="card-body card-padding">
                 <p><strong>Event fee:</strong> {{ eventDetail.eventFee | currency:'USD':true }}</p>
-                <p *ngIf="eventDetail.skinsType !== 'None'"><strong>{{ eventDetail.skinsType }} Skins:</strong>
+                <p *ngIf="hasSkins"><strong>{{ eventDetail.skinsType }} Skins:</strong>
                     {{ eventDetail.skinsFee | currency:'USD':true }}</p>
                 <p><strong>Group size:</strong> {{ eventDetail.groupSize }}</p>
                 <p><strong>Season long points:</strong> {{ eventDetail.seasonPoints }}</p>

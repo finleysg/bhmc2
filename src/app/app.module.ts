@@ -15,7 +15,6 @@ import { SharedModule } from './shared/shared.module';
 import { CalendarModule } from './features/calendar/calendar.module';
 import { BhmcErrorHandler } from './core/services/bhmc-error-handler.service';
 import { ConfigService, ConfigLoader } from './app-config.service';
-import { Http } from '@angular/http';
 import { SeasonPointsModule } from './features/season-points/season-points.module';
 import { DamCupModule } from './features/dam-cup/dam-cup.module';
 
@@ -46,7 +45,7 @@ import { DamCupModule } from './features/dam-cup/dam-cup.module';
         {
             provide: APP_INITIALIZER,
             useFactory: ConfigLoader,
-            deps: [ConfigService, Http],
+            deps: [ConfigService],
             multi: true
         }
     ],

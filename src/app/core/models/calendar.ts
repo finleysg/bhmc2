@@ -1,5 +1,5 @@
 import { CalendarEvent } from './calendar-event';
-import * as moment from 'moment';
+import moment from 'moment';
 
 export class Day {
     name: string;
@@ -176,9 +176,8 @@ export class Calendar {
     addEvent(event: CalendarEvent): void {
         for (const week of this.weeks) {
             for (const day of week.days) {
-                if (day.date.isSame(event.startDate, 'day')) {
+                if (day.date.isBetween(event.startDate, event.endDate, 'day', '[]')) {
                     day.events.push(event);
-                    break; //TODO: can we return; here?
                 }
             }
         }

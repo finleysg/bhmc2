@@ -64,5 +64,5 @@ export enum DocumentType {
     MatchPlay = <any>'Match Play',
     Financial = <any>'Financial Statements',
     SignUp = <any>'Sign Up',
-    Other = <any>'Unknown'
+    Other = <any>'Other'
 }

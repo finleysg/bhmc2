@@ -14,7 +14,7 @@ import * as _ from 'lodash';
 })
 export class SeasonSignupComponent implements OnInit {
 
-    @ViewChild(PaymentComponent) private paymentComponent: PaymentComponent;
+    @ViewChild(PaymentComponent) paymentComponent: PaymentComponent;
 
     public registrationGroup: EventRegistrationGroup;
     public paymentGroup: EventRegistrationGroup;

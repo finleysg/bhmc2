@@ -8,8 +8,8 @@ import { EventDetailService, EventDetail } from '../../../core';
 })
 export class RegisteredComponent implements OnInit {
 
-    private eventDetail: EventDetail;
-    private courses: any[];
+    eventDetail: EventDetail;
+    courses: any[];
 
     constructor(private eventService: EventDetailService,
                 private router: Router,

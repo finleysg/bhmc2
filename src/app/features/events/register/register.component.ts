@@ -6,7 +6,7 @@ import { ActivatedRoute, Router, CanDeactivate } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { TypeaheadMatch } from 'ng2-bootstrap';
 import { PaymentComponent, ProcessingStatus } from '../../../shared/payments/payment.component';
-import * as moment from 'moment';
+import moment from 'moment';
 
 @Component({
     moduleId: module.id,
@@ -16,7 +16,7 @@ import * as moment from 'moment';
 
 export class RegisterComponent implements OnInit, CanDeactivate<CanComponentDeactivate> {
 
-    @ViewChild(PaymentComponent) private paymentComponent: PaymentComponent;
+    @ViewChild(PaymentComponent) paymentComponent: PaymentComponent;
 
     public registrationGroup: EventRegistrationGroup;
     public eventDetail: EventDetail;
