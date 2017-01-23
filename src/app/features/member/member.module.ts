@@ -11,6 +11,8 @@ import { AccountInfoComponent } from './account/account-info.component';
 import { AccountSettingsComponent } from './account/account-settings.component';
 import { ChangePasswordComponent } from './account/change-password.component';
 import { NewMemberSignupComponent } from './signup/new-member-signup.component';
+import { NewMemberDataService } from './signup/new-member-data.service';
+import { NewMemberForm } from './signup/new-member-form.service';
 
 @NgModule({
     imports: [
@@ -28,6 +30,10 @@ import { NewMemberSignupComponent } from './signup/new-member-signup.component';
         AccountSettingsComponent,
         ChangePasswordComponent,
         NewMemberSignupComponent
+    ],
+    providers: [
+        NewMemberDataService,
+        NewMemberForm
     ]
 })
 export class MemberModule { }

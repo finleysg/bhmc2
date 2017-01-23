@@ -1,6 +1,6 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule }  from '@angular/common';
-import { FormsModule }   from '@angular/forms';
+import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 import { RouterModule }  from '@angular/router';
 import { SpinnerDirective } from './spinner/spinner.directive';
 import { SpinnerService } from './spinner/spinner.service';
@@ -16,6 +16,7 @@ import { PaymentComponent } from './payments/payment.component';
     imports: [
         CommonModule,
         FormsModule,
+        ReactiveFormsModule,
         RouterModule,
         ToasterModule,
         TypeaheadModule.forRoot(),
@@ -39,6 +40,7 @@ import { PaymentComponent } from './payments/payment.component';
     exports: [
         CommonModule,
         FormsModule,
+        ReactiveFormsModule,
         RouterModule,
         SpinnerDirective,
         SpinnerButtonComponent,

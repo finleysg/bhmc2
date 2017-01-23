@@ -39,9 +39,6 @@
         </div>
 
         <ul class="main-menu">
-            <li [routerLinkActive]="['active']" *ngIf="!user.isAuthenticated">
-                <a [routerLink]="['/member/login']" (click)="close()"> Login</a>
-            </li>
             <li [routerLinkActive]="['active']">
                 <a [routerLink]="['/home']" (click)="close()">
                     <i class="zmdi zmdi-home"></i>
@@ -134,6 +131,9 @@
                     <i class="zmdi zmdi-help"></i>
                     About Us
                 </a>
+            </li>
+            <li [routerLinkActive]="['active']" *ngIf="!user.isAuthenticated">
+                <a [routerLink]="['/member/login']" (click)="close()"> Login</a>
             </li>
             <li class="sub-menu clickable" [routerLinkActive]="['active']" *ngIf="user.isStaff">
                 <a toggle-submenu><i class="zmdi zmdi-wrench"></i> Administration</a>

@@ -103,6 +103,17 @@ export class AuthenticationService {
             });
     }
 
+    checkEmail(email: string): Promise<boolean> {
+        return this.dataService.getApiRequest('members/check', {'e': email})
+            .toPromise()
+            .then(() => {
+                return false;
+            })
+            .catch(() => {
+                return true;  // TODO: only on a 409
+            });
+    }
+
     resetPassword(email: string): Promise<void> {
         return this.dataService.postAuthRequest('password/reset', {email: email}).toPromise();
     }
