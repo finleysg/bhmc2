@@ -1,14 +1,17 @@
-import rollup      from 'rollup';
+// import rollup      from 'rollup';
 import nodeResolve from 'rollup-plugin-node-resolve';
 import commonjs    from 'rollup-plugin-commonjs';
 import uglify      from 'rollup-plugin-uglify';
 
 export default {
     entry: 'src/app/main-aot.js',
-    dest: 'dist/bhmc.min.js', // output a single application bundle
+    dest: 'tmp/bhmc.min.js', // output a single application bundle
     sourceMap: true,
-    sourceMapFile: 'dist/bhmc.min.js.map',
+    // sourceMapFile: 'tmp/bhmc.min.js.map',
     format: 'iife',
+    onwarn: (warning) => {
+        if ( warning.code === 'THIS_IS_UNDEFINED' ) return;
+    },
     plugins: [
         nodeResolve({jsnext: true, module: true}),
         commonjs({

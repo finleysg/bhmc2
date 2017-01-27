@@ -32,7 +32,6 @@
             'showdown': 'npm:showdown/dist',
             'moment': 'npm:moment/moment.js',
             'ng2-bootstrap': 'npm:ng2-bootstrap/bundles/ng2-bootstrap.umd.js',
-            'sweetalert2': 'npm:sweetalert2',
             'ng2-slim-loading-bar': 'npm:ng2-slim-loading-bar/bundles/index.umd.js',
             'raven-js': 'npm:raven-js',
             'lodash': 'npm:lodash/lodash.js'
@@ -66,10 +65,6 @@
                 defaultExtension: 'js'
             },
             'ng2-bootstrap': {
-                defaultExtension: 'js'
-            },
-            'sweetalert2': {
-                main: 'dist/sweetalert2.js',
                 defaultExtension: 'js'
             },
             'raven-js': {
