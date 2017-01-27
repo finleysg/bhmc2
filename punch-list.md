@@ -14,7 +14,6 @@
 * Check and fix formatting on event markdown (templates and derived events)
 * From the calendar, external events should open in a new window
 * Financials/payments FAQs
-* Fix bug - Financials is opening to club policies
 * Acceptable scores item: adjust to read better on the phone
 * Payments: message to please don't navigate away
 * Payments: ability to choose whether or not to save a card
@@ -37,7 +36,10 @@
 * malihu scrollbars
 * Google analytics
 * Typo in payments placeholder pop-up
+* Move payment form to reactive forms
 * On mobile, close side menu on logout
+* Change admin title to BHMC Administration
+* Enable manual registration for events (cash flag?)
 * Reports:
     * Event report (copy of existing)
     * Payment report by event

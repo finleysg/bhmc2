@@ -5,9 +5,9 @@ import uglify      from 'rollup-plugin-uglify';
 
 export default {
     entry: 'src/app/main-aot.js',
-    dest: 'dist/bhmc.js', // output a single application bundle
+    dest: 'dist/bhmc.min.js', // output a single application bundle
     sourceMap: true,
-    sourceMapFile: 'dist/bhmc.js.map',
+    sourceMapFile: 'dist/bhmc.min.js.map',
     format: 'iife',
     plugins: [
         nodeResolve({jsnext: true, module: true}),
@@ -20,7 +20,7 @@ export default {
                 'node_modules/lodash/lodash.js': ['merge', 'clone', 'cloneDeep'],
                 'node_modules/showdown/dist/showdown.js': ['Converter']
             }
-        })
-        // uglify()
+        }),
+        uglify()
     ]
 }

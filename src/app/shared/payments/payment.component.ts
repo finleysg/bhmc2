@@ -90,8 +90,11 @@ export class PaymentComponent implements OnInit {
         this.messages.length = 0;
         this.processStatus = ProcessingStatus.Pending;
         this.paymentModal.config = { backdrop: 'static', keyboard: false };
-        this.spinnerElement = this.elementRef.nativeElement.querySelector('#spinner-span');
         this.paymentModal.show();
+    }
+
+    onShown(): void {
+        this.spinnerElement = this.elementRef.nativeElement.querySelector('#spinner-span');
     }
 
     cancelPayment(): void {

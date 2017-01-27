@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { default as swal } from 'sweetalert2';
+
+declare const swal: any;
 
 @Injectable()
 export class DialogService {

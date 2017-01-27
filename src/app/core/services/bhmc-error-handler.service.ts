@@ -2,12 +2,12 @@ import { Injectable, ErrorHandler } from '@angular/core';
 import { Response } from '@angular/http';
 import { ConfigService } from '../../app-config.service';
 import { AppConfig } from '../../app-config';
-import * as Raven from 'raven-js';
+import Raven from 'raven-js';
 
 @Injectable()
 export class BhmcErrorHandler extends ErrorHandler {
 
-    private config: AppConfig
+    private config: AppConfig;
 
     constructor(
         private configService: ConfigService
@@ -16,7 +16,10 @@ export class BhmcErrorHandler extends ErrorHandler {
         this.config = configService.config;
         if (!this.config.isLocal) {
             const options = { 'release': configService.config.version, 'autoBreadcrumbs': { 'xhr': false }};
-            Raven.config(this.config.ravenDsn, options).install();
+            Raven
+                .config(`https://${this.config.ravenDsn}@sentry.io/bhmc`, options)
+                .install();
+            // Raven.config(this.config.ravenDsn, options).install();
         }
     }
 
