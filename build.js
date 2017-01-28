@@ -1,6 +1,6 @@
 const fs = require('fs-extra');
 const crypto = require('crypto');
-const replaceStream = require('replaceStream');
+const replaceStream = require('replacestream');
 const version = require('./package.json').version;
 
 fs.emptyDirSync('dist');
@@ -44,8 +44,7 @@ js_resources.map(function(f) {
 // CSS files to hash and inject
 let cssInject = [];
 const css_resources = [
-    'tmp/app.min.css',
-    'tmp/app.min.css.map',    
+    'src/assets/css/app.css',
     'src/assets/css/vendor.css'
 ];
 fs.mkdir('./dist/assets/css');
@@ -70,4 +69,4 @@ fs.createReadStream('src/index-dist.html')
     .pipe(replaceStream('INJECT-VERSION', displayVersion))
     .pipe(fs.createWriteStream('dist/index.html'));
 
-// fs.emptyDir('tmp');
+fs.emptyDir('tmp');
