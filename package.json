@@ -1,6 +1,6 @@
 {
   "name": "BHMC",
-  "version": "1.0.0",
+  "version": "0.9.0",
   "description": "The Bunker Hills Men's Club website for event registration and results",
   "scripts": {
     "start": "concurrently \"npm run tsc:w\" \"npm run lite\" ",
@@ -13,13 +13,13 @@
     "test-once": "tsc && karma start karma.conf.js --single-run",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
-    "clean": "rm -rf ./dist; mkdir ./dist",
-    "copy": "node copy-to-dist",
-    "minify-css": "cleancss --source-map -o ./dist/assets/css/app.min.css ./src/assets/css/app.css",
+    "minify-css": "cleancss --source-map -o ./tmp/app.min.css ./src/assets/css/app.css",
     "ngc": "ngc -p tsconfig-aot.json",
     "rollup": "rollup -c rollup.config.js",
-    "build": "npm run clean && npm run copy && npm run less && npm run ngc && npm run rollup",
-    "publish": "surge --domain https://oceanic-tendency.surge.sh/"
+    "build": "npm run ngc && npm run rollup && npm run less && npm run minify-css && node build",
+    "build-patch": "npm version patch && npm run build",
+    "build-minor": "npm version minor && npm run build",
+    "publish": "cwd ./dist; surge --domain https://oceanic-tendency.surge.sh/;"
   },
   "keywords": [
     "golf",
@@ -40,7 +40,6 @@
     "@angular/platform-server": "2.4.1",
     "@angular/router": "3.4.1",
     "angular2-toaster": "2.0.0",
-    "clean-css-cli": "4.0.0",
     "core-js": "2.4.1",
     "lodash": "4.16.4",
     "material-design-iconic-font": "2.2.0",
@@ -50,10 +49,8 @@
     "ng2-slim-loading-bar": "2.0.7",
     "raven-js": "3.9.1",
     "reflect-metadata": "0.1.8",
-    "rollup": "0.41.0",
     "rxjs": "5.0.1",
     "showdown": "1.5.4",
-    "systemjs": "0.19.40",
     "zone.js": "0.7.4"
   },
   "devDependencies": {
@@ -64,6 +61,7 @@
     "@types/showdown": "1.4.31",
     "@types/stripe": "0.0.32",
     "canonical-path": "0.0.2",
+    "clean-css-cli": "4.0.0",
     "concurrently": "3.1.0",
     "fs-extra": "2.0.0",
     "http-server": "0.9.0",
@@ -77,11 +75,13 @@
     "lite-server": "2.2.2",
     "lodash": "4.16.4",
     "protractor": "4.0.13",
+    "replacestream": "4.0.2",
     "rimraf": "2.5.4",
     "rollup": "0.41.0",
     "rollup-plugin-commonjs": "7.0.0",
     "rollup-plugin-node-resolve": "2.0.0",
     "rollup-plugin-uglify": "1.0.1",
+    "systemjs": "0.19.40",
     "tslint": "3.15.1",
     "typescript": "2.0.10"
   },

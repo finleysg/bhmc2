@@ -5,16 +5,16 @@
     <title>Bunker Hills Men's Club</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="assets/css/app.css">
-    <link rel="stylesheet" href="assets/css/vendor.css">
+    <!-- inject:css -->
+    <!-- endinject -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.3.2/sweetalert2.min.css">
 
     <!-- Polyfill(s) for older browsers -->
     <script src="shim.min.js"></script>
     <script src="zone.min.js"></script>
     <script>window.module = 'aot';</script>
+    <script>window.bhmcVersion='INJECT-VERSION';</script>
 </head>
-
 <body>
 <!-- Google Analytics: change UA-71073175-2 to be your site's ID
 <script>
@@ -36,7 +36,8 @@
         }
     })();
 </script>
-<script src="bhmc.min.js" type="text/javascript"></script>
+<!-- inject:js -->
+<!-- endinject -->
 <script src="https://js.stripe.com/v2/" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.3.2/sweetalert2.min.js" type="text/javascript"></script>
