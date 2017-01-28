@@ -18,25 +18,38 @@ export class User {
     isAuthenticated: boolean = false;
     isStaff: boolean = false;
     isActive: boolean = false;
+    groups: any[];
 
     constructor() {
         this.member = new PrivateMember();
     }
 
-    get name() {
+    get name(): string {
         if (!this.isAuthenticated) {
             return 'Guest';
         }
         return this.firstName + ' ' + this.lastName;
     };
 
-    // TODO: this is temporary
-    isInRole(role: string) {
-        let result = true;
-        if (this.isStaff && role) {
-            result = false;
+    get isBoardMember(): boolean {
+        if (this.groups && this.groups.length > 0) {
+            return this.groups.some(g => g.name === 'Board Member');
         }
-        return result;
+        return false;
+    }
+
+    get isProshopStaff(): boolean {
+        if (this.groups && this.groups.length > 0) {
+            return this.groups.some(g => g.name === 'Proshop Staff');
+        }
+        return false;
+    }
+
+    get isOfficer(): boolean {
+        if (this.groups && this.groups.length > 0) {
+            return this.groups.some(g => g.name === 'Officer');
+        }
+        return false;
     }
 
     fromJson(json: any): User {
@@ -49,6 +62,7 @@ export class User {
             this.isAuthenticated = json.is_authenticated;
             this.isStaff = json.is_staff;
             this.isActive = json.is_active;
+            this.groups = json.groups;
             this.member = new PrivateMember().fromJson(json.member);
         }
         return this;

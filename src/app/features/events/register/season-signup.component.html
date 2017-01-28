@@ -28,7 +28,7 @@
                 <div class="row hidden-xs">
                     <div class="col-sm-3 text-info">Member</div>
                     <div class="col-sm-2 text-info">Season Fee</div>
-                    <div class="col-sm-2 text-info">Patron Card</div>
+                    <div class="col-sm-2 text-info">*Patron Card</div>
                     <div class="col-sm-2 text-info">Gold Tees</div>
                     <div class="col-sm-3 text-info text-right"><strong>Total</strong></div>
                 </div>
@@ -48,7 +48,7 @@
                     </div>
                     <div class="col-sm-2 col-xs-3">
                         <div class="checkbox">
-                            <label class="visible-xs-inline">Patron Card</label>
+                            <label class="visible-xs-inline">*Patron Card</label>
                             <input type="checkbox" [(ngModel)]="reg.isGreensFeePaid" (change)="updatePayment()"><i class="input-helper"></i>
                         </div>
                     </div>
@@ -75,6 +75,7 @@
                     </div>
                 </div>
                 <div class="row">
+                    <p class="text-info">* Seniors (62 and over) will need to purchase a patron card in person to get the senior rate.</p>
                     <div class="form-group">
                         <div class="controls ">
                             <label>Notes / Special Requests</label>

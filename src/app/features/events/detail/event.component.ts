@@ -66,7 +66,9 @@ export class EventComponent implements OnInit {
                         we use now.`;
         } else if (funcType === 'report') {
             message = `This will print the same event report(s) that you have in the current system.`;
-}
+        } else if (funcType === 'manual') {
+            message = 'This option will be where you manually sign up someone who insists on registering offline. The Luddite option.'
+        }
         this.dialogService.info('Admin Placeholder', message);
     }
 }

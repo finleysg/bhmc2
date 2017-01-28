@@ -17,6 +17,7 @@ import { BhmcErrorHandler } from './core/services/bhmc-error-handler.service';
 import { ConfigService, ConfigLoader } from './app-config.service';
 import { SeasonPointsModule } from './features/season-points/season-points.module';
 import { DamCupModule } from './features/dam-cup/dam-cup.module';
+import { ReportingModule } from './features/reporting/reporting.module';
 
 @NgModule({
     imports: [
@@ -34,7 +35,8 @@ import { DamCupModule } from './features/dam-cup/dam-cup.module';
         PoliciesModule,
         CalendarModule,
         SeasonPointsModule,
-        DamCupModule
+        DamCupModule,
+        ReportingModule
     ],
     declarations: [
         AppComponent

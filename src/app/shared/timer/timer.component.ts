@@ -15,6 +15,7 @@ export class TimerComponent implements OnInit {
     @Input() expiration: any;
     @Input() expiryMessage: string;
     public timeRemaining: string;
+    public done: boolean;
     private cancel: boolean;
 
     constructor(private toaster: ToasterService) { }
@@ -27,11 +28,12 @@ export class TimerComponent implements OnInit {
 
     update() {
         // TODO: stop timer turn red at 0:00
-        if (!this.cancel) {
+        if (!this.cancel && !this.done) {
             let remaining = this.expiration.diff(moment(), 'seconds');
             if (remaining === 0) {
                 this.toaster.pop('warning', 'Time Expired', this.expiryMessage);
                 this.onTimeElapsed.emit('cancel');
+                this.done = true;
             }
             let minutes = remaining / 60 | 0;
             let seconds = remaining % 60 | 0;
@@ -39,12 +41,11 @@ export class TimerComponent implements OnInit {
         }
     }
 
-    // TODO: do we need this?
-    // start() {
-    //     this.cancel = false;
-    // }
-    //
-    // stop() {
-    //     this.cancel = true;
-    // }
+    start() {
+        this.cancel = false;
+    }
+
+    stop() {
+        this.cancel = true;
+    }
 }

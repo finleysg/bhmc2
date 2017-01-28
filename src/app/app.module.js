@@ -27,6 +27,7 @@ var bhmc_error_handler_service_1 = require('./core/services/bhmc-error-handler.s
 var app_config_service_1 = require('./app-config.service');
 var season_points_module_1 = require('./features/season-points/season-points.module');
 var dam_cup_module_1 = require('./features/dam-cup/dam-cup.module');
+var reporting_module_1 = require('./features/reporting/reporting.module');
 var AppModule = (function () {
     function AppModule() {
     }
@@ -47,7 +48,8 @@ var AppModule = (function () {
                 policies_module_1.PoliciesModule,
                 calendar_module_1.CalendarModule,
                 season_points_module_1.SeasonPointsModule,
-                dam_cup_module_1.DamCupModule
+                dam_cup_module_1.DamCupModule,
+                reporting_module_1.ReportingModule
             ],
             declarations: [
                 app_component_1.AppComponent

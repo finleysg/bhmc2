@@ -4,7 +4,7 @@ import { LayoutService } from './core/services/layout.service';
 @Component({
     moduleId: module.id,
     selector: 'body',
-    template: `<bhmc-layout></bhmc-layout>`
+    template: `<bhmc-layout>Loading...</bhmc-layout>`
 })
 
 export class AppComponent {

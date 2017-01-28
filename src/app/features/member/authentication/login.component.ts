@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../../../core';
 import { ToasterService } from 'angular2-toaster';
+import { ConfigService } from '../../../app-config.service';
+import { AppConfig } from '../../../app-config';
 
 @Component({
     moduleId: module.id,
@@ -16,15 +18,18 @@ export class LoginComponent implements OnInit {
     };
     loading = false;
     returnUrl: string;
+    config: AppConfig;
 
     constructor(private router: Router,
                 private toaster: ToasterService,
+                private configService: ConfigService,
                 private authenticationService: AuthenticationService) {
     }
 
     ngOnInit() {
         // get return url from the auth service or default to '/'
         this.returnUrl = this.authenticationService.redirectUrl || '/';
+        this.config = this.configService.config;
     }
 
     login() {

@@ -25,7 +25,7 @@ var AppComponent = (function () {
         core_1.Component({
             moduleId: module.id,
             selector: 'body',
-            template: "<bhmc-layout></bhmc-layout>"
+            template: "<bhmc-layout>Loading...</bhmc-layout>"
         }), 
         __metadata('design:paramtypes', [layout_service_1.LayoutService])
     ], AppComponent);

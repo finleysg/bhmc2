@@ -135,14 +135,14 @@
             <li [routerLinkActive]="['active']" *ngIf="!user.isAuthenticated">
                 <a [routerLink]="['/member/login']" (click)="close()"> Login</a>
             </li>
-            <li class="sub-menu clickable" [routerLinkActive]="['active']" *ngIf="user.isStaff">
+            <li class="sub-menu clickable" [routerLinkActive]="['active']" *ngIf="user.isOfficer">
                 <a toggle-submenu><i class="zmdi zmdi-wrench"></i> Administration</a>
                 <ul>
                     <li>
                         <a href="{{adminUrl}}" target="_blank">Django (backend) Admin</a>
                     </li>
                     <li [routerLinkActive]="['active']">
-                        <a [routerLink]="['/reports']" (click)="close()">Reports</a>
+                        <a [routerLink]="['/admin', 'reporting']" (click)="close()">Reports</a>
                     </li>
                 </ul>
             </li>

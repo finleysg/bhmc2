@@ -6,6 +6,7 @@ import { ActivatedRoute, Router, CanDeactivate } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { TypeaheadMatch } from 'ng2-bootstrap';
 import { PaymentComponent, ProcessingStatus } from '../../../shared/payments/payment.component';
+import { TimerComponent } from '../../../shared/timer/timer.component';
 declare const moment: any;
 
 @Component({
@@ -17,6 +18,7 @@ declare const moment: any;
 export class RegisterComponent implements OnInit, CanDeactivate<CanComponentDeactivate> {
 
     @ViewChild(PaymentComponent) paymentComponent: PaymentComponent;
+    @ViewChild(TimerComponent) timerComponent: TimerComponent;
 
     public registrationGroup: EventRegistrationGroup;
     public eventDetail: EventDetail;
@@ -103,6 +105,7 @@ export class RegisterComponent implements OnInit, CanDeactivate<CanComponentDeac
 
     paymentComplete(result: boolean): void {
         if (result) {
+            this.timerComponent.stop();
             this.eventService.refreshEventDetail().then(() => {
                 if (this.eventDetail.eventType === EventType.Registration) {
                     this.authService.refreshUser();
@@ -117,6 +120,7 @@ export class RegisterComponent implements OnInit, CanDeactivate<CanComponentDeac
         // Guard against cancelling a paid registration
         if (this.paymentComponent.processStatus !== ProcessingStatus.Complete) {
             this.cancelling = true;
+            this.timerComponent.stop();
             this.eventService.cancelReservation(this.registrationGroup).then(() => {
                 this.eventService.refreshEventDetail().then(() => {
                     this.location.back();

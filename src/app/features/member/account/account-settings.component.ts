@@ -50,7 +50,7 @@ export class AccountSettingsComponent implements OnInit {
     }
 
     openPaymentReport(): void {
-        this.dialog.info('Coming Soon', `This button will pull all your payments for the current season from Stipe. It
+        this.dialog.info('Coming Soon', `This button will pull all your payments for the current season from Stripe. It
                                          will allow you to check for yourself if you have a doubt about whether or not
                                          a payment went through.`);
     }
