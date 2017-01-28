@@ -1,6 +1,6 @@
 import { EventRegistration } from './event-registration';
 import { DocumentType, EventDocument } from './event-document';
-import moment from 'moment';
+declare const moment: any;
 
 export class EventDetail {
     id: number;
@@ -24,11 +24,11 @@ export class EventDetail {
     skinsType: SkinsType;
     seasonPoints: number;
     requiresRegistration: boolean;
-    startDate: moment.Moment;
+    startDate: any;
     startTime: string;
     enablePayments: boolean;
-    signupStart: moment.Moment;
-    signupEnd: moment.Moment;
+    signupStart: any;
+    signupEnd: any;
     registrationMaximum: number;
     documents: EventDocument[];
     registrations: EventRegistration[];

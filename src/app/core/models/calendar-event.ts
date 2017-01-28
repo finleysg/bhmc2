@@ -1,6 +1,6 @@
 import { EventDetail, StartType } from './event-detail';
 import { EventType } from './event-detail';
-import moment from 'moment';
+declare const moment: any;
 
 export class CalendarEvent {
     id: number;
@@ -11,11 +11,11 @@ export class CalendarEvent {
     registrationWindow: string;
     externalUrl: string;
     eventType: EventType;
-    startDate: moment.Moment;
+    startDate: any;
     startTime: string;
-    endDate: moment.Moment;
-    signupStart: moment.Moment;
-    signupEnd: moment.Moment;
+    endDate: any;
+    signupStart: any;
+    signupEnd: any;
 
     eventTypeClass(): string {
         return this.eventType.toString().replace(' ', '-').toLowerCase();

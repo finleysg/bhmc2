@@ -1,16 +1,16 @@
 
 * Upload the results docs from previous years
 * Mailgun setup and testing
-* Raven testing for front end
+* Bug: can register twice (matchplay, for example)
+* Timer: stop the clock
+* Raven testing for front end (user context)
 * Raven config for the back end - testing
 * Audit permissions for api and front end
 * Three levels of admin: board, officer, sysadmin
-* Cache busting strategy
+* Caching - client and server side
 * Version strategy
 * Restyle calendar days to handle up to 4 events
 * Older events or events without courses should fail more gracefully
-* Enter 2017 event calendar (including MGA/MPGA events)
-* Check and fix formatting on event markdown (templates and derived events)
 * Financials/payments FAQs
 * Payments: ability to choose whether or not to save a card
 * Payments: saving/selectind multiple cards

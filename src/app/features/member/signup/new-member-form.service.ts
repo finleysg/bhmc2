@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
 import { NewMemberDataService, CheckType } from './new-member-data.service';
 import * as _ from 'lodash';
-import moment from 'moment';
+declare const moment: any;
 
 @Injectable()
 export class NewMemberForm {

@@ -1,5 +1,5 @@
 import { CalendarEvent } from './calendar-event';
-import moment from 'moment';
+declare const moment: any;
 
 export class Day {
     name: string;
@@ -7,10 +7,10 @@ export class Day {
     day: number;
     isCurrentMonth: boolean;
     isToday: boolean;
-    date: moment.Moment;
+    date: any;
     events: CalendarEvent[];
 
-    constructor (date: moment.Moment, currentMonth: moment.Moment) {
+    constructor (date: any, currentMonth: any) {
         this.name = date.format('dddd');
         this.shortName = date.format('ddd');
         this.day = parseInt(date.format('D'), 10);
@@ -28,7 +28,7 @@ export class Day {
 export class Calendar {
 
     private weeks: any[];
-    private firstDay: moment.Moment;
+    private firstDay: any;
 
     constructor (year: number, monthName: string) {
         const monthNumber = Calendar.getMonth(monthName);
@@ -47,7 +47,7 @@ export class Calendar {
         return start;
     }
 
-    private buildMonth(start: moment.Moment, currentMonth: moment.Moment) {
+    private buildMonth(start: any, currentMonth: any) {
         let weeks: any[] = [];
         let done = false, date = start.clone(), monthIndex = date.month(), count = 0;
         while (!done) {
@@ -59,7 +59,7 @@ export class Calendar {
         return weeks;
     }
 
-    private buildWeek(date: moment.Moment, month: moment.Moment) {
+    private buildWeek(date: any, month: any) {
         let days: Day[] = [];
         for (var i = 0; i < 7; i++) {
             days.push(new Day(date, month));

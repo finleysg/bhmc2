@@ -1,11 +1,11 @@
-import moment from 'moment';
+declare const moment: any;
 
 export class Announcement {
     id: number;
     title: string;
     text: string;
-    starts: moment.Moment;
-    expires: moment.Moment;
+    starts: any;
+    expires: any;
     eventId: number;
     eventName: string;
     membersOnly: boolean;

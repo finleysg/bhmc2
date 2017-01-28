@@ -6,7 +6,7 @@ import { ActivatedRoute, Router, CanDeactivate } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { TypeaheadMatch } from 'ng2-bootstrap';
 import { PaymentComponent, ProcessingStatus } from '../../../shared/payments/payment.component';
-import moment from 'moment';
+declare const moment: any;
 
 @Component({
     moduleId: module.id,
@@ -24,7 +24,7 @@ export class RegisterComponent implements OnInit, CanDeactivate<CanComponentDeac
     public members: PublicMember[];
     public friends: PublicMember[];
     public selectedMemberName: string;
-    public expires: moment.Moment;
+    public expires: any;
     public expiryMessage: string = 'Your reservation was cancelled because it was not completed within 10 minutes.';
     public isLeagueEvent: boolean;
     private cancelling: boolean;

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User, AuthenticationService, AccountUpdateType } from '../../../core';
 import { ToasterService } from 'angular2-toaster';
-import moment from 'moment';
+declare const moment: any;
 
 @Component({
     moduleId: module.id,

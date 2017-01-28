@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import moment from 'moment';
+declare const moment: any;
 import { ToasterService } from 'angular2-toaster';
 
 @Component({
@@ -12,7 +12,7 @@ export class TimerComponent implements OnInit {
 
     @Output() onTimeElapsed = new EventEmitter<string>();
 
-    @Input() expiration: moment.Moment;
+    @Input() expiration: any;
     @Input() expiryMessage: string;
     public timeRemaining: string;
     private cancel: boolean;

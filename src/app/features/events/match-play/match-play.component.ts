@@ -4,7 +4,7 @@ import { ConfigService } from '../../../app-config.service';
 import { Component, OnInit } from '@angular/core';
 import { User, AuthenticationService, EventDetail, EventDocument, DocumentType, DialogService } from '../../../core';
 import { ActivatedRoute } from '@angular/router';
-import moment from 'moment';
+declare const moment: any;
 
 @Component({
     moduleId: module.id,

@@ -1,11 +1,11 @@
-import moment from 'moment';
+declare const moment: any;
 
 export class PublicMember {
     id: number;
     firstName: string;
     lastName: string;
     email: string;
-    birthDate: moment.Moment;
+    birthDate: any;
     location: string;
     phoneNumber: string;
     forwardTees: boolean;
@@ -31,7 +31,7 @@ export class PublicMember {
 
 export class PrivateMember {
     id: number;
-    birthDate: moment.Moment;
+    birthDate: any;
     ghin: string;
     handicap: number;
     handicapRevisionDate: string;

@@ -2,7 +2,7 @@ import { EventRegistration } from './event-registration';
 import { EventPayment } from './event-payment';
 import { EventDetail } from './event-detail';
 import { PublicMember } from './member';
-import moment from 'moment';
+declare const moment: any;
 import { User } from './user';
 
 export class EventRegistrationGroup {
@@ -18,7 +18,7 @@ export class EventRegistrationGroup {
     paymentConfirmationCode: string;
     payment: EventPayment = new EventPayment();
     registrations: EventRegistration[];
-    expires: moment.Moment;
+    expires: any;
 
     get startingHoleName(): string {
         return `${this.startingHole}${this.startingOrder === 0 ? 'A' : 'B' }`;
