@@ -14,3 +14,4 @@ fs.createReadStream('src/404.html').pipe(fs.createWriteStream('dist/404.html'));
 fs.copySync('src/assets/css', 'dist/assets/css');
 fs.copySync('src/assets/fonts', 'dist/assets/fonts');
 fs.copySync('src/assets/img', 'dist/assets/img');
+fs.copySync('favicon.ico', 'dist/favicon.ico');

@@ -1,23 +1,20 @@
 
 * Upload the results docs from previous years
-* No spinner on new member reg payments
 * Mailgun setup and testing
-* Compilation and tree shaking - css strategy, images, so forth
 * Raven testing for front end
 * Raven config for the back end - testing
 * Audit permissions for api and front end
 * Three levels of admin: board, officer, sysadmin
-* Image size optimization
+* Cache busting strategy
+* Version strategy
 * Restyle calendar days to handle up to 4 events
 * Older events or events without courses should fail more gracefully
 * Enter 2017 event calendar (including MGA/MPGA events)
 * Check and fix formatting on event markdown (templates and derived events)
-* From the calendar, external events should open in a new window
 * Financials/payments FAQs
-* Acceptable scores item: adjust to read better on the phone
-* Payments: message to please don't navigate away
 * Payments: ability to choose whether or not to save a card
 * Payments: saving/selectind multiple cards
+* What does cancel on new member reg do?
 * Contact messages - send to contact@bhmc.org
 * Refactor login to be reactive
 * Fix register url from login page

@@ -10,7 +10,7 @@ import { ConfigService } from '../../app-config.service';
 declare const Spinner: any;
 
 export enum ProcessingStatus {
-    Pending,
+    Pending = 0,
     Validating,
     Processing,
     Complete,

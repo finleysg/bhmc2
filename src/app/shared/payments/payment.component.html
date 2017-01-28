@@ -9,18 +9,17 @@
             </div>
             <div class="modal-body">
                 <form role="form" #cardForm="ngForm" novalidate>
-                    <div class="row">
-                        <div class="toggle-switch col-xs-12 m-t-20 m-b-30" data-ts-color="teal">
+                    <div class="row" *ngIf="hasSavedCard">
+                        <div class="toggle-switch col-xs-12 m-t-20" data-ts-color="teal">
                             <label for="pmt-switch" class="ts-label">Use {{ savedCard }}</label>
                             <input id="pmt-switch" type="checkbox" hidden="hidden" name="useSavedCard"
-                                   [disabled]="!hasSavedCard"
                                    [(ngModel)]="useSavedCard">
                             <label for="pmt-switch" class="ts-helper"></label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12">
-                            <div class="form-group" [class.has-error]="!card.number.isValid">
+                            <div class="form-group m-t-30" [class.has-error]="!card.number.isValid">
                                 <label>Card Number</label>
                                 <input name="cardNumber" type="text" class="form-control input-lg"
                                        #cardNumber="ngModel"
@@ -61,6 +60,10 @@
                                 <li *ngIf="!card.number.isValid" class="text-danger">{{ card.number.errorMessage }}</li>
                                 <li *ngIf="!card.exp.isValid" class="text-danger">{{ card.exp.errorMessage }}</li>
                                 <li *ngIf="!card.cvc.isValid" class="text-danger">{{ card.cvc.errorMessage }}</li>
+                            </ul>
+                            <ul class="clist clist-stay" *ngIf="processStatus === 1 || processStatus === 2">
+                                <li class="text-info">Processing payment...</li>
+                                <li class="text-info">Please don't navigate away from the site until this is completed.</li>
                             </ul>
                             <ul class="clist clist-check">
                                 <li *ngFor="let msg of messages" [ngClass]="msg.style">{{ msg.text }}</li>

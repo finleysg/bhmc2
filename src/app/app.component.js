@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,9 +7,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var layout_service_1 = require('./core/services/layout.service');
-var AppComponent = (function () {
+import { Component, HostBinding } from '@angular/core';
+import { LayoutService } from './core/services/layout.service';
+export var AppComponent = (function () {
     function AppComponent(layoutService) {
         var _this = this;
         this.layoutService = layoutService;
@@ -18,18 +17,17 @@ var AppComponent = (function () {
         layoutService.layoutToggle.subscribe(function (value) { return _this.swToggle = value === 1; });
     }
     __decorate([
-        core_1.HostBinding('class.sw-toggled'), 
+        HostBinding('class.sw-toggled'), 
         __metadata('design:type', Boolean)
     ], AppComponent.prototype, "swToggle", void 0);
     AppComponent = __decorate([
-        core_1.Component({
+        Component({
             moduleId: module.id,
             selector: 'body',
             template: "<bhmc-layout></bhmc-layout>"
         }), 
-        __metadata('design:paramtypes', [layout_service_1.LayoutService])
+        __metadata('design:paramtypes', [LayoutService])
     ], AppComponent);
     return AppComponent;
 }());
-exports.AppComponent = AppComponent;
 //# sourceMappingURL=app.component.js.map
