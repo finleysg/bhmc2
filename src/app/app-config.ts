@@ -70,7 +70,7 @@ export class AppConfig {
         this._registrationId = json.reg_event;
         this._matchPlayId = json.match_play_event ? json.match_play_event : 0;
         this._acceptNewMembers = json.accept_new_members;
-        this._version = 'alpha';
+        this._version = (window as any).bhmcVersion;
         this._stripePublicKey = 'pk_test_huMlHToXOZcuNXb9eQ7viBvY';
         this._ravenDsn = 'https://9b56cf753b264c9fa9be08b86846551b@sentry.io/126710';
     }

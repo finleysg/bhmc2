@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LayoutService } from '../../core/services/layout.service';
-import { Router } from '@angular/router';
+import { ConfigService } from '../../app-config.service';
 
 @Component({
     moduleId: module.id,
@@ -12,13 +12,15 @@ import { Router } from '@angular/router';
 export class PageHeaderComponent implements OnInit {
 
     isOpen: boolean = false;
+    version: string;
 
-    constructor(private router: Router,
+    constructor(private configService: ConfigService,
                 private _layoutService: LayoutService) {
     }
 
     ngOnInit(): void {
         this._layoutService.sidebarToggle.subscribe(value => this.isOpen = value)
+        this.version = this.configService.config.version;
     }
 
     toggleSidebar() {

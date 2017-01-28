@@ -111,14 +111,21 @@
 #calendar .member-meeting {
     background-color: blue;
 }
-#calendar .board-meeting {
-    background-color: blue;
+#calendar .board-meeting > div > a {
+    color: blue !important;
 }
-#calendar .holiday-pro-shop-event {
-    background-color: purple;
+#calendar .board-meeting {
+    background-color: white;
+}
+#calendar .holiday-pro-shop {
+    background-color: green;
 }
 #calendar .state-tournament {
-    background-color: green;
+    background-color: white;
+    padding: 2px;
+}
+#calendar .state-tournament > div > a {
+    color: purple !important;
 }
 #calendar .other {
     background-color: lightblue;
