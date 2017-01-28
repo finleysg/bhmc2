@@ -19,7 +19,7 @@
     "build": "npm run ngc && npm run rollup && npm run less && node build",
     "build-patch": "npm version patch && npm run build",
     "build-minor": "npm version minor && npm run build",
-    "publish": "cwd ./dist; surge --domain https://oceanic-tendency.surge.sh/;"
+    "publish": "cd ./dist; surge --domain https://oceanic-tendency.surge.sh/;"
   },
   "keywords": [
     "golf",
