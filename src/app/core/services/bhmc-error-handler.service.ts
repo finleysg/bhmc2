@@ -18,9 +18,8 @@ export class BhmcErrorHandler extends ErrorHandler {
         if (!this.config.isLocal) {
             const options = { 'release': configService.config.version, 'autoBreadcrumbs': { 'xhr': false }};
             Raven
-                .config(`https://${this.config.ravenDsn}@sentry.io/bhmc`, options)
+                .config(this.config.ravenDsn, options)
                 .install();
-            // Raven.config(this.config.ravenDsn, options).install();
         }
     }
 
