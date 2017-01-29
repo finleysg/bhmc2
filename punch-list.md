@@ -2,6 +2,7 @@
 * Gah! Green fees and cart fees for 9-hole events
 
 
+* Bug: New reg and login: should not be presented with a reg button
 * Calendar event for deadlines
 * Silly season events (invite only)
 * Bug: can register twice (matchplay, for example)
