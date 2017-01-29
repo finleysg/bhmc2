@@ -34,7 +34,7 @@ export class CalendarEvent {
         this.startTime = json.start_time;
         this.signupStart = moment(json.signup_start);
         this.signupEnd = moment(json.signup_end);
-        if (this.rounds === 1) {
+        if (this.rounds <= 1) {
             this.endDate = moment(json.start_date);
         } else {
             this.endDate = moment(json.start_date).add(this.rounds -1, 'days');

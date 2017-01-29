@@ -1,6 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService, User, EventDetailService, EventDocument, DocumentType, SkinsType,
+import { AuthenticationService, User, EventDetailService, EventDocument, DocumentType, SkinsType, StartType,
     EventDetail, EventType, EventRegistrationGroup, DialogService } from '../../../core';
 
 @Component({
@@ -15,6 +15,7 @@ export class EventComponent implements OnInit {
     public results: EventDocument;
     public teetimes: EventDocument;
     public hasSkins: boolean;
+    public startType: string;
 
     constructor(
         private route: ActivatedRoute,
@@ -31,6 +32,9 @@ export class EventComponent implements OnInit {
                 this.results = this.eventDetail.getDocument(DocumentType.Results);
                 this.teetimes = this.eventDetail.getDocument(DocumentType.Teetimes);
                 this.hasSkins = this.eventDetail.skinsType !== SkinsType.None;
+                if (this.eventDetail.startType != StartType.NA) {
+                    this.startType = this.eventDetail.startType.toString();
+                }
             });
     }
 

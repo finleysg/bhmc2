@@ -2,7 +2,6 @@
 * Upload the results docs from previous years
 * Gah! Green fees and cart fees for 9-hole events
 * Member import
-* Scheduled expired cleanup Job
 * Load test reserve
 
 

@@ -55,12 +55,16 @@ export class BhmcErrorHandler extends ErrorHandler {
         }
     }
 
-    logResponse(response: Response) {
+    logResponse(message: string, response: Response) {
         if (this.config.isLocal) {
             // TODO: handle text or blob responses
             console.info(`${response.status}: ${JSON.stringify(response.json())}`)
         } else {
-            // TODO
+            const options: any = {
+                level: 'error',
+                extra: {'response': response}
+            };
+            Raven.captureMessage(message, options)
         }
     }
 

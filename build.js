@@ -6,20 +6,23 @@ const version = require('./package.json').version;
 fs.emptyDirSync('dist');
 
 // NPM resources to copy to the distribution directory
-const npm_resources = [
+const resources = [
     'node_modules/core-js/client/shim.min.js',
     'node_modules/core-js/client/shim.min.js.map',
-    'node_modules/zone.js/dist/zone.min.js'
+    'node_modules/zone.js/dist/zone.min.js',
+    'favicon.ico',
+    'src/200.html',
+    'src/404.html'
 ];
-npm_resources.map(function(f) {
+resources.map(function(f) {
     const path = f.split('/');
     const t = 'dist/' + path[path.length-1];
     fs.createReadStream(f).pipe(fs.createWriteStream(t));
 });
 
 // Source assets
-fs.createReadStream('src/200.html').pipe(fs.createWriteStream('dist/200.html'));
-fs.createReadStream('src/404.html').pipe(fs.createWriteStream('dist/404.html'));
+// fs.createReadStream('src/200.html').pipe(fs.createWriteStream('dist/200.html'));
+// fs.createReadStream('src/404.html').pipe(fs.createWriteStream('dist/404.html'));
 fs.copySync('src/assets/fonts', 'dist/assets/fonts');
 fs.copySync('src/assets/img', 'dist/assets/img');
 

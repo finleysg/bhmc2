@@ -99,7 +99,6 @@ export class BhmcDataService {
 
         let message: string;
         if (error instanceof Response) {
-            this.errorHandler.logResponse(error);
             if (error.status === 0) {
                 message = `Could not reach the bhmc server because your internet connection 
                            was lost, the connection timed out, or the server is not responding.`;
@@ -118,6 +117,7 @@ export class BhmcDataService {
                     message = JSON.stringify(body);
                 }
             }
+            this.errorHandler.logResponse(message, error);
         } else {
             this.errorHandler.logError(error);
             message = error.message ? error.message : error.toString();
