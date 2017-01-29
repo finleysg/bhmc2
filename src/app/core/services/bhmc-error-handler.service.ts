@@ -2,6 +2,7 @@ import { Injectable, ErrorHandler } from '@angular/core';
 import { Response } from '@angular/http';
 import { ConfigService } from '../../app-config.service';
 import { AppConfig } from '../../app-config';
+import { User } from '../models/user';
 import Raven from 'raven-js';
 
 @Injectable()
@@ -21,6 +22,21 @@ export class BhmcErrorHandler extends ErrorHandler {
                 .install();
             // Raven.config(this.config.ravenDsn, options).install();
         }
+    }
+
+    setUserContext(user: User): void {
+        if (this.config.isLocal) return;
+        if (user.isAuthenticated) {
+            Raven.setUserContext({
+                username: user.name,
+                email: user.email
+            });
+        }
+    }
+
+    clearUserContext(): void {
+        if (this.config.isLocal) return;
+        Raven.setUserContext();
     }
 
     handleError(err: any): void {

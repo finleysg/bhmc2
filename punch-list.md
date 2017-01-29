@@ -1,8 +1,5 @@
 * Financials/payments FAQs
 * Upload the results docs from previous years
-* Mailgun setup and testing
-* Raven config for the back end - testing
-* Raven testing for front end (user context)
 * Gah! Green fees and cart fees for 9-hole events
 * Member import
 * Scheduled expired cleanup Job

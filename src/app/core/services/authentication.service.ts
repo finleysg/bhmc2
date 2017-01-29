@@ -8,7 +8,8 @@ import { Cookie } from 'ng2-cookies';
 import { MemberService } from './member.service';
 import { ConfigService } from '../../app-config.service';
 import { AppConfig } from '../../app-config';
-// declare const moment: any;
+import Raven from 'raven-js';
+import { BhmcErrorHandler } from './bhmc-error-handler.service';
 
 declare const moment: any;
 
@@ -26,7 +27,8 @@ export class AuthenticationService {
     constructor(
         private dataService: BhmcDataService,
         private memberService: MemberService,
-        private configService: ConfigService
+        private configService: ConfigService,
+        private errorHandler: BhmcErrorHandler
     ) {
         this.config = this.configService.config;
         if (!this._currentUser) {
@@ -40,6 +42,7 @@ export class AuthenticationService {
                 if (this._currentUser.member && this._currentUser.member.birthDate) {
                     this._currentUser.member.birthDate = moment(this._currentUser.member.birthDate);
                 }
+                this.errorHandler.setUserContext(this._currentUser);
             }
         }
         this.currentUserSource = new BehaviorSubject(this._currentUser);
@@ -184,6 +187,7 @@ export class AuthenticationService {
         this._currentUser = new User();
         this.currentUserSource.next(this._currentUser);
         this.saveToStorage('bhmc_user', JSON.stringify(this._currentUser));
+        this.errorHandler.clearUserContext();
     }
 
     private getFromStorage(key: string, override: boolean = false): string {
