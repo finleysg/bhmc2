@@ -1,8 +1,5 @@
-* Financials/payments FAQs
 * Upload the results docs from previous years
 * Gah! Green fees and cart fees for 9-hole events
-* Member import
-* Load test reserve
 
 
 * Calendar event for deadlines

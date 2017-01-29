@@ -76,6 +76,7 @@ export class User {
             'password': password,
             'first_name': this.firstName,
             'last_name': this.lastName,
+            'groups': [],
             'member': this.member.toJson()
         };
     }
