@@ -16,6 +16,7 @@ export class EventComponent implements OnInit {
     public teetimes: EventDocument;
     public hasSkins: boolean;
     public startType: string;
+    public isRegistered: boolean;
 
     constructor(
         private route: ActivatedRoute,
@@ -35,6 +36,7 @@ export class EventComponent implements OnInit {
                 if (this.eventDetail.startType != StartType.NA) {
                     this.startType = this.eventDetail.startType.toString();
                 }
+                this.isRegistered = this.eventDetail.isRegistered(this.currentUser.member.id);
             });
     }
 

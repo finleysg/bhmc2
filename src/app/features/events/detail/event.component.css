@@ -6,3 +6,9 @@
     float: right;
     margin-top: -15px;
 }
+
+@media (max-width: 768px) {
+    .event-button {
+        margin-top: 5px;
+    }
+}

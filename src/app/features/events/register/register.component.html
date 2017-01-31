@@ -6,9 +6,9 @@
     <div class="col-lg-6 col-md-8 col-xs-12">
         <div class="card event-card">
             <div class="card-header">
-                <h2 *ngIf="!isLeagueEvent">{{ eventDetail.name }}</h2>
+                <h2 *ngIf="!isLeagueEvent">&nbsp;</h2>
                 <h2 *ngIf="isLeagueEvent">{{ registrationGroup.registrations[0].courseName.replace('League', '') }} {{ registrationGroup.startingHoleName }}</h2>
-                <div class="col-sm-4 col-xs-8 input-group find-partner" *ngIf="eventDetail.groupSize > 1">
+                <div class="col-sm-4 col-xs-9 input-group find-partner" *ngIf="eventDetail.groupSize > 1">
                     <template #memberTemplate let-model="item" let-index="index">
                         <span>{{ model.name }}</span>
                     </template>
@@ -17,7 +17,7 @@
                            [typeahead]="members"
                            [typeaheadItemTemplate]="memberTemplate"
                            [typeaheadOptionField]="'name'"
-                           [typeaheadOptionsLimit]="7"
+                           [typeaheadOptionsLimit]="8"
                            (typeaheadOnSelect)="selectMember($event)"
                            class="form-control input-sm" placeholder="Find partners...">
                 </div>
