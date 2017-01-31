@@ -29,4 +29,8 @@ export class DocumentService {
             });
         });
     }
+
+    uploadDocument(formData: FormData, id: number = 0): Promise<void> {
+        return this.dataService.upload(formData, id).toPromise();
+    }
 }

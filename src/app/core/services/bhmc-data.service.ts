@@ -47,6 +47,17 @@ export class BhmcDataService {
         return this.request(RequestMethod.Patch, url, data);
     }
 
+    upload(form: FormData, id: number = 0): Observable<any> {
+        let method = RequestMethod.Post;
+        let resource = 'documents/';
+        if (id > 0) {
+            method = RequestMethod.Put;
+            resource = resource + id.toString() + '/';
+        }
+        const url: string = this._authUrl + resource + '/';
+        return this.request(method, url, form);
+    }
+
     private request(method: RequestMethod, url: string, data?: any) {
         this.loadingBar.color = 'blue';
         this.loadingBar.start();
@@ -64,7 +75,7 @@ export class BhmcDataService {
             .catch((err: any) => this.handleError(err));
     }
 
-    private createOptions(method: RequestMethod = RequestMethod.Get, data: any = {}): RequestOptions {
+    private createHeaders(): Headers {
         let headers = new Headers({'Content-Type': 'application/json'});
         let token = localStorage.getItem('bhmc_token');
         if (!token) {
@@ -78,6 +89,11 @@ export class BhmcDataService {
         if (csrf) {
             headers.append('X-CSRFToken', csrf);
         }
+        return headers;
+    }
+
+    private createOptions(method: RequestMethod = RequestMethod.Get, data: any = {}): RequestOptions {
+        let headers = this.createHeaders();
         let options = new RequestOptions({method: method, headers: headers});
         if (method === RequestMethod.Get) {
             let params = new URLSearchParams();
@@ -88,7 +104,11 @@ export class BhmcDataService {
             }
             options.search = params;
         } else {
-            options.body = JSON.stringify(data);
+            if (data instanceof FormData) {
+                options.body = data;
+            } else {
+                options.body = JSON.stringify(data);
+            }
         }
         return options;
     }
