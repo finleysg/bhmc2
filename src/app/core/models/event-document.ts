@@ -1,3 +1,5 @@
+declare const moment: any;
+
 export class EventDocument {
     id: number;
     title: string;
@@ -5,6 +7,7 @@ export class EventDocument {
     type: DocumentType;
     year: number;
     eventId: number;
+    lastUpdate: any;
 
     fromJson(json: any): EventDocument {
         this.id = json.id;
@@ -13,6 +16,7 @@ export class EventDocument {
         this.eventId = json.event;
         this.type = EventDocument.getDocumentType(json.document_type);
         this.year = json.year;
+        this.lastUpdate = moment(json.last_update);
         return this;
     }
 

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { EventDocument, DocumentService, DocumentType, DialogService, User, AuthenticationService } from '../../core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { EventDocument, DocumentService, DocumentType, User, AuthenticationService } from '../../core';
 import { ConfigService } from '../../app-config.service';
+import { UploadComponent } from '../../shared/upload/upload.component';
 
 @Component({
     moduleId: module.id,
@@ -9,43 +10,38 @@ import { ConfigService } from '../../app-config.service';
 })
 export class DamCupComponent implements OnInit {
 
+    @ViewChild(UploadComponent) uploadComponent: UploadComponent;
+
     currentUser: User;
-    currentYear: EventDocument[];
     archives: EventDocument[];
-    selectedFile: any = {};
+    documentType: DocumentType = DocumentType.DamCup;
+
+    currentStandings: EventDocument;
 
     constructor(private configService: ConfigService,
-                private dialogService: DialogService,
                 private authService: AuthenticationService,
                 private documentService: DocumentService) {
     }
 
     ngOnInit(): void {
         this.currentUser = this.authService.user;
-        this.documentService.getDocuments(DocumentType.DamCup)
+        this.documentService.getDocuments(this.documentType)
             .subscribe(docs => {
-                this.currentYear = docs.filter(d => d.year === this.configService.config.year);
+                let current = docs.filter(d => d.year === this.configService.config.year);
                 this.archives = docs.filter(d => d.year !== this.configService.config.year);
+                if (current && current.length > 0) {
+                    this.currentStandings = current[0];
+                }
             });
     }
 
     showTodo(): void {
-        this.dialogService.info('Admin Placeholder', 'This will be an admin function where you can upload the latest standings.');
+        this.uploadComponent.open(this.currentStandings);
     }
 
-    fileSelected($event: any): void {
-        this.selectedFile = $event.target.files[0];
-    }
-
-    uploadDocument(): void {
-        let form = new FormData();
-        form.append('file', this.selectedFile);
-        form.append('document_type', 'D');
-        form.append('year', this.configService.config.year);
-        form.append('title', `${this.configService.config.year} Dam Cup Standings`);
-        // TODO: if not new, add id
-        this.documentService.uploadDocument(form, 0).then(() => {
-            // toast success and refresh
-        });
+    uploadComplete(result: EventDocument): void {
+        if (result) {
+            this.currentStandings = result;
+        }
     }
 }
