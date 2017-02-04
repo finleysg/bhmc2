@@ -1,6 +1,6 @@
 {
   "name": "BHMC",
-  "version": "0.9.9",
+  "version": "0.9.10",
   "description": "The Bunker Hills Men's Club website for event registration and results",
   "scripts": {
     "start": "concurrently \"npm run tsc:w\" \"npm run lite\" ",
