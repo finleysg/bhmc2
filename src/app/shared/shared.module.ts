@@ -11,6 +11,7 @@ import { TimerComponent } from './timer/timer.component';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 import { ToasterModule } from 'angular2-toaster';
 import { PaymentComponent } from './payments/payment.component';
+import { UploadComponent } from './upload/upload.component';
 
 @NgModule({
     imports: [
@@ -30,6 +31,7 @@ import { PaymentComponent } from './payments/payment.component';
         SpinnerButtonComponent,
         MarkdownDirective,
         TimerComponent,
+        UploadComponent,
     ],
     providers: [
         SpinnerService
@@ -51,7 +53,8 @@ import { PaymentComponent } from './payments/payment.component';
         ModalModule,
         DropdownModule,
         SlimLoadingBarModule,
-        PaymentComponent
+        PaymentComponent,
+        UploadComponent,
     ]
 })
 export class SharedModule { }

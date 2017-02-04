@@ -1,8 +1,10 @@
 * Upload the results docs from previous years
-* Gah! Green fees and cart fees for 9-hole events
-
-
+* You are registered message on event detail
+* Mobile styling improvements: detail and register
+* Financial documents on payment FAQ page
+* Log out on invalid token response
 * Bug: New reg and login: should not be presented with a reg button
+* Bug: make sure currency is formatted with 2 decimals in conf email
 * Calendar event for deadlines
 * Silly season events (invite only)
 * Bug: can register twice (matchplay, for example)
@@ -24,8 +26,19 @@
 * Google analytics
 * Move payment form to reactive forms
 * Enable manual registration for events (cash flag?)
-* Reports:
-    * Event report (copy of existing)
-    * Payment report by event
-    * Payment report by users
-    * Membership report
+
+###Reports:
+* Event report (copy of existing)
+* Payment report by event
+* Payment report by users
+* Membership report
+
+###Admin Functions:
+1. Document upload (MP, DC, SLP, Results, Teetimes)
+2. Offline season signup for previous members
+3. Offline season signup for new members
+4. Offline major signup
+5. Wednesday admin page
+    * add and remove groups (separate function)
+    * manual signup and skins
+    * move groups/players

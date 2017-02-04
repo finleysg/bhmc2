@@ -15,26 +15,74 @@
     </ul>
 </div>
 <div class="row">
-    <div class="col-md-6">
-        <div class="card event-card">
-            <div class="card-header">
-                <h2>Storied History of the Cup</h2>
+    <div class="col-md-3">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="card event-card">
+                    <div class="card-header">
+                        <h2>Current Standings</h2>
+                    </div>
+                    <div class="card-body card-padding" *ngIf="currentStandings">
+                        <div class="list-group">
+                            <a class="list-group-item text-center" [href]="currentStandings.url" target="_blank">{{currentStandings.title}}<br>
+                                <small>Last updated {{currentStandings.lastUpdate.format('MMM D, YYYY h:mm A')}}</small>
+                            </a>
+                        </div>
+                    </div>
+                    <upload (onClose)="uploadComplete($event)" [documentType]="documentType"></upload>
+                </div>
             </div>
-            <div class="card-body card-padding">
-                <p>TODO: how the dam cup works, and how about a few pictures? Or at least a picture of the Cup?</p>
-                <p>Year by year results of the competition would be good here too.</p>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="card event-card">
+                    <div class="card-header">
+                        <h2>Results</h2>
+                    </div>
+                    <div class="card-body card-padding">
+                        <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Bunker Hills</th>
+                                    <th>Edinburgh</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>2013</td>
+                                <td>10</td>
+                                <td><strong>20</strong></td>
+                            </tr>
+                            <tr>
+                                <td>2014</td>
+                                <td><strong>20</strong></td>
+                                <td>10</td>
+                            </tr>
+                            <tr>
+                                <td>2015</td>
+                                <td>10</td>
+                                <td><strong>20</strong></td>
+                            </tr>
+                            <tr>
+                                <td>2016</td>
+                                <td><strong>20</strong></td>
+                                <td>10</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-6">
         <div class="card event-card">
-            <div class="card-header">
-                <h2>Current Standings</h2>
-            </div>
             <div class="card-body card-padding">
-                <div class="list-group" *ngIf="currentYear">
-                    <a *ngFor="let doc of currentYear" class="list-group-item text-center"
-                       [href]="doc.url" target="_blank">{{doc.title}}</a>
+                <div class="dam-cup-pic">
+                    <img src="../../../assets/img/DamCup.png">
                 </div>
             </div>
         </div>

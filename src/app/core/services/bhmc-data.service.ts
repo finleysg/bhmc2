@@ -5,9 +5,13 @@ import { Cookie } from 'ng2-cookies';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 import { BhmcErrorHandler } from './bhmc-error-handler.service';
 import { ConfigService } from '../../app-config.service';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class BhmcDataService {
+
+    private errorSource: Subject<string>;
+    public lastError$: Observable<string>;
 
     private _authUrl: string ;
     private _apiUrl: string;
@@ -20,6 +24,8 @@ export class BhmcDataService {
 
         this._authUrl = configService.config.authUrl;
         this._apiUrl = configService.config.apiUrl;
+        this.errorSource = new Subject();
+        this.lastError$ = this.errorSource.asObservable();
     }
 
     getAuthRequest(resource: string, data?: any): Observable<any> {
@@ -47,7 +53,7 @@ export class BhmcDataService {
         return this.request(RequestMethod.Patch, url, data);
     }
 
-    private request(method: RequestMethod, url: string, data?: any) {
+    request(method: RequestMethod, url: string, data?: any) {
         this.loadingBar.color = 'blue';
         this.loadingBar.start();
         let options = this.createOptions(method, data);
@@ -55,17 +61,17 @@ export class BhmcDataService {
             .map((response: Response) => {
                 this.loadingBar.color = 'green';
                 this.loadingBar.complete();
-                // TODO: get location from a 201?
-                if (response.status !== 204 && response.status !== 201) {
+                try {
                     return response.json() || {};
+                } catch(e) {
+                    return {};
                 }
-                return {}; // empty response
             })
             .catch((err: any) => this.handleError(err));
     }
 
-    private createOptions(method: RequestMethod = RequestMethod.Get, data: any = {}): RequestOptions {
-        let headers = new Headers({'Content-Type': 'application/json'});
+    private createHeaders(contentType: string): Headers {
+        let headers = new Headers({'Content-Type': contentType});
         let token = localStorage.getItem('bhmc_token');
         if (!token) {
             token = sessionStorage.getItem('bhmc_token');
@@ -78,6 +84,14 @@ export class BhmcDataService {
         if (csrf) {
             headers.append('X-CSRFToken', csrf);
         }
+        return headers;
+    }
+
+    private createOptions(method: RequestMethod = RequestMethod.Get, data: any = {}): RequestOptions {
+        let headers = this.createHeaders('application/json');
+        if (data instanceof FormData) {
+            headers.delete('Content-Type');
+        }
         let options = new RequestOptions({method: method, headers: headers});
         if (method === RequestMethod.Get) {
             let params = new URLSearchParams();
@@ -88,7 +102,11 @@ export class BhmcDataService {
             }
             options.search = params;
         } else {
-            options.body = JSON.stringify(data);
+            if (data instanceof FormData) {
+                options.body = data;
+            } else {
+                options.body = JSON.stringify(data);
+            }
         }
         return options;
     }
@@ -123,6 +141,7 @@ export class BhmcDataService {
             message = error.message ? error.message : error.toString();
         }
 
+        this.errorSource.next(message);
         return Observable.throw(message);
     }
 }

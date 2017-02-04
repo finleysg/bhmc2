@@ -8,7 +8,6 @@ import { Cookie } from 'ng2-cookies';
 import { MemberService } from './member.service';
 import { ConfigService } from '../../app-config.service';
 import { AppConfig } from '../../app-config';
-import Raven from 'raven-js';
 import { BhmcErrorHandler } from './bhmc-error-handler.service';
 
 declare const moment: any;
@@ -47,6 +46,7 @@ export class AuthenticationService {
         }
         this.currentUserSource = new BehaviorSubject(this._currentUser);
         this.currentUser$ = this.currentUserSource.asObservable();
+        this.dataService.lastError$.subscribe(err => this.onError(err));
     }
 
     get user(): User {
@@ -179,6 +179,12 @@ export class AuthenticationService {
                 this.removeFromStorage('bhmc_token');
                 return Observable.of(new User());
             });
+    }
+
+    onError(message: string): void {
+        if (message === 'Invalid token.') {
+            this.resetUser();
+        }
     }
 
     resetUser(): void {
