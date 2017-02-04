@@ -23,12 +23,12 @@
             <div class="card-header">
                 <h2>Current Standings</h2>
             </div>
-            <div class="card-body card-padding" *ngIf="currentStandingsNet">
+            <div class="card-body card-padding">
                 <div class="list-group">
-                    <a class="list-group-item text-center" [href]="currentStandingsGross.url" target="_blank">{{currentStandingsGross.title}}<br>
+                    <a *ngIf="currentStandingsGross" class="list-group-item text-center" [href]="currentStandingsGross.url" target="_blank">{{currentStandingsGross.title}}<br>
                         <small>Last updated {{currentStandingsGross.lastUpdate.format('MMM D, YYYY h:mm A')}}</small>
                     </a>
-                    <a class="list-group-item text-center" [href]="currentStandingsNet.url" target="_blank">{{currentStandingsNet.title}}<br>
+                    <a *ngIf="currentStandingsNet" class="list-group-item text-center" [href]="currentStandingsNet.url" target="_blank">{{currentStandingsNet.title}}<br>
                         <small>Last updated {{currentStandingsNet.lastUpdate.format('MMM D, YYYY h:mm A')}}</small>
                     </a>
                 </div>

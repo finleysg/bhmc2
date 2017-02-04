@@ -40,12 +40,12 @@ export class UploadComponent implements OnInit {
 
     ngOnInit() {
         this.initSpinner();
-        this.documentName = this.deriveDocumentTitle();
     }
 
     open(document: EventDocument, titleSuffix: string = null): void {
         this.existingDocument = document;
         this.titleSuffix = titleSuffix;
+        this.documentName = this.deriveDocumentTitle();
         this.uploadModal.config = { backdrop: 'static', keyboard: false };
         this.uploadModal.show();
     }

@@ -41,6 +41,14 @@
                     <a *ngIf="canRegister" [routerLink]="['register']" class="btn btn-success event-button m-r-10">Register Online</a>
                     <p *ngIf="currentUser.member.matchplayParticipant"><strong>You are registered for this event. Good luck!</strong></p>
                 </div>
+                <div class="card-body card-padding" *ngIf="currentBrackets">
+                    <div class="list-group">
+                        <a class="list-group-item text-center" [href]="currentBrackets.url" target="_blank">{{currentBrackets.title}}<br>
+                            <small>Last updated {{currentBrackets.lastUpdate.format('MMM D, YYYY h:mm A')}}</small>
+                        </a>
+                    </div>
+                </div>
+                <upload (onClose)="uploadComplete($event)" [documentType]="documentType"></upload>
             </div>
         </div>
     </div>
