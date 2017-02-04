@@ -81,6 +81,7 @@ export class AuthenticationService {
             .map(isParticipant => {
                 this._currentUser.member.matchplayParticipant = isParticipant;
                 this.saveToStorage('bhmc_user', JSON.stringify(this._currentUser));
+                this.errorHandler.setUserContext(this._currentUser);
                 this.currentUserSource.next(this._currentUser);
                 return;
             })

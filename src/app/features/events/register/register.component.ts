@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { Location } from '@angular/common';
-import { User, AuthenticationService, PublicMember, MemberService, EventDetail, EventType, EventRegistration,
+import { User, AuthenticationService, PublicMember, MemberService, EventDetail, EventType, EventRegistration, SkinsType,
          CanComponentDeactivate, DialogService, EventDetailService, EventRegistrationGroup } from '../../../core';
 import { ActivatedRoute, Router, CanDeactivate } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
@@ -29,6 +29,7 @@ export class RegisterComponent implements OnInit, CanDeactivate<CanComponentDeac
     public expires: any;
     public expiryMessage: string = 'Your reservation was cancelled because it was not completed within 10 minutes.';
     public isLeagueEvent: boolean;
+    public hasSkins: boolean;
     private cancelling: boolean;
 
     constructor(
@@ -48,6 +49,7 @@ export class RegisterComponent implements OnInit, CanDeactivate<CanComponentDeac
                 this.isLeagueEvent = this.eventDetail.eventType === EventType.League;
                 this.registrationGroup = data.registrationGroup;
                 this.expires = this.registrationGroup.expires;
+                this.hasSkins = this.eventDetail.skinsType !== SkinsType.None;
                 this.registrationGroup.updatePayment(this.eventDetail);
             });
         Observable.forkJoin([

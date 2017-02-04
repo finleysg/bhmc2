@@ -26,6 +26,7 @@
 * Google analytics
 * Move payment form to reactive forms
 * Enable manual registration for events (cash flag?)
+* Bug: if skins are not available, don't show them in the signup
 
 ###Reports:
 * Event report (copy of existing)

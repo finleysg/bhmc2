@@ -83,6 +83,7 @@ export class UploadComponent implements OnInit {
                 this.onClose.emit(doc);
                 this.uploadModal.hide();
                 this.spinner.stop();
+                this.clearFile();
             })
             .catch((err: string) => {
                 this.spinner.stop();

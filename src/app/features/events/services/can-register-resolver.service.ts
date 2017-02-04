@@ -32,7 +32,9 @@ export class CanRegisterResolver implements Resolve<EventRegistrationGroup> {
             })
             .catch(() => {
                 this.errorHandler.logWarning(`Group ${id} was not found during the can-register resolve`);
-                this.router.navigate(['/events', route.parent.url[1].path, 'detail']);
+                // TODO: how did Brian get here and still end up on the reg page?
+                // this.router.navigate(['/events', route.parent.url[1].path, 'detail']);
+                this.router.navigate(['/home']);
                 return null;
             });
     }
