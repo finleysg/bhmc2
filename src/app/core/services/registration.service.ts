@@ -72,7 +72,9 @@ export class RegistrationService {
     }
 
     isRegistered(eventId: number, memberId: number): Promise<boolean> {
-        if (this.sessionRegistrations.indexOf(eventId) >= 0) {
+        if (!memberId) {  // anonymous user
+            return new Promise(resolve => resolve(false));
+        } else if (this.sessionRegistrations.indexOf(eventId) >= 0) {
             return new Promise(resolve => resolve(true));
         } else {
             return this.dataService.getApiRequest(`registration/${eventId}/${memberId}`)
