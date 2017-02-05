@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AuthenticationService, EventDocument, DocumentType, EventPayment, RegistrationService,
+import { AuthenticationService, EventDocument, DocumentType, EventPayment, RegistrationService, User,
     EventRegistrationGroup, EventDetail } from '../../../core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 import { PaymentComponent } from '../../../shared/payments/payment.component';
 import { ConfigService } from '../../../app-config.service';
@@ -34,6 +34,7 @@ export class NewMemberSignupComponent implements OnInit {
         private authService: AuthenticationService,
         private toaster: ToasterService,
         private route: ActivatedRoute,
+        private router: Router,
         private registrationService: RegistrationService,
         private formService: NewMemberForm,
         private configService: ConfigService) {
@@ -58,51 +59,57 @@ export class NewMemberSignupComponent implements OnInit {
                     })
                 }
             });
-        this.registrationService.registrationGroup$.subscribe(group => this.group = group);
+        this.group = EventRegistrationGroup.create(new User());
         this.formService.buildForm(this.newUser);
     }
 
     createAccount(): void {
-        // BUG: this is getting called a second time
+        // TODO: BUG: createAccount is getting called a second time
         if (this.loading) {
             return;
         }
         this.loading = true;
 
         this.formService.updateValue(this.newUser);
-        this.authService.createAccount(this.newUser.toUser().toJson(this.newUser.password1))
-            .then(() => {
-                this.toaster.pop('info', 'Account Created', 'Step 1 complete: your account has been created');
-                return this.authService.quietLogin(this.newUser.username, this.newUser.password1)
-            })
-            .then(() => {
-                return this.registrationService.reserve(this.eventDetail.id);
-            })
-            .then(() => {
-                // this.group = group;
-                this.group.notes = 'NEW MEMBER REGISTRATION';
-                if (this.newUser.formerClubName) {
-                    this.group.notes = this.group.notes + `\nFormer club: ${this.newUser.formerClubName} (${this.newUser.formerClubNumber})`;
-                }
-                if (this.newUser.forwardTees) {
-                    this.group.notes = this.group.notes + 'PLAYING FORWARD TEES';
-                }
-                this.group.updatePayment(this.eventDetail, true);
-                this.paymentComponent.open();
-            })
-            .catch((err: any) => {
-                this.loading = false;
-                this.toaster.pop('error', 'Account Creation Error', err);
-            })
+        setTimeout(() => {
+            this.authService.createAccount(this.newUser.toUser().toJson(this.newUser.password1))
+                .then(() => {
+                    this.toaster.pop('info', 'Account Created', 'Step 1 complete: your account has been created');
+                    return this.authService.quietLogin(this.newUser.username, this.newUser.password1)
+                })
+                .then(() => {
+                    return this.registrationService.reserve(this.eventDetail.id);
+                })
+                .then(() => {
+                    this.group = this.registrationService.currentGroup;
+                    this.group.notes = 'NEW MEMBER REGISTRATION';
+                    if (this.newUser.formerClubName) {
+                        this.group.notes = this.group.notes + `\nFormer club: ${this.newUser.formerClubName} (${this.newUser.formerClubNumber})`;
+                    }
+                    if (this.newUser.forwardTees) {
+                        this.group.notes = this.group.notes + 'PLAYING FORWARD TEES';
+                    }
+                    this.group.updatePayment(this.eventDetail, true);
+                    this.paymentComponent.open();
+                })
+                .catch((err: any) => {
+                    this.loading = false;
+                    this.toaster.pop('error', 'Account Creation Error', err);
+                })
+        }, 1000);
     }
 
-    paymentComplete(result: boolean): void {
+    done(result: boolean): void {
         // remove any temporary auth token - user must log in
-        this.authService.resetUser();
         if (result) {
+            this.authService.resetUser();
             this.registered = true;
         } else {
-            this.registrationService.cancelReservation(this.group);
+            this.registrationService.cancelReservation(this.group)
+                .then(() => {
+                    this.authService.resetUser();
+                    this.router.navigate(['/home']);
+                });
         }
     }
 }

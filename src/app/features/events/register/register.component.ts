@@ -16,7 +16,6 @@ declare const moment: any;
     templateUrl: 'register.component.html',
     styleUrls: ['register.component.css']
 })
-
 export class RegisterComponent implements OnInit, CanDeactivate<CanComponentDeactivate> {
 
     @ViewChild(PaymentComponent) paymentComponent: PaymentComponent;
