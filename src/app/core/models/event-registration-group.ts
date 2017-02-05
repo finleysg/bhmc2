@@ -28,6 +28,10 @@ export class EventRegistrationGroup {
         return this.registrations && this.registrations.every( reg => { return reg.hasMember; });
     }
 
+    hasExpired(): boolean {
+        return this.expires.isBefore(moment());
+    }
+
     static create(user: User): EventRegistrationGroup {
         let group = new EventRegistrationGroup();
         let reg = new EventRegistration();

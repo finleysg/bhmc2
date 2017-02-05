@@ -5,6 +5,7 @@ import { PublicMember, MemberService } from '../../../core';
 import { Observable } from 'rxjs/Observable';
 import { EventRegistrationGroup } from '../../../core/models/event-registration-group';
 import { EventDetail } from '../../../core/models/event-detail';
+import { RegistrationService } from '../../../core/services/registration.service';
 
 @Component({
     moduleId: module.id,
@@ -20,6 +21,7 @@ export class PaymentTestComponent implements OnInit {
 
     constructor(
         private eventService: EventDetailService,
+        private registrationService: RegistrationService,
         private memberService: MemberService) {
     }
 
@@ -40,9 +42,9 @@ export class PaymentTestComponent implements OnInit {
     }
 
     reserve() {
-        this.eventService.reserve(this.eventDetail.id).then( (group) => {
-            this.group = group;
-            group.clearRegistration(group.registrations[0].id);
+        this.registrationService.reserve(this.eventDetail.id).then( () => {
+            this.group = this.registrationService.currentGroup;
+            this.group.clearRegistration(this.group.registrations[0].id);
             this.group.registerMember(this.getRandomMember());
             this.group.registerMember(this.getRandomMember());
             this.group.updatePayment(this.eventDetail);
@@ -50,7 +52,7 @@ export class PaymentTestComponent implements OnInit {
     }
 
     cancel() {
-        this.eventService.cancelReservation(this.group).then( () => {
+        this.registrationService.cancelReservation(this.group).then( () => {
             this.group = new EventRegistrationGroup();
         });
     }

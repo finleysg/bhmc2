@@ -1,7 +1,7 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService, User, EventDetailService, EventDocument, DocumentType, SkinsType, StartType,
-    EventDetail, EventType, EventRegistrationGroup, DialogService } from '../../../core';
+import { AuthenticationService, User, EventDocument, DocumentType, SkinsType, StartType,
+    EventDetail, EventType, DialogService, RegistrationService } from '../../../core';
 
 @Component({
     moduleId: module.id,
@@ -21,7 +21,7 @@ export class EventComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private eventService: EventDetailService,
+        private registrationService: RegistrationService,
         private dialogService: DialogService,
         private authService: AuthenticationService) { }
 
@@ -36,7 +36,8 @@ export class EventComponent implements OnInit {
                 if (this.eventDetail.startType != StartType.NA) {
                     this.startType = this.eventDetail.startType.toString();
                 }
-                this.isRegistered = this.eventDetail.isRegistered(this.currentUser.member.id);
+                this.registrationService.isRegistered(this.eventDetail.id, this.currentUser.member.id)
+                    .then(registered => this.isRegistered = registered);
             });
     }
 
@@ -44,8 +45,8 @@ export class EventComponent implements OnInit {
         if (this.eventDetail.eventType === EventType.League) {
             this.router.navigate(['reserve'], {relativeTo: this.route.parent});
         } else {
-            this.eventService.reserve(this.eventDetail.id).then((group: EventRegistrationGroup) => {
-                this.router.navigate(['register', group.id], {relativeTo: this.route.parent});
+            this.registrationService.reserve(this.eventDetail.id).then(() => {
+                this.router.navigate(['register'], {relativeTo: this.route.parent});
             });
        }
     }

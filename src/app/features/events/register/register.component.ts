@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { Location } from '@angular/common';
-import { User, AuthenticationService, PublicMember, MemberService, EventDetail, EventType, EventRegistration, SkinsType,
-         CanComponentDeactivate, DialogService, EventDetailService, EventRegistrationGroup } from '../../../core';
+import { User, AuthenticationService, PublicMember, MemberService,
+         EventDetail, EventType, EventRegistration, SkinsType,
+         CanComponentDeactivate, DialogService, EventDetailService,
+         EventRegistrationGroup, RegistrationService } from '../../../core';
 import { ActivatedRoute, Router, CanDeactivate } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { TypeaheadMatch } from 'ng2-bootstrap';
@@ -38,18 +40,24 @@ export class RegisterComponent implements OnInit, CanDeactivate<CanComponentDeac
         private location: Location,
         private dialogService: DialogService,
         private eventService: EventDetailService,
+        private registrationService: RegistrationService,
         private memberService: MemberService,
         private authService: AuthenticationService) { }
 
     ngOnInit(): void {
         this.currentUser = this.authService.user;
+        // this.registrationService.registrationGroup$.subscribe((group: EventRegistrationGroup) => {
+        //     this.registrationGroup = group;
+        //     this.expires = this.registrationGroup.expires;
+        //     this.registrationGroup.updatePayment(this.eventDetail);
+        // });
         this.route.data
-            .subscribe((data: { eventDetail: EventDetail, registrationGroup: EventRegistrationGroup }) => {
+            .subscribe((data: { eventDetail: EventDetail }) => {
                 this.eventDetail = data.eventDetail;
                 this.isLeagueEvent = this.eventDetail.eventType === EventType.League;
-                this.registrationGroup = data.registrationGroup;
-                this.expires = this.registrationGroup.expires;
                 this.hasSkins = this.eventDetail.skinsType !== SkinsType.None;
+                this.registrationGroup = this.registrationService.currentGroup;
+                this.expires = this.registrationGroup.expires;
                 this.registrationGroup.updatePayment(this.eventDetail);
             });
         Observable.forkJoin([
@@ -123,7 +131,7 @@ export class RegisterComponent implements OnInit, CanDeactivate<CanComponentDeac
         if (this.paymentComponent.processStatus !== ProcessingStatus.Complete) {
             this.cancelling = true;
             this.timerComponent.stop();
-            this.eventService.cancelReservation(this.registrationGroup).then(() => {
+            this.registrationService.cancelReservation(this.registrationGroup).then(() => {
                 this.eventService.refreshEventDetail().then(() => {
                     this.location.back();
                 });
@@ -141,7 +149,7 @@ export class RegisterComponent implements OnInit, CanDeactivate<CanComponentDeac
             `Are you sure you want to leave the registration page? You will not be registered,
              and your hole reservation (league only) will be canceled.`)
             .then(() => {
-                return this.eventService.cancelReservation(this.registrationGroup).then(() => { return true; })
+                return this.registrationService.cancelReservation(this.registrationGroup).then(() => { return true; })
             })
             .catch(() => { return false; });
     }

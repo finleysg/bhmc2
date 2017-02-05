@@ -44,7 +44,7 @@
             <div class="card-body card-padding">
                 <div class="list-group">
                     <a *ngFor="let m of monthListing" class="list-group-item text-center"
-                        [routerLinkActive]="['active', 'list-registrationGroup-item-success']"
+                        [routerLinkActive]="['active', 'list-registrationGroup$-item-success']"
                         [routerLink]="['/calendar', m.year, m.month.toLowerCase()]">{{m.month}}</a>
                 </div>
             </div>

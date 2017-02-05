@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
 import { ModalDirective } from 'ng2-bootstrap';
-import { MemberService, SavedCard, EventDetailService, AuthenticationService,
-    EventDetail, EventRegistrationGroup } from '../../core';
+import { MemberService, SavedCard, AuthenticationService,
+         RegistrationService, EventDetail, EventRegistrationGroup } from '../../core';
 import { CreditCard } from './credit-card';
 import { AppConfig } from '../../app-config';
 import { ConfigService } from '../../app-config.service';
@@ -61,7 +61,7 @@ export class PaymentComponent implements OnInit {
     private spinnerElement: any;
 
     constructor(
-        private eventService: EventDetailService,
+        private registrationService: RegistrationService,
         private memberService: MemberService,
         private authService: AuthenticationService,
         private elementRef: ElementRef,
@@ -121,35 +121,36 @@ export class PaymentComponent implements OnInit {
     quickPayment(): void {
         this.processStatus = ProcessingStatus.Processing;
         this.spinner.spin(this.spinnerElement);
-        this.eventService.register(this.registrationGroup).then(group => {
-            this.successState(group);
-        }).catch(response => {
-            this.errorState(response);
-        });
+        this.registrationService.register(this.registrationGroup)
+            .then(conf => {
+                this.successState(conf);
+            }).catch(response => {
+                this.errorState(response);
+            });
     };
 
     fullPayment(): void {
         this.processStatus = ProcessingStatus.Validating;
         this.spinner.spin(this.spinnerElement);
-        this.card.createToken().then((token: string) => {
-            this.processStatus = ProcessingStatus.Processing;
-            this.registrationGroup.cardVerificationToken = token;
-            return this.eventService.register(this.registrationGroup);
-        }).then((group: EventRegistrationGroup) => {
-            this.successState(group);
-        }).catch((response: any) => {
-            this.errorState(response);
-        });
+        this.card.createToken()
+            .then((token: string) => {
+                this.processStatus = ProcessingStatus.Processing;
+                this.registrationGroup.cardVerificationToken = token;
+                return this.registrationService.register(this.registrationGroup);
+            }).then(conf => {
+                this.successState(conf);
+            }).catch((response: any) => {
+                this.errorState(response);
+            });
     };
 
-    successState(group: EventRegistrationGroup): void {
+    successState(confirmation: string): void {
         this.spinner.stop();
         this.processStatus = ProcessingStatus.Complete;
-        this.registrationGroup = group;
         this.messages.length = 0;
         this.messages.push(new ProcessingResult('Payment complete', 'text-success'));
-        this.messages.push(new ProcessingResult('Confirmation #: ' + group.paymentConfirmationCode, 'text-success'));
-        this.toaster.pop('success', 'Payment Complete', `Your payment for ${group.payment.total} has been processed.`);
+        this.messages.push(new ProcessingResult('Confirmation #: ' + confirmation, 'text-success'));
+        this.toaster.pop('success', 'Payment Complete', `Your payment for ${this.registrationGroup.payment.total} has been processed.`);
     };
 
     errorState(message: any): void {

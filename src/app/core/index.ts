@@ -25,3 +25,4 @@ export { AnnouncementService } from './services/announcement.service';
 export { EventDetailService } from './services/event-detail.service';
 export { EventDetailResolver } from './services/event-detail-resolver.service';
 export { DocumentService } from './services/document.service';
+export { RegistrationService } from './services/registration.service';

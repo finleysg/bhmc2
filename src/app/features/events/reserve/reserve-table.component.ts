@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { EventSignupTable } from '../models/event-signup-table';
-import { AuthenticationService, User, EventDetailService } from '../../../core';
+import { AuthenticationService, User, EventDetailService, RegistrationService } from '../../../core';
 import { RegistrationSlot, SlotStatus } from '../models/registration-slot';
 import { RegistrationRow } from '../models/registration-row';
 import { ToasterService } from 'angular2-toaster';
@@ -17,6 +17,7 @@ export class ReserveTableComponent implements OnInit {
     public table: EventSignupTable;
 
     constructor(private eventService: EventDetailService,
+                private registrationService: RegistrationService,
                 private authService: AuthenticationService,
                 private toaster: ToasterService,
                 private router: Router,
@@ -76,12 +77,12 @@ export class ReserveTableComponent implements OnInit {
     register = (row: RegistrationRow) => {
         // The group created is saved on the service
         let eventId = this.route.snapshot.parent.parent.params['id'];
-        this.eventService.reserve(eventId, row)
-            .then((group) => {
-                this.router.navigate(['register', group.id], {relativeTo: this.route.parent.parent});
+        this.registrationService.reserve(eventId, row)
+            .then(() => {
+                this.router.navigate(['register'], {relativeTo: this.route.parent.parent});
             })
             .catch(err => {
-                this.eventService.refreshEventDetail(); // TODO: stop spinning when complete
+                this.eventService.refreshEventDetail();
                 this.toaster.pop('error', 'Reservation Failure', err);
             });
     }

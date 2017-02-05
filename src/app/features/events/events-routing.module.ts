@@ -8,10 +8,12 @@ import { PaymentTestComponent } from './test/payment-test.component';
 import { RegisteredComponent } from './register/registered.component';
 import { ReadonlyTableComponent } from './register/readonly-table.component';
 import { AuthGuard, CanDeactivateGuard, EventDetailResolver } from '../../core';
-import { CanRegisterResolver } from './services/can-register-resolver.service';
+import { CanRegisterGuard } from './services/can-register-guard.service';
 import { SeasonSignupComponent } from './register/season-signup.component';
 import { MatchPlaySignupComponent } from './match-play/matchplay-signup.component';
 import { MatchPlayComponent } from './match-play/match-play.component';
+import { CanReserveGuard } from './services/can-reserve-guard.service';
+import { MatchPlayGuard } from './services/matchplay-guard.service';
 
 const routes: Routes = [
     { path: 'test', children: [
@@ -19,14 +21,14 @@ const routes: Routes = [
     ]},
     { path: 'events/:id', resolve: { eventDetail: EventDetailResolver }, children: [
         { path: 'detail', component: EventComponent },
-        { path: 'register/:groupId', canActivate: [AuthGuard], resolve: { registrationGroup: CanRegisterResolver }, canDeactivate: [CanDeactivateGuard], component: RegisterComponent },
+        { path: 'register', canActivate: [AuthGuard, CanRegisterGuard], canDeactivate: [CanDeactivateGuard], component: RegisterComponent },
         { path: 'matchplay', component: MatchPlayComponent },
-        { path: 'matchplay/register', canActivate: [AuthGuard], component: MatchPlaySignupComponent },
+        { path: 'matchplay/register', canActivate: [AuthGuard, MatchPlayGuard], component: MatchPlaySignupComponent },
         { path: 'season-signup', canActivate: [AuthGuard], component: SeasonSignupComponent },
         { path: 'reserve', canActivate: [AuthGuard], component: ReserveComponent, children: [
-            { path: ':course', component: ReserveTableComponent }
+            { path: ':course', canActivate: [CanReserveGuard], component: ReserveTableComponent }
         ]},
-        { path: 'registered', canActivate: [AuthGuard], component: RegisteredComponent, children: [
+        { path: 'registered', component: RegisteredComponent, children: [
             { path: ':course', component: ReadonlyTableComponent }
         ]},
     ]}
@@ -35,6 +37,5 @@ const routes: Routes = [
 @NgModule({
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule],
-    providers: [EventDetailResolver, CanRegisterResolver]
 })
 export class EventsRoutingModule { }

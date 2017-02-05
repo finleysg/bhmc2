@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AuthenticationService, EventDocument, DocumentType, EventPayment,
-    EventRegistrationGroup, EventDetail, EventDetailService } from '../../../core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { AuthenticationService, EventDocument, DocumentType, EventPayment, RegistrationService,
+    EventRegistrationGroup, EventDetail } from '../../../core';
+import { ActivatedRoute } from '@angular/router';
 import { ToasterService } from 'angular2-toaster';
 import { PaymentComponent } from '../../../shared/payments/payment.component';
 import { ConfigService } from '../../../app-config.service';
@@ -32,10 +32,9 @@ export class NewMemberSignupComponent implements OnInit {
 
     constructor(
         private authService: AuthenticationService,
-        private eventService: EventDetailService,
         private toaster: ToasterService,
         private route: ActivatedRoute,
-        private router: Router,
+        private registrationService: RegistrationService,
         private formService: NewMemberForm,
         private configService: ConfigService) {
     }
@@ -59,6 +58,7 @@ export class NewMemberSignupComponent implements OnInit {
                     })
                 }
             });
+        this.registrationService.registrationGroup$.subscribe(group => this.group = group);
         this.formService.buildForm(this.newUser);
     }
 
@@ -76,10 +76,10 @@ export class NewMemberSignupComponent implements OnInit {
                 return this.authService.quietLogin(this.newUser.username, this.newUser.password1)
             })
             .then(() => {
-                return this.eventService.reserve(this.eventDetail.id);
+                return this.registrationService.reserve(this.eventDetail.id);
             })
-            .then((group: EventRegistrationGroup) => {
-                this.group = group;
+            .then(() => {
+                // this.group = group;
                 this.group.notes = 'NEW MEMBER REGISTRATION';
                 if (this.newUser.formerClubName) {
                     this.group.notes = this.group.notes + `\nFormer club: ${this.newUser.formerClubName} (${this.newUser.formerClubNumber})`;
@@ -102,7 +102,7 @@ export class NewMemberSignupComponent implements OnInit {
         if (result) {
             this.registered = true;
         } else {
-            // TODO: what to do when user canceled payment?
+            this.registrationService.cancelReservation(this.group);
         }
     }
 }

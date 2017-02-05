@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { User, AuthenticationService, EventDetail,
+import { User, AuthenticationService, EventDetail, RegistrationService,
     EventDetailService, EventRegistrationGroup, EventDocument, DocumentType } from '../../../core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PaymentComponent } from '../../../shared/payments/payment.component';
@@ -27,6 +27,7 @@ export class SeasonSignupComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
+        private registrationService: RegistrationService,
         private eventService: EventDetailService,
         private configService: ConfigService,
         private toaster: ToasterService,
@@ -66,9 +67,10 @@ export class SeasonSignupComponent implements OnInit {
     }
 
     registerOnline(): void {
-        this.eventService.reserve(this.eventDetail.id)
-            .then((group: EventRegistrationGroup) => {
+        this.registrationService.reserve(this.eventDetail.id)
+            .then(() => {
                 // preserve the registration choices made
+                let group = this.registrationService.currentGroup;
                 let registration = _.merge({}, group.registrations[0], this.registrationGroup.registrations[0]);
                 this.paymentGroup = _.merge({}, group, this.registrationGroup);
                 this.paymentGroup.registrations[0] = registration;
@@ -91,7 +93,7 @@ export class SeasonSignupComponent implements OnInit {
                     this.toaster.pop('error', 'Error', err);
                 });
         } else {
-            this.eventService.cancelReservation(this.paymentGroup);
+            this.registrationService.cancelReservation(this.paymentGroup);
         }
     }
 }

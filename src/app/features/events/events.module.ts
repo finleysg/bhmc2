@@ -11,6 +11,9 @@ import { ReadonlyTableComponent } from './register/readonly-table.component';
 import { SeasonSignupComponent } from './register/season-signup.component';
 import { MatchPlaySignupComponent } from './match-play/matchplay-signup.component';
 import { MatchPlayComponent } from './match-play/match-play.component';
+import { CanRegisterGuard } from './services/can-register-guard.service';
+import { CanReserveGuard } from './services/can-reserve-guard.service';
+import { MatchPlayGuard } from './services/matchplay-guard.service';
 
 @NgModule({
     imports: [
@@ -30,6 +33,9 @@ import { MatchPlayComponent } from './match-play/match-play.component';
         MatchPlaySignupComponent
     ],
     providers: [
+        CanReserveGuard,
+        CanRegisterGuard,
+        MatchPlayGuard
     ]
 })
 export class EventsModule { }
