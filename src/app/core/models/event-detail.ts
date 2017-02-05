@@ -89,9 +89,8 @@ export class EventDetail {
         return this.registrations.some(r => r.memberId === memberId);
     }
 
-    canRegister(memberId: number): boolean {
-        return !this.isRegistered(memberId) &&
-               this.requiresRegistration &&
+    get canRegister(): boolean {
+        return this.requiresRegistration &&
                this.registrationWindow === RegistrationWindowType.Registering;
     }
 
