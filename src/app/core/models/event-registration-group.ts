@@ -75,6 +75,7 @@ export class EventRegistrationGroup {
             notes: this.notes,
             card_verification_token: this.cardVerificationToken,
             payment_amount: this.payment.total,
+            payment_confirmation_code: this.paymentConfirmationCode,
             slots: this.registrations.map(r => r.toJson())
         };
     }
@@ -103,6 +104,19 @@ export class EventRegistrationGroup {
                 reg.isCartFeePaid = false;
                 reg.totalFees = 0.0;
             }
+        });
+    };
+
+
+    clearRegistrations(): void {
+        this.registrations.forEach(reg => {
+            reg.memberId = -1;
+            reg.isEventFeePaid = false;
+            reg.isGrossSkinsFeePaid = false;
+            reg.isNetSkinsFeePaid = false;
+            reg.isGreensFeePaid = false;
+            reg.isCartFeePaid = false;
+            reg.totalFees = 0.0;
         });
     };
 

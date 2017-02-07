@@ -97,10 +97,6 @@ export class PaymentComponent implements OnInit {
         this.spinnerElement = this.elementRef.nativeElement.querySelector('#spinner-span');
     }
 
-    onHide($event: any): void {
-        console.log('hide');
-    }
-
     cancelPayment(): void {
         this.paymentModal.hide();
         this.onClose.emit(false);

@@ -48,32 +48,28 @@
                 </p>
                 <p class="text-danger" *ngIf="isRegistered"><strong>You are registered for this event.</strong></p>
                 <div [markdown]="eventDetail.description"></div>
+                <div *ngIf="eventDetail.notes">
+                    <h5 class="m-t-20">Notes</h5>
+                    <div [markdown]="eventDetail.notes"></div>
+                </div>
             </div>
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card event-card">
-            <div class="card-header">
-                <h2>Fees and Points</h2>
-            </div>
-            <div class="card-body card-padding">
-                <p><strong>Event fee:</strong> {{ eventDetail.eventFee | currency:'USD':true }}</p>
-                <p *ngIf="hasSkins"><strong>{{ eventDetail.skinsType }} Skins:</strong>
-                    {{ eventDetail.skinsFee | currency:'USD':true }}</p>
-                <p><strong>Group size:</strong> {{ eventDetail.groupSize }}</p>
-                <p><strong>Season long points:</strong> {{ eventDetail.seasonPoints }}</p>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="card event-card">
-            <div class="card-header">
-                <h2>Notes</h2>
-            </div>
-            <div class="card-body card-padding">
-                <div [markdown]="eventDetail.notes"></div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="card event-card">
+                    <div class="card-header">
+                        <h2>Fees and Points</h2>
+                    </div>
+                    <div class="card-body card-padding">
+                        <p><strong>Event fee:</strong> {{ eventDetail.eventFee | currency:'USD':true }}</p>
+                        <p *ngIf="hasSkins"><strong>{{ eventDetail.skinsType }} Skins:</strong>
+                            {{ eventDetail.skinsFee | currency:'USD':true }}</p>
+                        <p><strong>Group size:</strong> {{ eventDetail.groupSize }}</p>
+                        <p><strong>Season long points:</strong> {{ eventDetail.seasonPoints }}</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

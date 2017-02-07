@@ -45,11 +45,6 @@ export class RegisterComponent implements OnInit, CanDeactivate<CanComponentDeac
 
     ngOnInit(): void {
         this.currentUser = this.authService.user;
-        // this.registrationService.registrationGroup$.subscribe((group: EventRegistrationGroup) => {
-        //     this.registrationGroup = group;
-        //     this.expires = this.registrationGroup.expires;
-        //     this.registrationGroup.updatePayment(this.eventDetail);
-        // });
         this.route.data
             .subscribe((data: { eventDetail: EventDetail }) => {
                 this.eventDetail = data.eventDetail;
@@ -134,7 +129,7 @@ export class RegisterComponent implements OnInit, CanDeactivate<CanComponentDeac
                 this.eventService.refreshEventDetail().then(() => {
                     this.location.back();
                 });
-            });
+            }).catch(() => this.cancelling = false);
         }
     }
 
@@ -146,7 +141,7 @@ export class RegisterComponent implements OnInit, CanDeactivate<CanComponentDeac
         return this.dialogService.confirm(
             'Cancel Registration',
             `Are you sure you want to leave the registration page? You will not be registered,
-             and your hole reservation (league only) will be canceled.`)
+             and your hole reservation (Wednesday events) will be canceled.`)
             .then(() => {
                 return this.registrationService.cancelReservation(this.registrationGroup).then(() => { return true; })
             })

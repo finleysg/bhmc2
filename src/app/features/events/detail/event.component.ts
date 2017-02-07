@@ -26,6 +26,7 @@ export class EventComponent implements OnInit {
         private authService: AuthenticationService) { }
 
     ngOnInit(): void {
+        this.isRegistered = false;
         this.currentUser = this.authService.user;
         this.route.data
             .subscribe((data: {eventDetail: EventDetail}) => {
@@ -37,7 +38,9 @@ export class EventComponent implements OnInit {
                     this.startType = this.eventDetail.startType.toString();
                 }
                 this.registrationService.isRegistered(this.eventDetail.id, this.currentUser.member.id)
-                    .then(registered => this.isRegistered = registered);
+                    .then(registered => {
+                        this.isRegistered = registered;
+                    });
             });
     }
 

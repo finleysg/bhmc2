@@ -12,6 +12,8 @@ import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 import { ToasterModule } from 'angular2-toaster';
 import { PaymentComponent } from './payments/payment.component';
 import { UploadComponent } from './upload/upload.component';
+import { OfflineRegistrationComponent } from './offline-register/offline-registration.component';
+import { OfflineRegistrationForm } from './offline-register/offline-registration-form.service';
 
 @NgModule({
     imports: [
@@ -32,9 +34,11 @@ import { UploadComponent } from './upload/upload.component';
         MarkdownDirective,
         TimerComponent,
         UploadComponent,
+        OfflineRegistrationComponent,
     ],
     providers: [
-        SpinnerService
+        SpinnerService,
+        OfflineRegistrationForm
     ],
     schemas: [
         CUSTOM_ELEMENTS_SCHEMA
@@ -55,6 +59,7 @@ import { UploadComponent } from './upload/upload.component';
         SlimLoadingBarModule,
         PaymentComponent,
         UploadComponent,
+        OfflineRegistrationComponent,
     ]
 })
 export class SharedModule { }

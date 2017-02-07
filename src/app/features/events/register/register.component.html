@@ -36,9 +36,9 @@
                     <div class="col-md-4 col-sm-4 col-xs-12">
                         <div class="input-group">
                             <span class="read-only" (click)="removeFriend(reg)" *ngIf="reg.hasMember">
-                                <i class="zmdi zmdi-close-circle c-red m-r-15"></i>{{ reg.memberName }}
+                                <i *ngIf="reg.memberId !== currentUser.member.id" class="zmdi zmdi-close-circle c-red m-r-15"></i>{{ reg.memberName }}
                             </span>
-                            <span class="read-only" *ngIf="!reg.hasMember">Add or find a partner...</span>
+                            <span class="read-only" *ngIf="!reg.hasMember">Find partner (above) ...</span>
                         </div>
                     </div>
                     <div class="col-md-1 col-sm-1 hidden-xs">
@@ -88,10 +88,10 @@
                 <div class="row">
                     <timer [expiration]="expires" [expiryMessage]="expiryMessage" (onTimeElapsed)="cancelReservation()"></timer>
                     <div class="pull-right">
-                        <button class="btn btn-warning m-t-10" (click)="cancelReservation()">Cancel</button>
+                        <button class="btn btn-warning m-t-10" [disabled]="cancelling" (click)="cancelReservation()">Cancel</button>
                     </div>
                     <div class="pull-right">
-                        <button [disabled]="!registrationGroup.canRegister" class="btn btn-primary m-r-10 m-t-10" (click)="openPayment()">Pay Now</button>
+                        <button class="btn btn-primary m-r-10 m-t-10" (click)="openPayment()">Pay Now</button>
                         <payment [registrationGroup]="registrationGroup" [eventDetail]="eventDetail" (onClose)="paymentComplete($event)"></payment>
                     </div>
                 </div>
