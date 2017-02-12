@@ -14,9 +14,10 @@ import { MatchPlaySignupComponent } from './match-play/matchplay-signup.componen
 import { MatchPlayComponent } from './match-play/match-play.component';
 import { CanReserveGuard } from './services/can-reserve-guard.service';
 import { MatchPlayGuard } from './services/matchplay-guard.service';
-import { EventReportComponent } from './detail/event-report.component';
-import { MatchplayReportComponent } from './match-play/matchplay-report.component';
-import { CheckInReportComponent } from './detail/check-in-report.component';
+import { EventReportComponent } from './reports/event-report.component';
+import { MatchplayReportComponent } from './reports/matchplay-report.component';
+import { CheckInReportComponent } from './reports/check-in-report.component';
+import { ReconciliationReportComponent } from './reports/reconciliation-report.component';
 
 const routes: Routes = [
     { path: 'test', children: [
@@ -26,6 +27,7 @@ const routes: Routes = [
         { path: 'detail', component: EventComponent },
         { path: 'report', canActivate: [AuthGuard], component: EventReportComponent },
         { path: 'check-in-report', canActivate: [AuthGuard], component: CheckInReportComponent },
+        { path: 'recon-report', canActivate: [AuthGuard], component: ReconciliationReportComponent },
         { path: 'register', canActivate: [AuthGuard, CanRegisterGuard], canDeactivate: [CanDeactivateGuard], component: RegisterComponent },
         { path: 'matchplay', component: MatchPlayComponent },
         { path: 'matchplay/register', canActivate: [AuthGuard, MatchPlayGuard], component: MatchPlaySignupComponent },

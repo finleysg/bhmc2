@@ -32,19 +32,17 @@ div.selected {
     font-weight: bold;
 }
 
-@page {
-    margin-top: 1.5cm;
-    margin-bottom: 1cm;
-}
-
 @media print {
 
-    .block-header {
-        display: none !important;
+    @page {
+        margin-top: 1cm;
+        margin-bottom: 1cm;
     }
 
-    .course-summary {
-        page-break-after: always;
+    .card {
+        page-break-inside: avoid;
+        break-inside: avoid;
+        margin: 0 -1cm 0 0;
     }
 
     .registration-slot {
@@ -69,6 +67,6 @@ div.selected {
     div.selected {
         font-weight: bold;
         border: solid 2pt black;
-        border-radius: 35%;
+        border-radius: 40%;
     }
 }

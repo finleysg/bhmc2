@@ -11,13 +11,14 @@ export class AppConfig {
     private _adminUrl: string = 'https://finleysg.pythonanywhere.com/admin';
     private _authUrl: string = 'https://finleysg.pythonanywhere.com/rest-auth/';
     private _apiUrl: string = 'https://finleysg.pythonanywhere.com/api/';
+    private _stripeUrl: string = 'https://dashboard.stripe.com/test/payments';
 
     constructor() {
         this._isLocal = window.location.hostname.indexOf('localhost') >= 0;
-        if (this._isLocal) {
-            this._authUrl = 'http://localhost:8000/rest-auth/';
-            this._apiUrl = 'http://localhost:8000/api/';
-        }
+        // if (this._isLocal) {
+        //     this._authUrl = 'http://localhost:8000/rest-auth/';
+        //     this._apiUrl = 'http://localhost:8000/api/';
+        // }
     }
 
     get year(): number {
@@ -54,6 +55,10 @@ export class AppConfig {
 
     get apiUrl(): string {
         return this._apiUrl;
+    }
+
+    get stripeUrl(): string {
+        return this._stripeUrl;
     }
 
     get stripePublicKey(): string {

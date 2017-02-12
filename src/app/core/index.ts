@@ -10,6 +10,7 @@ export { PublicMember, PrivateMember } from './models/member';
 export { User, AccountUpdateType } from './models/user';
 export { PasswordReset } from './models/password-reset';
 export { SavedCard } from './models/saved-card';
+export { StripeCharge } from './models/stripe-charge';
 export { Announcement } from './models/announcement';
 export { AuthGuard } from './services/auth-guard.service';
 export { AuthenticationService } from './services/authentication.service';

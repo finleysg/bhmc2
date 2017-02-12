@@ -66,6 +66,10 @@ export class EventComponent implements OnInit {
         this.router.navigate(['check-in-report'], {relativeTo: this.route.parent});
     }
 
+    reconReport(): void {
+        this.router.navigate(['recon-report'], {relativeTo: this.route.parent});
+    }
+
     showTodo(funcType: string): void {
         let message = '';
         if (funcType === 'teetimes') {

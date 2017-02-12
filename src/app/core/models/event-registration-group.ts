@@ -30,6 +30,13 @@ export class EventRegistrationGroup {
         return this.registrations && this.registrations.every( reg => { return reg.hasMember; });
     }
 
+    get paymentConfirmationDateFormatted(): string {
+        if (this.paymentConfirmationDate) {
+            return this.paymentConfirmationDate.format('YYYY-MM-DD h:mm:ss a');
+        }
+        return '';
+    }
+
     hasExpired(): boolean {
         return this.expires.isBefore(moment());
     }

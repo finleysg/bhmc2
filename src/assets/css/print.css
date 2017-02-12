@@ -1,8 +1,17 @@
 @media print {
 
+    aside,
     #header,
     #footer,
     #sidebar {
+        display: none !important;
+    }
+
+    #main {
+        padding: 0;
+    }
+
+    .block-header {
         display: none !important;
     }
 

@@ -8,7 +8,10 @@
             </a>
             <ul dropdownMenu class="dropdown-menu dropdown-menu-right">
                 <li>
-                    <a class="clickable" (click)="showTodo()">Update brackets</a>
+                    <a class="clickable" (click)="uploadBrackets()">Update brackets</a>
+                </li>
+                <li>
+                    <a class="clickable" [routerLink]="['/events', config.matchPlayId, 'matchplay', 'report']">Sign-up Report</a>
                 </li>
             </ul>
         </li>

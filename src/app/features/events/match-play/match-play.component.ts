@@ -49,7 +49,7 @@ export class MatchPlayComponent implements OnInit {
             });
     }
 
-    showTodo(): void {
+    uploadBrackets(): void {
         this.uploadComponent.open(this.currentBrackets);
     }
 

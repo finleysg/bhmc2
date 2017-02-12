@@ -4,6 +4,7 @@ import { Subject } from 'rxjs/Subject';
 import { EventRegistrationGroup } from '../models/event-registration-group';
 import { BhmcDataService } from './bhmc-data.service';
 import { RegistrationRow } from '../../features/events/models/registration-row';
+import { StripeCharge } from '../models/stripe-charge';
 
 @Injectable()
 export class RegistrationService {
@@ -93,6 +94,24 @@ export class RegistrationService {
                     regGroups.push(new EventRegistrationGroup().fromJson(g));
                 });
                 return regGroups;
-            })
+            });
+    }
+
+    getPayments(eventId: number): Observable<StripeCharge[]> {
+        return this.dataService.getApiRequest(`registration/charges/${eventId}`)
+            .map((charges: any[]) => {
+                let eventCharges: StripeCharge[] = [];
+                charges.forEach(c => {
+                    eventCharges.push(new StripeCharge().fromJson(c));
+                });
+                return eventCharges;
+            });
+    }
+
+    getPayment(chargeId: string): Observable<StripeCharge> {
+        return this.dataService.getApiRequest('registration/charge', {id: chargeId})
+            .map((charge: any) => {
+                return new StripeCharge().fromJson(charge);
+            });
     }
 }

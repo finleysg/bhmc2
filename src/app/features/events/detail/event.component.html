@@ -15,6 +15,9 @@
                 <li *ngIf="currentUser.isOfficer || currentUser.isBoardMember">
                     <a class="clickable" (click)="eventReport()">Event Report</a>
                 </li>
+                <li *ngIf="currentUser.isOfficer">
+                    <a class="clickable" (click)="reconReport()">Reconciliation Report</a>
+                </li>
                 <li *ngIf="currentUser.isOfficer || currentUser.isBoardMember">
                     <a class="clickable" (click)="checkInReport()">Check-in Report</a>
                 </li>
