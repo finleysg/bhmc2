@@ -13,6 +13,8 @@ import { ChangePasswordComponent } from './account/change-password.component';
 import { NewMemberSignupComponent } from './signup/new-member-signup.component';
 import { NewMemberDataService } from './signup/new-member-data.service';
 import { NewMemberForm } from './signup/new-member-form.service';
+import { AccountReportComponent } from './report/account-report.component';
+import { MemberReportComponent } from './report/member-report.component';
 
 @NgModule({
     imports: [
@@ -29,7 +31,9 @@ import { NewMemberForm } from './signup/new-member-form.service';
         AccountInfoComponent,
         AccountSettingsComponent,
         ChangePasswordComponent,
-        NewMemberSignupComponent
+        NewMemberSignupComponent,
+        AccountReportComponent,
+        MemberReportComponent,
     ],
     providers: [
         NewMemberDataService,

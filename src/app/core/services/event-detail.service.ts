@@ -53,47 +53,6 @@ export class EventDetailService {
             .toPromise();
     }
 
-    // getRegistrationGroup(id: number): Promise<EventRegistrationGroup> {
-    //     return this.dataService.getApiRequest(`registration/groups/${id}`)
-    //         .map((data: any) => {
-    //             return new EventRegistrationGroup().fromJson(data);
-    //         })
-    //         .toPromise();
-    // }
-    //
-    // reserve(id: number, row: RegistrationRow = null): Promise<EventRegistrationGroup> {
-    //     let payload: any = {
-    //         event_id: id
-    //     };
-    //     if (row) {
-    //         Object.assign(payload, {
-    //             course_setup_hole_id: row.holeId,
-    //             starting_order: row.startingOrder,
-    //             slot_ids: row.selectedSlotIds
-    //         });
-    //     }
-    //     return this.dataService.postApiRequest('registration/reserve', payload)
-    //         .map((data: any) => {
-    //             this.registrationGroup = new EventRegistrationGroup().fromJson(data);
-    //             return this.registrationGroup;
-    //         })
-    //         .toPromise();
-    // }
-    //
-    //
-    // register(group: EventRegistrationGroup): Promise<EventRegistrationGroup> {
-    //     return this.dataService.postApiRequest('registration/register', {'group': group.toJson()})
-    //         .map((data: any) => {
-    //             this.registrationGroup = new EventRegistrationGroup().fromJson(data);
-    //             return this.registrationGroup;
-    //         })
-    //         .toPromise();
-    // }
-    //
-    // cancelReservation(group: EventRegistrationGroup) {
-    //     return this.dataService.postApiRequest('registration/cancel', {group_id: group.id}).toPromise();
-    // }
-
     signupTable(id: number): Observable<EventSignupTable> {
         return this.signupTables.get(id);
     }

@@ -9,6 +9,10 @@ export class EventRegistration {
     groupId: number;
     memberId: number;
     memberName: string;
+    memberFirstName: string;
+    memberLastName: string;
+    memberGhin: string;
+    memberEmail: string;
     startingOrder: number;
     slotNumber: number;
     isEventFeePaid: boolean;
@@ -23,6 +27,10 @@ export class EventRegistration {
         return this.memberId > 0;
     }
 
+    get startingHoleName(): string {
+        return `${this.holeNumber}${this.startingOrder === 0 ? 'A' : 'B' }`;
+    }
+
     fromJson(json: any): EventRegistration {
         this.id = json.id;
         this.courseName = json.course ? json.course : 'In the Event';
@@ -32,6 +40,10 @@ export class EventRegistration {
         this.groupId = json.registration_group ? +json.registration_group : -1;
         this.memberId = json.member ? json.member.id : -1;
         this.memberName = json.member ? `${json.member.first_name} ${json.member.last_name}` : '';
+        this.memberFirstName = json.member ? json.member.first_name : '';
+        this.memberLastName = json.member ? json.member.last_name : '';
+        this.memberGhin = json.member ? json.member.ghin : '';
+        this.memberEmail = json.member ? json.member.email : '';
         this.slotNumber = json.slot;
         this.startingOrder = json.starting_order;
         this.isEventFeePaid = !!json.member; // default to true if member is present

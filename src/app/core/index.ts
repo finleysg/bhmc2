@@ -3,6 +3,7 @@ export { CalendarEvent } from './models/calendar-event';
 export { EventDetail, EventType, RegistrationWindowType, SkinsType, StartType } from './models/event-detail';
 export { EventDocument, DocumentType } from './models/event-document';
 export { EventPayment } from './models/event-payment';
+export { EventData, EventDataSummary } from './models/event-data';
 export { EventRegistration } from './models/event-registration';
 export { EventRegistrationGroup } from './models/event-registration-group';
 export { PublicMember, PrivateMember } from './models/member';

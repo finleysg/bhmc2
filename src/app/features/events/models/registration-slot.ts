@@ -9,6 +9,7 @@ export class RegistrationSlot {
     memberName: string;
     status: SlotStatus;
     selected: boolean;
+    registration: EventRegistration;
 
     static create(parent: RegistrationRow, slot: EventRegistration): RegistrationSlot {
         let newSlot = new RegistrationSlot();
@@ -17,6 +18,7 @@ export class RegistrationSlot {
         newSlot.memberId = slot.memberId;
         newSlot.memberName = slot.memberName;
         newSlot.selected = false;
+        newSlot.registration = slot;
         newSlot.updateStatus(slot.status);
         return newSlot;
     }

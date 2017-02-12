@@ -5,13 +5,15 @@
     <div class="col-md-6">
         <div class="card event-card">
             <div class="card-header">
-                <h2>Planned Reports</h2>
-                <small>NOTE: only officers can reach these reports.</small>
-            </div>h
+                <h2>Reports</h2>
+            </div>
             <div class="card-body card-padding">
-                <h6>Membership Report</h6>
-                <p>All member records with additional audit/filtering columns for is-active, is-registered (current year),
-                    payment method, and so forth.</p>
+                <a class="btn btn-link" [routerLink]="['/member', 'reports', 'all-members']">Full Membership</a>
+                <p>All member records, including inactive accounts.</p>
+                <a class="btn btn-link" [routerLink]="['/member', 'reports', 'current-members']">Current Membership</a>
+                <p>Membership report for the {{config.year}} season.</p>
+                <a class="btn btn-link" [routerLink]="['/events', config.matchPlayId, 'matchplay', 'report']">Match Play Sign-ups</a>
+                <p>Match play sign-ups for the {{config.year}} season.</p>
                 <h6>Event Reconciliation Report</h6>
                 <p>This is a pull from Stripe side-by-side with our own records to ensure that the payment info we
                 have matches what our payment provider has.</p>

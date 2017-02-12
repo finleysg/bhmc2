@@ -11,11 +11,13 @@ export class EventRegistrationGroup {
     courseSetupId: number;
     courseName: string;
     registrantId: number;
+    registrant: string;
     startingHole: number;
     startingOrder: number;
     notes: string;
     cardVerificationToken: string;
     paymentConfirmationCode: string;
+    paymentConfirmationDate: any;
     payment: EventPayment = new EventPayment();
     registrations: EventRegistration[];
     expires: any;
@@ -47,13 +49,17 @@ export class EventRegistrationGroup {
         this.id = json.id;
         this.eventId = json.event;
         this.courseSetupId = json.course_setup;
-        this.registrantId = json.signed_up_by;
+        this.registrantId = json.signed_up_by ? json.signed_up_by.id : -1;
+        this.registrant = json.signed_up_by ? `${json.signed_up_by.first_name} ${json.signed_up_by.last_name}` : '';
         this.startingHole = json.starting_hole;
         this.startingOrder = json.starting_order;
         this.notes = json.notes;
         this.cardVerificationToken = json.card_verification_token;
         this.paymentConfirmationCode = json.payment_confirmation_code;
         this.payment.total = json.payment_amount;
+        if (json.payment_confirmation_timestamp) {
+            this.paymentConfirmationDate = moment(json.payment_confirmation_timestamp);
+        }
         if (json.expires) {
             this.expires = moment(json.expires);
         }

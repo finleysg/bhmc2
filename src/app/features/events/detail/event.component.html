@@ -6,14 +6,17 @@
                 <i class="zmdi zmdi-wrench"></i>
             </a>
             <ul dropdownMenu class="dropdown-menu dropdown-menu-right">
-                <li *ngIf="currentUser.isOfficer || currentUser.isBoardMember">
+                <li *ngIf="currentUser.isOfficer">
                     <a class="clickable" (click)="showTodo('manual')">Offline Registration</a>
                 </li>
                 <li *ngIf="currentUser.isOfficer || currentUser.isBoardMember">
                     <a class="clickable" (click)="showTodo('add-remove')">Add or Remove Groups</a>
                 </li>
                 <li *ngIf="currentUser.isOfficer || currentUser.isBoardMember">
-                    <a class="clickable" (click)="showTodo('report')">Event Report</a>
+                    <a class="clickable" (click)="eventReport()">Event Report</a>
+                </li>
+                <li *ngIf="currentUser.isOfficer || currentUser.isBoardMember">
+                    <a class="clickable" (click)="checkInReport()">Check-in Report</a>
                 </li>
                 <li *ngIf="currentUser.isOfficer || currentUser.isBoardMember">
                     <a class="clickable" (click)="showTodo('pre-event')">Pre-event Registration</a>

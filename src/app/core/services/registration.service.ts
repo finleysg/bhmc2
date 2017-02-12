@@ -84,4 +84,15 @@ export class RegistrationService {
                 .toPromise();
         }
     }
+
+    getGroups(eventId: number): Observable<EventRegistrationGroup[]> {
+        return this.dataService.getApiRequest('registration/groups', {event_id: eventId})
+            .map((groups: any[]) => {
+                let regGroups: EventRegistrationGroup[] = [];
+                groups.forEach(g => {
+                    regGroups.push(new EventRegistrationGroup().fromJson(g));
+                });
+                return regGroups;
+            })
+    }
 }

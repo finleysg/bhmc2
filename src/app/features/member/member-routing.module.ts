@@ -5,13 +5,14 @@ import { ResetPasswordComponent } from './authentication/reset-password.componen
 import { ResetPasswordSentComponent } from './authentication/reset-password-sent.component';
 import { ResetPasswordCompleteComponent } from './authentication/reset-password-complete.component';
 import { ResetPasswordConfirmComponent } from './authentication/reset-password-confirm.component';
-import { AuthGuard, StripeDetailsResolver } from '../../core';
+import { AuthGuard, StripeDetailsResolver, EventDetailResolver } from '../../core';
 import { AccountComponent } from './account/account.component';
 import { AccountSettingsComponent } from './account/account-settings.component';
 import { AccountInfoComponent } from './account/account-info.component';
 import { ChangePasswordComponent } from './account/change-password.component';
 import { NewMemberSignupComponent } from './signup/new-member-signup.component';
-import { EventDetailResolver } from '../../core/services/event-detail-resolver.service';
+import { AccountReportComponent } from './report/account-report.component';
+import { MemberReportComponent } from './report/member-report.component';
 
 const routes: Routes = [
     {
@@ -27,6 +28,10 @@ const routes: Routes = [
                 { path: 'settings', resolve: { savedCard: StripeDetailsResolver }, component: AccountSettingsComponent },
                 { path: 'change-password', component: ChangePasswordComponent },
             ]},
+            { path: 'reports', canActivate: [AuthGuard], children: [
+                { path: 'all-members', component: AccountReportComponent },
+                { path: 'current-members', component: MemberReportComponent },
+            ]}
         ]
     }
 ];

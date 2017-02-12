@@ -14,6 +14,7 @@ import { PaymentComponent } from './payments/payment.component';
 import { UploadComponent } from './upload/upload.component';
 import { OfflineRegistrationComponent } from './offline-register/offline-registration.component';
 import { OfflineRegistrationForm } from './offline-register/offline-registration-form.service';
+import { DownloadCsvComponent } from './download/download-csv.component';
 
 @NgModule({
     imports: [
@@ -35,6 +36,7 @@ import { OfflineRegistrationForm } from './offline-register/offline-registration
         TimerComponent,
         UploadComponent,
         OfflineRegistrationComponent,
+        DownloadCsvComponent,
     ],
     providers: [
         SpinnerService,
@@ -60,6 +62,7 @@ import { OfflineRegistrationForm } from './offline-register/offline-registration
         PaymentComponent,
         UploadComponent,
         OfflineRegistrationComponent,
+        DownloadCsvComponent,
     ]
 })
 export class SharedModule { }

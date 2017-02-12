@@ -58,6 +58,14 @@ export class EventComponent implements OnInit {
         this.router.navigate(['registered'], {relativeTo: this.route.parent});
     }
 
+    eventReport(): void {
+        this.router.navigate(['report'], {relativeTo: this.route.parent});
+    }
+
+    checkInReport(): void {
+        this.router.navigate(['check-in-report'], {relativeTo: this.route.parent});
+    }
+
     showTodo(funcType: string): void {
         let message = '';
         if (funcType === 'teetimes') {
@@ -74,10 +82,6 @@ export class EventComponent implements OnInit {
             message = `This will take you to a page where you can do the pre-event check-ins / skins payments. I envision
                         that, if I do this right, this will be the preferred method (as opposed to the paper-pencil system
                         we use now.`;
-        } else if (funcType === 'report') {
-            message = `This will print the same event report(s) that you have in the current system.`;
-        } else if (funcType === 'manual') {
-            message = 'This option will be where you manually sign up someone who insists on registering offline. The Luddite option.'
         }
         this.dialogService.info('Admin Placeholder', message);
     }
