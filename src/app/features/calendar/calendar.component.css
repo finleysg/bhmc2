@@ -102,6 +102,9 @@
     margin-top: 30px;
 }
 
+#calendar .deadline {
+    background-color: red;
+}
 #calendar .league {
     background-color: teal;
 }

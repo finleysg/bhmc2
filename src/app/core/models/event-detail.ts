@@ -49,6 +49,8 @@ export class EventDetail {
             eventType = EventType.State;
         } else if (shortType === 'R') {
             eventType = EventType.Registration;
+        } else if (shortType === 'D') {
+            eventType = EventType.Deadline;
         }
         return eventType;
     }
@@ -207,7 +209,8 @@ export enum EventType {
     BoardMeeting = <any>'Board Meeting',
     Other = <any>'Other',
     State = <any>'State Tournament',
-    Registration = <any>'Open Registration Period'
+    Registration = <any>'Open Registration Period',
+    Deadline = <any>'Deadline'
 }
 
 export enum SkinsType {
