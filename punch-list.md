@@ -1,7 +1,6 @@
 * Upload the results docs from previous years
 * Financial documents on payment FAQ page
 * Bug: New reg and login: should not be presented with a reg button
-* Calendar event for deadlines
 * Silly season events (invite only)
 * Audit permissions for api and front end
 * Caching - client and server side
