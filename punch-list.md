@@ -22,14 +22,14 @@
 * Correct the number of SLP for the club championship
 
 ###Reports:
-* Event report (copy of existing)
-* Payment report by event
 * Payment report by users
-* Membership report
+* Spinner on all reports
+* Staff guards on report urls
+* Print styling
 
 ###Admin Functions:
 1. Document upload (Results, Teetimes)
-1b. Financial doc uploads
+2. Financial doc uploads
 5. Wednesday admin page
     * add and remove groups (separate function)
     * manual signup and skins
