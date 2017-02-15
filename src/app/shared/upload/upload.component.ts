@@ -135,7 +135,7 @@ export class UploadComponent implements OnInit {
                     title = `${year} Match Play Brackets`;
                     break;
                 case DocumentType.Results:
-                    title = `${this.eventDetail.startDate.format('YYYY-MM-DD')} ${this.eventDetail.name} Results`;
+                    title = `${this.eventDetail.startDate.format('YYYY-MM-DD')} Results (${this.eventDetail.name})`;
                     break;
                 case DocumentType.SeasonPoints:
                     title = `${year} Season Long Points ${this.titleSuffix}`; // Net or Gross
