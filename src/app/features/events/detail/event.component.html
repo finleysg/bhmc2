@@ -9,7 +9,7 @@
                 <li *ngIf="currentUser.isOfficer">
                     <a class="clickable" (click)="showTodo('manual')">Offline Registration</a>
                 </li>
-                <li *ngIf="currentUser.isOfficer || currentUser.isBoardMember">
+                <li *ngIf="!isMajor && (currentUser.isOfficer || currentUser.isBoardMember)">
                     <a class="clickable" (click)="showTodo('add-remove')">Add or Remove Groups</a>
                 </li>
                 <li *ngIf="currentUser.isOfficer || currentUser.isBoardMember">
@@ -24,11 +24,11 @@
                 <li *ngIf="currentUser.isOfficer || currentUser.isBoardMember">
                     <a class="clickable" (click)="showTodo('pre-event')">Pre-event Registration</a>
                 </li>
-                <li *ngIf="currentUser.isProshopStaff">
-                    <a class="clickable" (click)="showTodo('teetimes')">Upload Teetimes</a>
+                <li *ngIf="isMajor && (currentUser.isOfficer || currentUser.isProshopStaff)">
+                    <a class="clickable" (click)="uploadTeetimes()">Upload Teetimes</a>
                 </li>
-                <li *ngIf="currentUser.isProshopStaff">
-                    <a class="clickable" (click)="showTodo('results')">Upload Results</a>
+                <li *ngIf="currentUser.isOfficer || currentUser.isProshopStaff">
+                    <a class="clickable" (click)="uploadResults()">Upload Results</a>
                 </li>
             </ul>
         </li>
@@ -42,8 +42,8 @@
                 <div>
                     <a *ngIf="currentUser.isAuthenticated && !isRegistered && eventDetail.canRegister" (click)="register()" class="btn btn-warning event-button">Register Now</a>
                     <a *ngIf="eventDetail.canViewRegistrations" (click)="registered()" class="btn btn-info event-button m-r-10">Registered</a>
-                    <a *ngIf="eventDetail.teeTimes" [href]="eventDetail.teeTimes.url" target="_blank" class="btn btn-info event-button m-r-10">Tee Times</a>
-                    <a *ngIf="eventDetail.results" [href]="eventDetail.results.url" target="_blank" class="btn btn-info event-button m-r-10">Results</a>
+                    <a *ngIf="teetimes" [href]="teetimes.url" target="_blank" class="btn btn-info event-button m-r-10">Tee Times</a>
+                    <a *ngIf="results" [href]="results.url" target="_blank" class="btn btn-info event-button m-r-10">Results</a>
                 </div>
             </div>
             <div class="card-body card-padding">
@@ -74,6 +74,7 @@
                             {{ eventDetail.skinsFee | currency:'USD':true }}</p>
                         <p><strong>Group size:</strong> {{ eventDetail.groupSize }}</p>
                         <p><strong>Season long points:</strong> {{ eventDetail.seasonPoints }}</p>
+                        <upload (onClose)="uploadComplete($event)" [eventDetail]="eventDetail"></upload>
                     </div>
                 </div>
             </div>

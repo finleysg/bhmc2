@@ -1,7 +1,8 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-import { AuthenticationService, User, EventDocument, DocumentType, SkinsType, StartType,
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { AuthenticationService, User, EventDocument, DocumentType, SkinsType, StartType, EventDetailService,
     EventDetail, EventType, DialogService, RegistrationService } from '../../../core';
+import { UploadComponent } from '../../../shared/upload/upload.component';
 
 @Component({
     moduleId: module.id,
@@ -10,6 +11,8 @@ import { AuthenticationService, User, EventDocument, DocumentType, SkinsType, St
 })
 export class EventComponent implements OnInit {
 
+    @ViewChild(UploadComponent) resultsUpload: UploadComponent;
+
     public eventDetail: EventDetail;
     public currentUser: User;
     public results: EventDocument;
@@ -17,12 +20,14 @@ export class EventComponent implements OnInit {
     public hasSkins: boolean;
     public startType: string;
     public isRegistered: boolean;
+    public isMajor: boolean;
 
     constructor(
         private route: ActivatedRoute,
         private router: Router,
         private registrationService: RegistrationService,
         private dialogService: DialogService,
+        private eventService: EventDetailService,
         private authService: AuthenticationService) { }
 
     ngOnInit(): void {
@@ -34,6 +39,7 @@ export class EventComponent implements OnInit {
                 this.results = this.eventDetail.getDocument(DocumentType.Results);
                 this.teetimes = this.eventDetail.getDocument(DocumentType.Teetimes);
                 this.hasSkins = this.eventDetail.skinsType !== SkinsType.None;
+                this.isMajor = this.eventDetail.eventType === EventType.Major;
                 if (this.eventDetail.startType != StartType.NA) {
                     this.startType = this.eventDetail.startType.toString();
                 }
@@ -70,16 +76,27 @@ export class EventComponent implements OnInit {
         this.router.navigate(['recon-report'], {relativeTo: this.route.parent});
     }
 
+    uploadResults(): void {
+        this.resultsUpload.openType(this.results, DocumentType.Results);
+    }
+
+    uploadTeetimes(): void {
+        this.resultsUpload.openType(this.teetimes, DocumentType.Teetimes);
+    }
+
+    uploadComplete(doc: EventDocument): void {
+        this.eventService.refreshEventDetail().then(() => {
+            if (doc.type === DocumentType.Results) {
+                this.results = doc;
+            } else {
+                this.teetimes = doc;
+            }
+        });
+    }
+
     showTodo(funcType: string): void {
         let message = '';
-        if (funcType === 'teetimes') {
-            message = `This is the function that the proshop staff will use to upload tee times for Majors or other
-                        events like the member-guest. The system will automatically create a link to that document
-                        on this page and on the home page.`;
-        } else if (funcType === 'results') {
-            message = `This is the function that the proshop staff will use to upload results for all events. The 
-                        system will automatically create a link to the results document on this page and on the home page.`;
-        } else if (funcType === 'add-remove') {
+        if (funcType === 'add-remove') {
             message = `This is the function to add extra groups or, if needed, remove groups for Wednesday night sign-ups.
                         Typically this will be used to add the second group to par 3's.`;
         } else if (funcType === 'pre-event') {

@@ -50,6 +50,14 @@ export class UploadComponent implements OnInit {
         this.uploadModal.show();
     }
 
+    openType(document: EventDocument, type: DocumentType): void {
+        this.existingDocument = document;
+        this.documentType = type;
+        this.documentName = this.deriveDocumentTitle();
+        this.uploadModal.config = { backdrop: 'static', keyboard: false };
+        this.uploadModal.show();
+    }
+
     onShown(): void {
         this.spinnerElement = this.elementRef.nativeElement.querySelector('#spinner-span');
     }
