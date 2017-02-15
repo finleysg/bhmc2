@@ -30,3 +30,8 @@
 .mCSB_inside > .mCSB_container {
   margin-right: 0;
 }
+
+.trophy {
+    background-image: url('../../../assets/img/trophy-variant-outline.png');
+    margin-top: 10px;
+}

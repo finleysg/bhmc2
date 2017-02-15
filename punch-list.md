@@ -16,8 +16,6 @@
 * malihu scrollbars
 * Google analytics
 * Move payment form to reactive forms
-* Replace the Dam Cup icon
-* Correct the number of SLP for the club championship
 
 ###Reports:
 * Payment report by users
