@@ -1,4 +1,3 @@
-* Upload the results docs from previous years
 * Financial documents on payment FAQ page
 * Bug: New reg and login: should not be presented with a reg button
 * Silly season events (invite only)
@@ -27,7 +26,6 @@
 * Print styling
 
 ###Admin Functions:
-1. Document upload (Results, Teetimes)
 2. Financial doc uploads
 5. Wednesday admin page
     * add and remove groups (separate function)
