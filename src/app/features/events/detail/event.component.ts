@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthenticationService, User, EventDocument, DocumentType, SkinsType, StartType, EventDetailService,
     EventDetail, EventType, DialogService, RegistrationService } from '../../../core';
 import { UploadComponent } from '../../../shared/upload/upload.component';
+import { ToasterService } from 'angular2-toaster';
 
 @Component({
     moduleId: module.id,
@@ -26,6 +27,7 @@ export class EventComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private registrationService: RegistrationService,
+        private toaster: ToasterService,
         private dialogService: DialogService,
         private eventService: EventDetailService,
         private authService: AuthenticationService) { }
@@ -92,6 +94,29 @@ export class EventComponent implements OnInit {
                 this.teetimes = doc;
             }
         });
+    }
+
+    addGroups(): void {
+        this.dialogService.confirm(
+            'Add Groups',
+            `Are you sure you want to add additional groups to the event? All holes with only one available 
+             group (i.e. all par threes) will get an additional empty group for additional sign ups.`)
+            .then(() => {
+                this.registrationService.addGroups(this.eventDetail.id)
+                    .then((nbr: number) => {
+                        if (nbr > 0) {
+                            this.eventService.refreshEventDetail().then(() => {
+                                this.toaster.pop('success', 'Groups Added', `${nbr} additional groups were added to the event`);
+                            });
+                        } else {
+                            this.toaster.pop('warning', 'No Groups Added', 'No additional groups were added to the event. Are the par 3s already full?');
+                        }
+                    })
+                    .catch(err => {
+                        this.toaster.pop('error', 'No Groups Added', err);
+                    });
+            })
+            .catch(() => { /* no-op */ });
     }
 
     showTodo(funcType: string): void {

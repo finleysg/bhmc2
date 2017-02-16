@@ -86,6 +86,15 @@ export class RegistrationService {
         }
     }
 
+    // technically any holes with one group, but that always means par 3's
+    addGroups(eventId: number): Promise<number> {
+        return this.dataService.postApiRequest('registration/add-groups', {event_id: eventId})
+            .map((data: any) => {
+                return +data.groups_added;
+            })
+            .toPromise();
+    }
+
     getGroups(eventId: number): Observable<EventRegistrationGroup[]> {
         return this.dataService.getApiRequest('registration/groups', {event_id: eventId})
             .map((groups: any[]) => {
