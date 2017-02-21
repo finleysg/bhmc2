@@ -56,6 +56,6 @@ export class RegistrationSlot {
 export enum SlotStatus {
     Available = <any>'Available',
     Reserved = <any>'Reserved',
-    Pending = <any>'Registering Now',
+    Pending = <any>'Unavailable',
     Unavailable = <any>'Unavailable'
 }

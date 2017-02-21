@@ -35,11 +35,11 @@ export class ReserveTableComponent implements OnInit {
     slotClass(slot: RegistrationSlot): string {
         let className = this.table.courseName.replace(' ', '').toLowerCase();
         if (slot.selected) {
-            className = 'bg-warning';
+            className = 'bg-warning clickable';
         } else if (slot.status === SlotStatus.Reserved) {
             className = 'text-success';
         } else if (slot.status === SlotStatus.Pending) {
-            className = 'bg-danger';
+            className = 'bgm-gray';
         }
         return className;
     };
