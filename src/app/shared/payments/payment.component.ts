@@ -3,9 +3,11 @@ import { ToasterService } from 'angular2-toaster';
 import { ModalDirective } from 'ng2-bootstrap';
 import { MemberService, SavedCard, AuthenticationService,
          RegistrationService, EventDetail, EventRegistrationGroup } from '../../core';
-import { CreditCard } from './credit-card';
+import { StripeCreditCard } from './stripe-credit-card';
 import { AppConfig } from '../../app-config';
 import { ConfigService } from '../../app-config.service';
+import { FormGroup } from '@angular/forms';
+import { CreditCardForm } from './credit-card.form';
 
 declare const Spinner: any;
 
@@ -49,10 +51,12 @@ export class PaymentComponent implements OnInit {
     @Output() onClose = new EventEmitter<boolean>();
     @ViewChild('paymentModal') paymentModal: ModalDirective;
 
-    public card: CreditCard;
+    public card: StripeCreditCard;
+    public cardForm: FormGroup;
+    public cardErrors: any;
     public messages: ProcessingResult[];
     public processStatus: ProcessingStatus;
-    public savedCard: string;
+    public savedCard: SavedCard;
     public hasSavedCard: boolean;
     public useSavedCard: boolean;
 
@@ -63,28 +67,49 @@ export class PaymentComponent implements OnInit {
     constructor(
         private registrationService: RegistrationService,
         private memberService: MemberService,
+        private creditCardForm: CreditCardForm,
         private authService: AuthenticationService,
         private elementRef: ElementRef,
         private configService: ConfigService,
         private toaster: ToasterService
     ) {
         this.config = configService.config;
+        Stripe.setPublishableKey(this.config.stripePublicKey);
     }
 
     ngOnInit() {
         this.messages = [];
-        this.card = new CreditCard();
+        this.card = new StripeCreditCard();
+        this.creditCardForm.form$.subscribe(form => this.cardForm = form);
+        this.creditCardForm.errors$.subscribe(errors => this.cardErrors = errors);
+        this.creditCardForm.buildForm(this.card);
         if (this.authService.user.isAuthenticated) {
             this.memberService.stripeSavedCard().then((savedCard: SavedCard) => {
-                // TODO: refactor to use object
-                this.savedCard = savedCard.description;
-                this.hasSavedCard = savedCard.description.length > 0;
+                this.savedCard = savedCard;
+                this.hasSavedCard = savedCard.last4.length > 0;
                 this.useSavedCard = this.hasSavedCard;
+                this.toggleSavedCard();
             });
         }
         this.initSpinner();
-        Stripe.setPublishableKey(this.config.stripePublicKey);
     };
+
+    private toggleDisabledState() {
+        if (this.cardForm) {
+            const nbrControl = this.cardForm.get('number');
+            if (nbrControl && nbrControl.disabled != this.useSavedCard) {
+                this.useSavedCard ? nbrControl.disable() : nbrControl.enable();
+            }
+            const expControl = this.cardForm.get('expiry');
+            if (expControl && expControl.disabled != this.useSavedCard) {
+                this.useSavedCard ? expControl.disable() : expControl.enable();
+            }
+            const cvcControl = this.cardForm.get('cvc');
+            if (cvcControl && cvcControl.disabled != this.useSavedCard) {
+                this.useSavedCard ? cvcControl.disable() : cvcControl.enable();
+            }
+        }
+    }
 
     open(): void {
         this.messages.length = 0;
@@ -102,6 +127,24 @@ export class PaymentComponent implements OnInit {
         this.onClose.emit(false);
     };
 
+    toggleSavedCard(): void {
+        if (!this.cardForm) return;
+        if (this.useSavedCard) {
+            this.cardForm.patchValue({
+                number: this.savedCard.cardNumber,
+                expiry: this.savedCard.expires,
+                cvc: this.savedCard.cvc
+            });
+        } else {
+            this.cardForm.patchValue({
+                number: '',
+                expiry: '',
+                cvc: ''
+            });
+        }
+        this.toggleDisabledState();
+    }
+
     processPayment(): void {
         if (this.processStatus === ProcessingStatus.Complete) {
             this.paymentModal.hide();
@@ -110,13 +153,18 @@ export class PaymentComponent implements OnInit {
             if (this.useSavedCard) {
                 this.quickPayment();
             } else {
-                if (!this.card.isValid()) {
-                    return;
+                if (this.isCardValid()) {
+                    this.fullPayment();
                 }
-                this.fullPayment();
             }
         }
     };
+
+    private isCardValid(): boolean {
+        return this.cardErrors.number === '' &&
+               this.cardErrors.expiry === '' &&
+               this.cardErrors.cvc === '';
+    }
 
     quickPayment(): void {
         this.processStatus = ProcessingStatus.Processing;
@@ -132,6 +180,7 @@ export class PaymentComponent implements OnInit {
     fullPayment(): void {
         this.processStatus = ProcessingStatus.Validating;
         this.spinner.spin(this.spinnerElement);
+        this.creditCardForm.updateValue(this.card);
         this.card.createToken()
             .then((token: string) => {
                 this.processStatus = ProcessingStatus.Processing;

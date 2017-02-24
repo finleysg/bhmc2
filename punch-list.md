@@ -15,7 +15,6 @@
 * Job to de-activate unregistered members
 * malihu scrollbars
 * Google analytics
-* Move payment form to reactive forms
 
 ###Reports:
 * Payment report by users
@@ -26,6 +25,5 @@
 ###Admin Functions:
 2. Financial doc uploads
 5. Wednesday admin page
-    * add and remove groups (separate function)
     * manual signup and skins
     * move groups/players

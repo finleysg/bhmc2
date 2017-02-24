@@ -16,6 +16,11 @@ import { OfflineRegistrationComponent } from './offline-register/offline-registr
 import { OfflineRegistrationForm } from './offline-register/offline-registration-form.service';
 import { DownloadCsvComponent } from './download/download-csv.component';
 import { ChargeComponent } from './payments/charge.component';
+import { CreditCardFormatDirective } from './payments/credit-card-format.directive';
+import { ExpiryFormatDirective } from './payments/expiry-format.directive';
+import { CvcFormatDirective } from './payments/cvc-format.directive';
+import { CreditCardService } from './payments/credit-card.service';
+import { CreditCardForm } from './payments/credit-card.form';
 
 @NgModule({
     imports: [
@@ -39,10 +44,15 @@ import { ChargeComponent } from './payments/charge.component';
         OfflineRegistrationComponent,
         DownloadCsvComponent,
         ChargeComponent,
+        CreditCardFormatDirective,
+        ExpiryFormatDirective,
+        CvcFormatDirective
     ],
     providers: [
         SpinnerService,
-        OfflineRegistrationForm
+        OfflineRegistrationForm,
+        CreditCardService,
+        CreditCardForm,
     ],
     schemas: [
         CUSTOM_ELEMENTS_SCHEMA
