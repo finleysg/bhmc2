@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { EventDetail, RegistrationService, EventRegistrationGroup, StripeCharge } from '../../../core';
 import { ConfigService } from '../../../app-config.service';
 import { AppConfig } from '../../../app-config';
+import { SpinnerService } from '../../../shared/spinner/spinner.service';
 
 @Component({
     moduleId: module.id,
@@ -19,9 +20,11 @@ export class ReconciliationReportComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private configService: ConfigService,
+        private spinnerService: SpinnerService,
         private registrationService: RegistrationService) { }
 
     ngOnInit(): void {
+        this.spinnerService.show('recon');
         this.config = this.configService.config;
         this.route.data
             .subscribe((data: {eventDetail: EventDetail}) => {
@@ -57,6 +60,9 @@ export class ReconciliationReportComponent implements OnInit {
                                 link: charge ? `${this.config.stripeUrl}/${charge.id}` : ''
                             });
                         });
+                        setTimeout(() => {
+                            this.spinnerService.hide('recon');
+                        }, 500);
                     }).subscribe();
             });
     }

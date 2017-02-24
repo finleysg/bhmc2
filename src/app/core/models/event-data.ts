@@ -56,8 +56,10 @@ export class EventData {
         if (group) {
             data.groupId = group.id;
             data.paymentCode = group.paymentConfirmationCode;
-            data.paymentDate = group.paymentConfirmationDate.format('YYYY-MM-DD');
-            data.reserved = group.paymentConfirmationDate.format('YYYY-MM-DD');
+            if (group.paymentConfirmationDate) {
+                data.paymentDate = group.paymentConfirmationDate.format('YYYY-MM-DD');
+                data.reserved = group.paymentConfirmationDate.format('YYYY-MM-DD');
+            }
             data.signedUpBy = group.registrant;
         } else {
             data.paymentCode = '';

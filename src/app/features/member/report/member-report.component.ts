@@ -4,6 +4,7 @@ import { EventDetail, PublicMember, RegistrationService, EventRegistrationGroup,
          MemberService, EventData, EventDataSummary } from '../../../core';
 import { AppConfig } from '../../../app-config';
 import { ConfigService } from '../../../app-config.service';
+import { SpinnerService } from '../../../shared/spinner/spinner.service';
 
 @Component({
     moduleId: module.id,
@@ -20,6 +21,7 @@ export class MemberReportComponent implements OnInit {
     constructor(
         private memberService: MemberService,
         private configService: ConfigService,
+        private spinnerService: SpinnerService,
         private registerService: RegistrationService,
         private eventService: EventDetailService
     ) {
@@ -27,6 +29,7 @@ export class MemberReportComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.spinnerService.show('members');
         this.report = [];
         Observable.forkJoin([
             this.memberService.getMembers(),
@@ -54,6 +57,9 @@ export class MemberReportComponent implements OnInit {
                     this.report.push(row);
                     this.summary.updateByRow(row);
                 });
+                setTimeout(() => {
+                    this.spinnerService.hide('members');
+                }, 500);
             }
         ).subscribe();
     }

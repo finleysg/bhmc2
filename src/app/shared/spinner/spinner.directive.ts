@@ -12,8 +12,8 @@ export class SpinnerDirective implements OnInit, OnDestroy {
     private subscription: Subscription;
 
     @Input('bhmc-spinner') name: string;
-    @Input() scale: number = 0.25; // Scales overall size of the spinner
-    @Input() color: string = '#fff'; // #rgb or #rrggbb or array of colors
+    @Input() scale: number = 0.5; // Scales overall size of the spinner
+    @Input() color: string = '#008000'; // #rgb or #rrggbb or array of colors
 
     constructor(private spinnerElement: ElementRef,
                 private spinnerService: SpinnerService) {
@@ -45,7 +45,7 @@ export class SpinnerDirective implements OnInit, OnDestroy {
     }
 
     private createServiceSubscription() {
-        this.subscription = this.spinnerService.getSpinner(this.name).subscribe(show => {
+        this.subscription = this.spinnerService.getSpinner(this.name).subscribe((show: boolean) => {
             if (show) {
                 this.spinner.spin(this.element);
             } else {

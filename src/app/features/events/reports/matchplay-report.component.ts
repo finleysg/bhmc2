@@ -5,6 +5,7 @@ import { EventDetail, PublicMember, RegistrationService, EventRegistrationGroup,
 import { AppConfig } from '../../../app-config';
 import { ConfigService } from '../../../app-config.service';
 import { ActivatedRoute } from '@angular/router';
+import { SpinnerService } from '../../../shared/spinner/spinner.service';
 
 @Component({
     moduleId: module.id,
@@ -21,6 +22,7 @@ export class MatchplayReportComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private memberService: MemberService,
+        private spinnerService: SpinnerService,
         private configService: ConfigService,
         private registerService: RegistrationService
     ) {
@@ -28,6 +30,7 @@ export class MatchplayReportComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.spinnerService.show('match-play-rpt');
         this.report = [];
         this.route.data
             .subscribe((data: {eventDetail: EventDetail}) => {
@@ -52,6 +55,9 @@ export class MatchplayReportComponent implements OnInit {
                             this.report.push(row);
                             this.summary.updateByRow(row, true); // isMatchplay=true
                         });
+                        setTimeout(() => {
+                            this.spinnerService.hide('match-play-rpt');
+                        }, 500);
                     }
                 ).subscribe();
             });

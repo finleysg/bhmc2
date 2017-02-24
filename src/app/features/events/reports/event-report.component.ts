@@ -1,6 +1,7 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { EventDetail, EventType, RegistrationService, EventData, EventDataSummary } from '../../../core';
+import { SpinnerService } from '../../../shared/spinner/spinner.service';
 
 @Component({
     moduleId: module.id,
@@ -18,9 +19,11 @@ export class EventReportComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
+        private spinnerService: SpinnerService,
         private registerService: RegistrationService) { }
 
     ngOnInit(): void {
+        this.spinnerService.show('event-rpt');
         this.route.data
             .subscribe((data: {eventDetail: EventDetail}) => {
                 this.eventDetail = data.eventDetail;
@@ -37,6 +40,9 @@ export class EventReportComponent implements OnInit {
                 this.showCourse = this.eventDetail.eventType === EventType.League;
                 this.showHole = this.eventDetail.eventType === EventType.League;
                 this.showGroup = this.eventDetail.eventType === EventType.Major && this.eventDetail.groupSize > 1;
+                setTimeout(() => {
+                    this.spinnerService.hide('event-rpt');
+                }, 500);
             });
     }
 

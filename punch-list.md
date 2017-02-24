@@ -7,18 +7,16 @@
 * Payments: ability to choose whether or not to save a card
 * Payments: saving/selecting multiple cards
 * Contact messages - send to contact@bhmc.org
-* Refactor login to be reactive
 * Ensure new member registration obeys the config flag
 * Return URL may need to be fixed - might also just be a dev issue
 * Eventually - only "registered" members can register
 * Inactive members should not be able to log in or register
 * Job to de-activate unregistered members
 * malihu scrollbars
-* Google analytics
+* Google analytics (maybe)
 
 ###Reports:
 * Payment report by users
-* Spinner on all reports
 * Staff guards on report urls
 * Print styling
 
