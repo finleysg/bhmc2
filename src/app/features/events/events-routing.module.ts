@@ -18,12 +18,14 @@ import { EventReportComponent } from './reports/event-report.component';
 import { MatchplayReportComponent } from './reports/matchplay-report.component';
 import { CheckInReportComponent } from './reports/check-in-report.component';
 import { ReconciliationReportComponent } from './reports/reconciliation-report.component';
+import { CheckInComponent } from './checkin/check-in.component';
 
 const routes: Routes = [
     { path: 'test', children: [
         { path: 'payments', component: PaymentTestComponent },
     ]},
     { path: 'events/:id', resolve: { eventDetail: EventDetailResolver }, children: [
+        { path: 'check-in', component: CheckInComponent },
         { path: 'detail', component: EventComponent },
         { path: 'report', canActivate: [AuthGuard], component: EventReportComponent },
         { path: 'check-in-report', canActivate: [AuthGuard], component: CheckInReportComponent },

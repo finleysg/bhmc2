@@ -45,6 +45,7 @@
     "material-design-iconic-font": "2.2.0",
     "ng2-bootstrap": "1.2.5",
     "ng2-cookies": "1.0.4",
+    "ng2-page-scroll": "4.0.0-beta.4",
     "ng2-slim-loading-bar": "2.0.7",
     "raven-js": "3.9.1",
     "reflect-metadata": "0.1.8",

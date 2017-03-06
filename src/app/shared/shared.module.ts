@@ -21,6 +21,7 @@ import { ExpiryFormatDirective } from './payments/expiry-format.directive';
 import { CvcFormatDirective } from './payments/cvc-format.directive';
 import { CreditCardService } from './payments/credit-card.service';
 import { CreditCardForm } from './payments/credit-card.form';
+import { Ng2PageScrollModule } from 'ng2-page-scroll';
 
 @NgModule({
     imports: [
@@ -32,7 +33,8 @@ import { CreditCardForm } from './payments/credit-card.form';
         TypeaheadModule.forRoot(),
         ModalModule.forRoot(),
         DropdownModule.forRoot(),
-        SlimLoadingBarModule.forRoot()
+        SlimLoadingBarModule.forRoot(),
+        Ng2PageScrollModule.forRoot()
     ],
     declarations: [
         PaymentComponent,
@@ -76,6 +78,7 @@ import { CreditCardForm } from './payments/credit-card.form';
         OfflineRegistrationComponent,
         DownloadCsvComponent,
         ChargeComponent,
+        Ng2PageScrollModule
     ]
 })
 export class SharedModule { }

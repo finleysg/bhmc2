@@ -1,0 +1,67 @@
+<div class="block-header">
+    <h2>Event Check-in | {{eventDetail.name}} | {{eventDetail.startDate.format('MMMM Do, YYYY')}}</h2>
+    <ul class="actions">
+        <li>
+            <div class="input-group find-member">
+                <span class="input-group-addon"><i class="zmdi zmdi-search"></i></span>
+                <input [(ngModel)]="selectedMemberName"
+                       [typeahead]="registeredMembers"
+                       [typeaheadOptionField]="'name'"
+                       [typeaheadOptionsLimit]="8"
+                       (typeaheadOnSelect)="findPlayer($event)"
+                       class="form-control input-sm" placeholder="Find member...">
+            </div>
+        </li>
+    </ul>
+</div>
+<div bsModal (onShown)="onShown()" #addPlayerModal="bs-modal" class="modal fade">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header bgm-blue">
+                <h4 class="modal-title">Add a Player</h4>
+            </div>
+            <div class="modal-body">
+                <div class="input-group m-t-30">
+                    <span class="input-group-addon"><i class="zmdi zmdi-search"></i></span>
+                    <input [(ngModel)]="addedMemberName"
+                           [typeahead]="allMembers"
+                           [typeaheadOptionField]="'name'"
+                           [typeaheadOptionsLimit]="8"
+                           (typeaheadOnSelect)="findMember($event)"
+                           class="form-control input-sm" placeholder="Find member...">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" type="button" (click)="cancelAdd()">Cancel</button>
+                <button class="btn btn-relative btn-icon-text btn-success"
+                        (click)="addPlayer()">
+                    <i class="zmdi zmdi-cloud-upload"></i> OK
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div #scrollContainer class="scrollable">
+    <div class="card" *ngFor="let table of tables" id="{{'course-' + table.courseSetupId}}">
+        <div class="card-body card-padding">
+            <div class="row" *ngFor="let row of table.rows" id="{{'hole-' + row.holeId}}">
+                <div class="col-sm-1">
+                    <div class="registration-hole">
+                        <span *ngIf="row.name">{{ row.name + ' ' + table.courseName }}</span>
+                    </div>
+                </div>
+                <div class="col-sm-2" *ngFor="let slot of row.slots">
+                    <div class="row registration-slot" [class.found]="slot.selected" [class.clickable]="slot.memberId === -1" (click)="openSearch(slot)">
+                        <div class="col-sm-12 member-name">
+                            <span>{{slot.memberName}}</span>
+                        </div>
+                        <div (click)="updateSkins(slot, 'gross')" class="col-sm-3 is-paid text-center clickable" [class.gs-paid]="slot.registration.isGrossSkinsFeePaid">GS</div>
+                        <div (click)="updateSkins(slot, 'net')" class="col-sm-3 is-paid text-center clickable" [class.ns-paid]="slot.registration.isNetSkinsFeePaid">NS</div>
+                        <div class="col-sm-3 is-paid text-center" [class.gf-paid]="slot.registration.isGreensFeePaid">GF</div>
+                        <div class="col-sm-3 is-paid text-center" [class.ct-paid]="slot.registration.isCartFeePaid">CT</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
