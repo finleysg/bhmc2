@@ -26,13 +26,13 @@
 
             // other libraries
             'rxjs': 'npm:rxjs',
-            'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js',
             'ng2-cookies': 'npm:ng2-cookies',
             'angular2-toaster': 'npm:angular2-toaster/bundles/angular2-toaster.umd.js',
             'showdown': 'npm:showdown/dist',
             // 'moment': 'npm:moment/moment.js',
             'ng2-bootstrap': 'npm:ng2-bootstrap/bundles/ng2-bootstrap.umd.js',
             'ng2-slim-loading-bar': 'npm:ng2-slim-loading-bar/bundles/index.umd.js',
+            'ng2-page-scroll': 'npm:ng2-page-scroll/bundles/ng2-page-scroll.umd.js',
             'raven-js': 'npm:raven-js',
             'lodash': 'npm:lodash/lodash.js'
         },
@@ -62,6 +62,9 @@
             },
             // 'moment': {
             //     // main: 'moment',
+            //     defaultExtension: 'js'
+            // },
+            // 'ng2-page-scroll': {
             //     defaultExtension: 'js'
             // },
             'ng2-bootstrap': {

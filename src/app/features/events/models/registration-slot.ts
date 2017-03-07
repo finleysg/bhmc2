@@ -9,6 +9,7 @@ export class RegistrationSlot {
     memberName: string;
     status: SlotStatus;
     selected: boolean;
+    found: boolean;
     registration: EventRegistration;
 
     static create(parent: RegistrationRow, slot: EventRegistration): RegistrationSlot {

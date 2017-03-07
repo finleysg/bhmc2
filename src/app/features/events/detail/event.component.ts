@@ -86,6 +86,10 @@ export class EventComponent implements OnInit {
         this.resultsUpload.openType(this.teetimes, DocumentType.Teetimes);
     }
 
+    checkIn(): void {
+        this.router.navigate(['check-in'], {relativeTo: this.route.parent});
+    }
+
     uploadComplete(doc: EventDocument): void {
         this.eventService.refreshEventDetail().then(() => {
             if (doc.type === DocumentType.Results) {
@@ -117,18 +121,5 @@ export class EventComponent implements OnInit {
                     });
             })
             .catch(() => { /* no-op */ });
-    }
-
-    showTodo(funcType: string): void {
-        let message = '';
-        if (funcType === 'add-remove') {
-            message = `This is the function to add extra groups or, if needed, remove groups for Wednesday night sign-ups.
-                        Typically this will be used to add the second group to par 3's.`;
-        } else if (funcType === 'pre-event') {
-            message = `This will take you to a page where you can do the pre-event check-ins / skins payments. I envision
-                        that, if I do this right, this will be the preferred method (as opposed to the paper-pencil system
-                        we use now.`;
-        }
-        this.dialogService.info('Admin Placeholder', message);
     }
 }
