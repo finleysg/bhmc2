@@ -12,6 +12,7 @@ export { PasswordReset } from './models/password-reset';
 export { SavedCard } from './models/saved-card';
 export { StripeCharge } from './models/stripe-charge';
 export { Announcement } from './models/announcement';
+export { SlotPayment } from './models/slot-payment';
 export { AuthGuard } from './services/auth-guard.service';
 export { AuthenticationService } from './services/authentication.service';
 export { BhmcDataService } from './services/bhmc-data.service';

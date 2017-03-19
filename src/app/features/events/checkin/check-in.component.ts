@@ -2,7 +2,8 @@ import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core'
 import { ActivatedRoute } from '@angular/router';
 import { DOCUMENT } from '@angular/platform-browser';
 import { EventSignupTable } from '../models/event-signup-table';
-import { EventDetailService, EventDetail, MemberService, PublicMember } from '../../../core';
+import { EventDetailService, EventDetail, MemberService, PublicMember,
+    SlotPayment, RegistrationService } from '../../../core';
 import { TypeaheadMatch, ModalDirective } from 'ng2-bootstrap';
 import { RegistrationSlot } from '../models/registration-slot';
 import { PageScrollService, PageScrollInstance, PageScrollConfig } from 'ng2-page-scroll';
@@ -26,8 +27,10 @@ export class CheckInComponent implements OnInit {
     public addedMemberName: string;
     public addedMember: PublicMember;
     private selectedSlot: RegistrationSlot;
+    private slotPayments: SlotPayment[];
 
     constructor(private eventService: EventDetailService,
+                private registrationService: RegistrationService,
                 private pageScrollService: PageScrollService,
                 @Inject(DOCUMENT) private document: any,
                 private memberService: MemberService,
@@ -43,6 +46,7 @@ export class CheckInComponent implements OnInit {
                 courses.slice().reverse().forEach(course => {
                     this.eventService.signupTable(course.id).do(table => this.tables.push(table)).subscribe();
                 });
+                this.registrationService.getSlotPayments(this.eventDetail.id).subscribe(payments => this.slotPayments = payments);
         });
         this.memberService.getMembers().subscribe(
             members => {
@@ -101,6 +105,7 @@ export class CheckInComponent implements OnInit {
         }
     }
 
+    // Assumptions: always cash
     updateSkins(slot: RegistrationSlot, skinsType: string): void {
         // TODO: allow toggling, but only if not previously paid online
         if (slot.memberId === -1) return;
@@ -115,5 +120,9 @@ export class CheckInComponent implements OnInit {
                 slot.registration.isNetSkinsFeePaid = true;
             }
         }
+    }
+
+    private isSlotPayment(registration: RegistrationSlot): boolean {
+        return false;
     }
 }

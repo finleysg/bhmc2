@@ -5,6 +5,7 @@ import { EventRegistrationGroup } from '../models/event-registration-group';
 import { BhmcDataService } from './bhmc-data.service';
 import { RegistrationRow } from '../../features/events/models/registration-row';
 import { StripeCharge } from '../models/stripe-charge';
+import { SlotPayment } from '../models/slot-payment';
 
 @Injectable()
 export class RegistrationService {
@@ -123,4 +124,23 @@ export class RegistrationService {
                 return new StripeCharge().fromJson(charge);
             });
     }
+
+    getSlotPayments(eventId: number): Observable<SlotPayment[]> {
+        return this.dataService.getApiRequest('registration/slot-payments', {event_id: eventId})
+            .map((json: any[]) => {
+                let payments: SlotPayment[] = [];
+                json.forEach(p => {
+                    payments.push(new SlotPayment().fromJson(p));
+                });
+                return payments;
+            });
+    }
+
+    addSlotPayment(payment: SlotPayment): Observable<void> {
+        return this.dataService.postApiRequest('registrations/slot-payments', payment);
+    }
+
+    // updateSlotPayment(payment: SlotPayment): Observable<void> {
+    //     return this.dataService.postApiRequest('registrations/slot-payments/' + payment.id, payment);
+    // }
 }
