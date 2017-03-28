@@ -16,8 +16,8 @@ import { RegistrationRow } from '../models/registration-row';
 })
 export class CheckInComponent implements OnInit {
 
-    @ViewChild('scrollContainer') private container: ElementRef;
-    @ViewChild('addPlayerModal') private addPlayerModal: ModalDirective;
+    @ViewChild('scrollContainer') container: ElementRef;
+    @ViewChild('addPlayerModal') addPlayerModal: ModalDirective;
 
     public tables: EventSignupTable[];
     public eventDetail: EventDetail;
