@@ -101,7 +101,7 @@
                                     <img *ngIf="event.eventType.toString()=='Member Meeting'" class="lv-img-sm" src="../../assets/img/Iron.png" alt="Member meeting">
                                 </div>
                                 <div class="media-body">
-                                    <div class="lv-title">{{ event.name }}</div>
+                                    <div [class.highlighted]="event.eventType.toString()=='Deadline'" class="lv-title">{{ event.name }}</div>
                                     <small class="lv-small">{{ event.startDate.format('dddd, MMMM Do') }}</small>
                                 </div>
                             </div>
