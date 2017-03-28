@@ -46,7 +46,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="lv-item" *ngIf="user && user.isAuthenticated && !user.member.membershipIsCurrent">
+                        <!--<div class="lv-item" *ngIf="user && user.isAuthenticated && !user.member.membershipIsCurrent">
                             <div class="media">
                                 <div class="pull-left">
                                     <img class="lv-img-sm" src="../../assets/img/RegisterNow.png" alt="Register now!">
@@ -60,7 +60,7 @@
                                     </p>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="lv-item" *ngFor="let a of announcements">
                             <div class="media" *ngIf="a.isVisible(user.isAuthenticated)">
                                 <div class="media-body">

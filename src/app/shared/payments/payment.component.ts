@@ -170,7 +170,7 @@ export class PaymentComponent implements OnInit {
         this.processStatus = ProcessingStatus.Processing;
         this.spinner.spin(this.spinnerElement);
         this.registrationService.register(this.registrationGroup)
-            .then(conf => {
+            .then((conf: string) => {
                 this.successState(conf);
             }).catch(response => {
                 this.errorState(response);
@@ -186,7 +186,7 @@ export class PaymentComponent implements OnInit {
                 this.processStatus = ProcessingStatus.Processing;
                 this.registrationGroup.cardVerificationToken = token;
                 return this.registrationService.register(this.registrationGroup);
-            }).then(conf => {
+            }).then((conf: string) => {
                 this.successState(conf);
             }).catch((response: any) => {
                 this.errorState(response);
