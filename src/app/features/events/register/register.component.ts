@@ -55,7 +55,7 @@ export class RegisterComponent implements OnInit, CanDeactivate<CanComponentDeac
                 this.registrationGroup.updatePayment(this.eventDetail);
             });
         Observable.forkJoin([
-            this.memberService.getMembers(),
+            this.memberService.getRegisteredMembers(),
             this.memberService.friends(),
         ]).subscribe(
             results => {

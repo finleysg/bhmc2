@@ -1,7 +1,7 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthenticationService, User, EventDocument, DocumentType, SkinsType, StartType, EventDetailService,
-    EventDetail, EventType, DialogService, RegistrationService } from '../../../core';
+    EventDetail, EventType, DialogService, RegistrationService, Sponsor, SponsorService } from '../../../core';
 import { UploadComponent } from '../../../shared/upload/upload.component';
 import { ToasterService } from 'angular2-toaster';
 
@@ -22,6 +22,7 @@ export class EventComponent implements OnInit {
     public startType: string;
     public isRegistered: boolean;
     public isMajor: boolean;
+    public goldSponsors: Sponsor[];
 
     constructor(
         private route: ActivatedRoute,
@@ -30,6 +31,7 @@ export class EventComponent implements OnInit {
         private toaster: ToasterService,
         private dialogService: DialogService,
         private eventService: EventDetailService,
+        private sponsorService: SponsorService,
         private authService: AuthenticationService) { }
 
     ngOnInit(): void {
@@ -50,6 +52,17 @@ export class EventComponent implements OnInit {
                         this.isRegistered = registered;
                     });
             });
+        this.sponsorService.getSponsors().then(sponsors => {
+            this.goldSponsors = sponsors.filter(s => s.level === 'G');
+        });
+    }
+
+    canRegister(): boolean {
+        // return this.eventDetail.canRegister &&
+        //     this.currentUser.isAuthenticated &&
+        //     this.currentUser.member.membershipIsCurrent &&
+        //     !this.isRegistered;
+        return false;
     }
 
     register(): void {
@@ -86,9 +99,9 @@ export class EventComponent implements OnInit {
         this.resultsUpload.openType(this.teetimes, DocumentType.Teetimes);
     }
 
-    checkIn(): void {
-        this.router.navigate(['check-in'], {relativeTo: this.route.parent});
-    }
+    // checkIn(): void {
+    //     this.router.navigate(['check-in'], {relativeTo: this.route.parent});
+    // }
 
     uploadComplete(doc: EventDocument): void {
         this.eventService.refreshEventDetail().then(() => {

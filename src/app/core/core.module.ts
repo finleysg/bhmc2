@@ -16,6 +16,7 @@ import { EventDetailService } from './services/event-detail.service';
 import { EventDetailResolver } from './services/event-detail-resolver.service';
 import { DocumentService } from './services/document.service';
 import { RegistrationService } from './services/registration.service';
+import { SponsorService } from './services/sponsor.service';
 import './rxjs-extensions';
 
 @NgModule({
@@ -38,7 +39,8 @@ import './rxjs-extensions';
         EventDetailService,
         EventDetailResolver,
         DocumentService,
-        RegistrationService
+        RegistrationService,
+        SponsorService
     ]
 })
 export class BhmcCoreModule {}

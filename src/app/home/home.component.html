@@ -10,7 +10,7 @@
                         Announcements
                     </div>
                     <div class="lv-body">
-                        <div class="lv-item" *ngIf="user && !user.isAuthenticated">
+                        <!--<div class="lv-item" *ngIf="user && !user.isAuthenticated">
                             <div class="media">
                                 <div class="pull-left">
                                     <img class="lv-img-sm" src="../../assets/img/QuestionMark.png" alt="Are you a returning member?">
@@ -18,15 +18,15 @@
                                 <div class="media-body">
                                     <div class="lv-title">Are You a Returning Member?</div>
                                     <p>If so, then this must look a bit strange to you! Welcome to the new club website. Before you
-                                        can register for events in the upcoming season or view the results of those events,
-                                        we need to update your account. Click on the link below to get more information.
+                                        can register for events in the upcoming season, we need to update your account. Click on the
+                                        link below to get more information.
                                     </p>
                                     <p>
                                         <button class="btn btn-sm btn-info" (click)="getPassword()">Returning Members</button>
                                     </p>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="lv-item" *ngIf="user && !user.isAuthenticated && config.acceptNewMembers">
                             <div class="media">
                                 <div class="pull-left">
@@ -110,8 +110,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-3 col-sm-4">
         <div class="card event-card">
             <div class="card-body card-padding">
                 <div class="listview">
@@ -182,6 +180,32 @@
                                 <div class="media-body">
                                     <div class="lv-title">Handicaps (GHIN)</div>
                                     <small class="lv-small"></small>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-4">
+        <div class="card event-card">
+            <div class="card-body card-padding">
+                <div class="listview">
+                    <div class="lv-header">
+                        Men's Club Sponsors
+                    </div>
+                    <div class="lv-body">
+                        <a class="lv-item" [href]="sponsor.website" target="_blank" *ngFor="let sponsor of sponsors">
+                            <div class="media">
+                                <div class="pull-left">
+                                    <img *ngIf="sponsor.level === 'G'" class="lv-img-sm2" src="../../assets/img/gold.png" alt="Gold Sponsor">
+                                    <img *ngIf="sponsor.level === 'S'" class="lv-img-sm2" src="../../assets/img/silver.png" alt="Silver Sponsor">
+                                    <img *ngIf="sponsor.level === 'B'" class="lv-img-sm2" src="../../assets/img/bronze.png" alt="Bronze Sponsor">
+                                </div>
+                                <div class="media-body">
+                                    <div class="lv-title">{{ sponsor.name }}</div>
+                                    <img class="img-responsive" [src]="sponsor.imageUrl" />
                                 </div>
                             </div>
                         </a>

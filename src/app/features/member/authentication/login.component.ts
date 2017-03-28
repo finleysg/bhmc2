@@ -38,7 +38,11 @@ export class LoginComponent implements OnInit {
             .then(() => this.router.navigate([this.returnUrl]))
             .catch((err: string) => {
                 this.loading = false;
-                this.toaster.pop('error', 'Invalid Credentials', err);
+                if (err.indexOf('disabled') > 0) {
+                    this.toaster.pop('error', 'Inactive Account', 'You\'re account is inactive. Register now for the new season!');
+                } else {
+                    this.toaster.pop('error', 'Invalid Credentials', err);
+                }
             });
     }
 }

@@ -9,19 +9,30 @@
 * Contact messages - send to contact@bhmc.org
 * Ensure new member registration obeys the config flag
 * Return URL may need to be fixed - might also just be a dev issue
-* Eventually - only "registered" members can register
-* Inactive members should not be able to log in or register
-* Job to de-activate unregistered members
+* Identity and handle returning inactive member signup (redirect from failed login)
 * malihu scrollbars
 * Google analytics (maybe)
+* How to handle members with the same name? (typeaheads)
+* Timed refresh of the Wednesday reserve page?
+* Better load times and some sort of indicator
+* How can we gracefully handle a 503 from the api?
+* "Secure" wording on the payment component
+* Sponsor model/api and rendering on the UI
 
-###Reports:
+###Reports
 * Payment report by users
 * Staff guards on report urls
 * Print styling
 
-###Admin Functions:
-2. Financial doc uploads
-5. Wednesday admin page
+###Admin Functions
+* Wednesday admin page
     * manual signup and skins
     * move groups/players
+
+###Jobs
+* Import friends from 2017 signup files
+
+### Transition
+* DNC
+* Email changes in the api
+* Email at mailgun

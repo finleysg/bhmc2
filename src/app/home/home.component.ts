@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CalendarService, CalendarEvent, AnnouncementService, Announcement,
-         User, AuthenticationService } from '../core';
+         User, AuthenticationService, Sponsor, SponsorService } from '../core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { ConfigService } from '../app-config.service';
@@ -17,12 +17,14 @@ export class HomeComponent implements OnInit {
     public announcements: Announcement[];
     public eventList: CalendarEvent[];
     public user: User;
+    public sponsors: Sponsor[];
 
     constructor(
         private authService: AuthenticationService,
         private calendarService: CalendarService,
         private announcementService: AnnouncementService,
         private router: Router,
+        private sponsorService: SponsorService,
         private configService: ConfigService) {
     }
 
@@ -43,6 +45,7 @@ export class HomeComponent implements OnInit {
                 });
             }
         );
+        this.sponsorService.getSponsors().then(sponsors => this.sponsors = sponsors);
     }
 
     registerOnline(): void {
