@@ -64,13 +64,13 @@
                         <div class="lv-item" *ngFor="let a of announcements">
                             <div class="media" *ngIf="a.isVisible(user.isAuthenticated)">
                                 <div class="media-body">
-                                    <div class="lv-title">{{a.title}}</div>
+                                    <div class="lv-announcement">{{a.title}}</div>
                                     <div [markdown]="a.text"></div>
                                     <div *ngIf="a.eventName">
-                                        <a class="btn btn-sm btn-link" [routerLink]="['/events', a.eventId, a.eventPage]">{{a.eventName}}</a>
+                                        <a class="btn btn-sm btn-success" [routerLink]="['/events', a.eventId, a.eventPage]">{{a.eventName}}</a>
                                     </div>
                                     <div *ngIf="a.documentName">
-                                        <a class="btn btn-sm btn-link" target="_blank" [href]="a.documentUrl">{{a.documentName}}</a>
+                                        <a class="btn btn-sm btn-info" target="_blank" [href]="a.documentUrl">{{a.documentName}}</a>
                                     </div>
                                     <div *ngIf="a.externalUrlName">
                                         <a class="btn btn-sm btn-link" target="_blank" [href]="a.externalUrl">{{a.externalUrlName}}</a>

@@ -18,6 +18,7 @@
 * How can we gracefully handle a 503 from the api?
 * "Secure" wording on the payment component
 * Sponsor model/api and rendering on the UI
+* Scroll to top on mobile
 
 ###Reports
 * Payment report by users

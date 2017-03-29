@@ -38,11 +38,11 @@ export class HomeComponent implements OnInit {
             results => {
                 this.announcements = results[0];
                 this.eventList = results[1];
-                this.announcements.forEach(a => {
-                    if (a.documentName) {
-                        a.documentUrl = `${this.config.apiUrl}${a.documentUrl}`
-                    }
-                });
+                // this.announcements.forEach(a => {
+                //     if (a.documentName) {
+                //         a.documentUrl = `${this.config.apiUrl}${a.documentUrl}`
+                //     }
+                // });
             }
         );
         this.sponsorService.getSponsors().then(sponsors => this.sponsors = sponsors);
