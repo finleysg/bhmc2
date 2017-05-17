@@ -1,9 +1,9 @@
 <div class="block-header">
     <h2>Event Sign-up Report</h2>
     <ul class="actions">
-        <li *ngIf="report && showCourse">
+        <!--<li *ngIf="report && showCourse">
             <download-csv [csvData]="legacyCsv()" [filename]="'LegacyEventExport.csv'"></download-csv>
-        </li>
+        </li>-->
         <li *ngIf="report && showCourse">
             <download-csv [csvData]="wednesdayCsv()" [filename]="'WednesdayEventExport.csv'"></download-csv>
         </li>
