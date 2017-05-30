@@ -58,11 +58,11 @@ export class EventComponent implements OnInit {
     }
 
     canRegister(): boolean {
-        // return this.eventDetail.canRegister &&
-        //     this.currentUser.isAuthenticated &&
-        //     this.currentUser.member.membershipIsCurrent &&
-        //     !this.isRegistered;
-        return false;
+        return this.eventDetail.canRegister &&
+            this.currentUser.isAuthenticated &&
+            this.currentUser.member.membershipIsCurrent &&
+            this.currentUser.isStaff &&
+            !this.isRegistered;
     }
 
     register(): void {

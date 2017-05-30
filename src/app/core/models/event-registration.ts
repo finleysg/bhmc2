@@ -13,6 +13,7 @@ export class EventRegistration {
     memberLastName: string;
     memberGhin: string;
     memberEmail: string;
+    forwardTees: boolean;
     startingOrder: number;
     slotNumber: number;
     isEventFeePaid: boolean;
@@ -44,6 +45,7 @@ export class EventRegistration {
         this.memberLastName = json.member ? json.member.last_name : '';
         this.memberGhin = json.member ? json.member.ghin : '';
         this.memberEmail = json.member ? json.member.email : '';
+        this.forwardTees = json.member ? json.member.forward_tees : false;
         this.slotNumber = json.slot;
         this.startingOrder = json.starting_order;
         this.isEventFeePaid = !!json.member; // default to true if member is present

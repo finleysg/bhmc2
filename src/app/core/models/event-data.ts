@@ -24,7 +24,7 @@ export class EventData {
     age: string;
     isNewMember: boolean;
     isNetSignup: boolean;
-    forwardTees: boolean;
+    forwardTees: string;
     reserved: string;
     eventFee: number;
     grossSkinsFee: number;
@@ -49,6 +49,7 @@ export class EventData {
         data.memberName = reg.memberName;
         data.memberId = reg.memberId;
         data.memberGhin = reg.memberGhin;
+        data.forwardTees = reg.forwardTees;
         data.firstName = reg.memberFirstName;
         data.lastName = reg.memberLastName;
         data.email = reg.memberEmail;
@@ -75,11 +76,11 @@ export class EventData {
     }
 
     static getWednesdayRegistrationHeader(): string {
-        return 'Course,Hole,GHIN,Last Name,First Name,Full Name,Email,Signed Up By,Sign-up Date,Payment Code,Event Fee,Gross Skins,Net Skins,Green Fees,Cart Fee,Total Fees';
+        return 'Course,Hole,GHIN,Gold Tees,Last Name,First Name,Full Name,Email,Signed Up By,Sign-up Date,Payment Code,Event Fee,Gross Skins,Net Skins,Green Fees,Cart Fee,Total Fees';
     }
 
     getWednesdayRegistrationCsv(): string {
-        return `${this.course},${this.hole},${this.memberGhin},${this.lastName},${this.firstName},${this.memberName},${this.email},${this.signedUpBy},${this.reserved},${this.paymentCode},${this.eventFee},${this.grossSkinsFee},${this.netSkinsFee},${this.greenFee},${this.cartFee},${this.totalFees}`;
+        return `${this.course},${this.hole},${this.memberGhin},${this.forwardTees},${this.lastName},${this.firstName},${this.memberName},${this.email},${this.signedUpBy},${this.reserved},${this.paymentCode},${this.eventFee},${this.grossSkinsFee},${this.netSkinsFee},${this.greenFee},${this.cartFee},${this.totalFees}`;
     }
 
     static getMajorRegistrationHeader(): string {
