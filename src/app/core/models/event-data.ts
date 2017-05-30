@@ -24,7 +24,7 @@ export class EventData {
     age: string;
     isNewMember: boolean;
     isNetSignup: boolean;
-    forwardTees: string;
+    forwardTees: boolean;
     reserved: string;
     eventFee: number;
     grossSkinsFee: number;
@@ -80,7 +80,7 @@ export class EventData {
     }
 
     getWednesdayRegistrationCsv(): string {
-        return `${this.course},${this.hole},${this.memberGhin},${this.forwardTees},${this.lastName},${this.firstName},${this.memberName},${this.email},${this.signedUpBy},${this.reserved},${this.paymentCode},${this.eventFee},${this.grossSkinsFee},${this.netSkinsFee},${this.greenFee},${this.cartFee},${this.totalFees}`;
+        return `${this.course},${this.hole},${this.memberGhin},${this.forwardTees ? 1 : 0},${this.lastName},${this.firstName},${this.memberName},${this.email},${this.signedUpBy},${this.reserved},${this.paymentCode},${this.eventFee},${this.grossSkinsFee},${this.netSkinsFee},${this.greenFee},${this.cartFee},${this.totalFees}`;
     }
 
     static getMajorRegistrationHeader(): string {
