@@ -16,9 +16,9 @@
                            class="form-control input-sm" placeholder="Find member...">
                 </div>
             </div>
-            <div class="card-body card-padding" *ngIf="!registration && currentMember">
-                <h3>{{currentMember.name}}</h3>
-                <p>{{currentMember.firstName}} is not in the event. <a (click)="findOpenHole()" class="btn btn-link">Find an open slot</a></p>
+            <div class="card-body card-padding" *ngIf="!registration">
+                <h3 *ngIf="currentMember">{{currentMember.name}}</h3>
+                <p *ngIf="currentMember">{{currentMember.firstName}} is not in the event. <a (click)="findOpenHole()" class="btn btn-link">Find an open slot</a></p>
             </div>
             <div class="card-body card-padding" *ngIf="registration">
                 <h3>{{currentMember.name}}</h3>
