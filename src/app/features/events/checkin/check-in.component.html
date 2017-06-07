@@ -1,29 +1,14 @@
 <div class="block-header">
-    <h2>Event Check-in | {{eventDetail.name}} | {{eventDetail.startDate.format('MMMM Do, YYYY')}}</h2>
-    <ul class="actions">
-        <li>
-            <div class="input-group find-member">
-                <span class="input-group-addon"><i class="zmdi zmdi-search"></i></span>
-                <input [(ngModel)]="selectedMemberName"
-                       [typeahead]="registeredMembers"
-                       [typeaheadOptionField]="'name'"
-                       [typeaheadOptionsLimit]="8"
-                       (typeaheadOnSelect)="findPlayer($event)"
-                       class="form-control input-sm" placeholder="Find member...">
-            </div>
-        </li>
-    </ul>
+    <h2 class="hidden-xs">Event Check-in ({{ eventDetail.startDate.format('dddd, MMMM Do') }})</h2>
+    <h4 class="visible-xs">Event Check-in ({{ eventDetail.startDate.format('MMM D') }})</h4>
 </div>
-<div bsModal #addPlayerModal="bs-modal" class="modal fade">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header bgm-blue">
-                <h4 class="modal-title">Add a Player</h4>
-            </div>
-            <div class="modal-body">
-                <div class="input-group m-t-30">
+<div class="row">
+    <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12">
+        <div class="card event-card">
+            <div class="card-header">
+                <div class="input-group" *ngIf="eventDetail.groupSize > 1">
                     <span class="input-group-addon"><i class="zmdi zmdi-search"></i></span>
-                    <input [(ngModel)]="addedMemberName"
+                    <input [(ngModel)]="selectedMemberName"
                            [typeahead]="allMembers"
                            [typeaheadOptionField]="'name'"
                            [typeaheadOptionsLimit]="8"
@@ -31,36 +16,79 @@
                            class="form-control input-sm" placeholder="Find member...">
                 </div>
             </div>
-            <div class="modal-footer">
-                <button class="btn btn-default" type="button" (click)="cancelAdd()">Cancel</button>
-                <button class="btn btn-relative btn-icon-text btn-success"
-                        (click)="addPlayer()">
-                    <i class="zmdi zmdi-cloud-upload"></i> OK
-                </button>
+            <div class="card-body card-padding" *ngIf="!registration && currentMember">
+                <h3>{{currentMember.name}}</h3>
+                <p>{{currentMember.firstName}} is not in the event. <a (click)="findOpenHole()" class="btn btn-link">Find an open slot</a></p>
+            </div>
+            <div class="card-body card-padding" *ngIf="registration">
+                <h3>{{currentMember.name}}</h3>
+                <div class="row m-t-10">
+                    <div class="col-xs-4 checkin-label">Starting Hole</div>
+                    <div class="col-xs-8 checkin-label checkin-data">{{ registration.courseName.replace('League', '') }} {{ registration.startingHoleName }}</div>
+                </div>
+                <div class="row m-t-10">
+                    <div class="col-xs-4 checkin-label">Net Skins</div>
+                    <div class="col-xs-8">
+                        <div class="checkbox">
+                            <input type="checkbox"
+                                   (change)="updatePayment()"
+                                   [(ngModel)]="registration.isNetSkinsFeePaid"
+                                   [disabled]="registrationOriginal.isNetSkinsFeePaid"><i class="input-helper"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-t-20">
+                    <div class="col-xs-4 checkin-label">Gross Skins</div>
+                    <div class="col-xs-8">
+                        <div class="checkbox">
+                            <input type="checkbox"
+                                   (change)="updatePayment()"
+                                   [(ngModel)]="registration.isGrossSkinsFeePaid"
+                                   [disabled]="registrationOriginal.isGrossSkinsFeePaid"><i class="input-helper"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-t-20">
+                    <div class="col-xs-4 checkin-label">Green Fee Paid</div>
+                    <div class="col-xs-8 checkin-label checkin-data">{{registration.isGreensFeePaid ? 'Yes' : 'No'}}</div>
+                </div>
+                <div class="row m-t-20">
+                    <div class="col-xs-4 checkin-label">Cart Fee Paid</div>
+                    <div class="col-xs-8 checkin-label checkin-data">{{registration.isCartFeePaid ? 'Yes' : 'No'}}</div>
+                </div>
+                <div class="row m-t-20">
+                    <div class="col-xs-4 checkin-label">Amount Due</div>
+                    <div class="col-xs-8 checkin-label checkin-data">{{ registration.totalFees | currency:'USD':true }}</div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-default" (click)="clear()">Cancel</button>
+                <button class="btn btn-warning" (click)="movePlayer()" [disabled]="true">Move</button>
+                <button class="btn btn-danger" (click)="dropPlayer()" [disabled]="true">Drop</button>
+                <button class="btn btn-success" (click)="savePlayer()" [disabled]="!isDirty()">Save</button>
             </div>
         </div>
     </div>
 </div>
-<div #scrollContainer class="scrollable">
-    <div class="card" *ngFor="let table of tables" id="{{'course-' + table.courseSetupId}}">
-        <div class="card-body card-padding">
-            <div class="row" *ngFor="let row of table.rows" id="{{'hole-' + row.holeId}}">
-                <div class="col-sm-1">
-                    <div class="registration-hole">
-                        <span *ngIf="row.name">{{ row.name + ' ' + table.courseName }}</span>
-                    </div>
+<div bsModal #openHolesModal="bs-modal" class="modal fade">
+    <div class="modal-sm modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bgm-blue">
+                <h3 class="modal-title">Open Holes / Slots</h3>
+                <small *ngIf="!selectedHole">Select an open slot below</small>
+                <small *ngIf="selectedHole">Add {{currentMember.firstName}} to {{selectedHole.courseName.replace('League', '')}}{{selectedHole.startingHoleName}}</small>
+            </div>
+            <div class="modal-body open-holes">
+                <div class="list-group m-t-15">
+                    <a *ngFor="let hole of openHoles" class="list-group-item text-center"
+                       (click)="selectHole(hole)">{{hole.courseName.replace('League', '')}}{{hole.startingHoleName}}</a>
                 </div>
-                <div class="col-sm-2" *ngFor="let slot of row.slots">
-                    <div class="row registration-slot" [class.found]="slot.selected" [class.clickable]="slot.memberId === -1" (click)="openSearch(slot)">
-                        <div class="col-sm-12 member-name">
-                            <span>{{slot.memberName}}</span>
-                        </div>
-                        <div (click)="updateSkins(slot, 'gross')" class="col-sm-3 is-paid text-center clickable" [class.gs-paid]="slot.registration.isGrossSkinsFeePaid">GS</div>
-                        <div (click)="updateSkins(slot, 'net')" class="col-sm-3 is-paid text-center clickable" [class.ns-paid]="slot.registration.isNetSkinsFeePaid">NS</div>
-                        <div class="col-sm-3 is-paid text-center" [class.gf-paid]="slot.registration.isGreensFeePaid">GF</div>
-                        <div class="col-sm-3 is-paid text-center" [class.ct-paid]="slot.registration.isCartFeePaid">CT</div>
-                    </div>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" type="button" (click)="cancelOpenHoles()">Cancel</button>
+                <button class="btn btn-relative btn-icon-text btn-primary" (click)="addPlayer()">
+                    <i class="zmdi zmdi-flag"> Add Player</i>
+                </button>
             </div>
         </div>
     </div>

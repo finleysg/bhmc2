@@ -99,9 +99,9 @@ export class EventComponent implements OnInit {
         this.resultsUpload.openType(this.teetimes, DocumentType.Teetimes);
     }
 
-    // checkIn(): void {
-    //     this.router.navigate(['check-in'], {relativeTo: this.route.parent});
-    // }
+    checkIn(): void {
+        this.router.navigate(['check-in'], {relativeTo: this.route.parent});
+    }
 
     uploadComplete(doc: EventDocument): void {
         this.eventService.refreshEventDetail().then(() => {

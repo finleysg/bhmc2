@@ -48,6 +48,11 @@ export class BhmcDataService {
         return this.request(RequestMethod.Post, url, data);
     }
 
+    patchApiRequest(resource: string, data: any): Observable<any> {
+        const url: string = this._apiUrl + resource + '/';
+        return this.request(RequestMethod.Patch, url, data);
+    }
+
     patchAuthRequest(resource: string, data: any): Observable<any> {
         const url: string = this._authUrl + resource + '/';
         return this.request(RequestMethod.Patch, url, data);

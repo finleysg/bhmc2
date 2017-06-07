@@ -76,11 +76,11 @@ export class EventData {
     }
 
     static getWednesdayRegistrationHeader(): string {
-        return 'Course,Hole,GHIN,Gold Tees,Last Name,First Name,Full Name,Email,Signed Up By,Sign-up Date,Payment Code,Event Fee,Gross Skins,Net Skins,Green Fees,Cart Fee,Total Fees';
+        return 'Team,Course,Hole,GHIN,Gold Tees,Last Name,First Name,Full Name,Email,Signed Up By,Sign-up Date,Payment Code,Event Fee,Gross Skins,Net Skins,Green Fees,Cart Fee,Total Fees';
     }
 
     getWednesdayRegistrationCsv(): string {
-        return `${this.course},${this.hole},${this.memberGhin},${this.forwardTees ? 1 : 0},${this.lastName},${this.firstName},${this.memberName},${this.email},${this.signedUpBy},${this.reserved},${this.paymentCode},${this.eventFee},${this.grossSkinsFee},${this.netSkinsFee},${this.greenFee},${this.cartFee},${this.totalFees}`;
+        return `${this.course}-${this.hole},${this.course},${this.hole},${this.memberGhin},${this.forwardTees ? 'Gold' : 'Club'},${this.lastName},${this.firstName},${this.memberName},${this.email},${this.signedUpBy},${this.reserved},${this.paymentCode},${this.eventFee},${this.grossSkinsFee},${this.netSkinsFee},${this.greenFee},${this.cartFee},${this.totalFees}`;
     }
 
     static getMajorRegistrationHeader(): string {

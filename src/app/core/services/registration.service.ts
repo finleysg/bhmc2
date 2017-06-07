@@ -6,6 +6,10 @@ import { BhmcDataService } from './bhmc-data.service';
 import { RegistrationRow } from '../../features/events/models/registration-row';
 import { StripeCharge } from '../models/stripe-charge';
 import { SlotPayment } from '../models/slot-payment';
+import { EventRegistration } from '../models/event-registration';
+import { EventDetail } from '../models/event-detail';
+import { User } from '../models/user';
+import * as _ from 'lodash';
 
 @Injectable()
 export class RegistrationService {
@@ -106,6 +110,28 @@ export class RegistrationService {
                 return regGroups;
             });
     }
+    
+    getOpenSlots(eventId: number): Observable<EventRegistration[]> {
+        return this.dataService.getApiRequest('registrations', {event_id: eventId, is_open: true})
+            .map((registrations: any) => {
+                let results: EventRegistration[] = [];
+                registrations.forEach((r: any) => {
+                    results.push(new EventRegistration().fromJson(r));
+                });
+                return results;
+            });
+    }
+
+    getRegistration(eventId: number, memberId: number): Promise<EventRegistration> {
+        return this.dataService.getApiRequest('registrations', {event_id: eventId, member_id: memberId})
+            .map((registrations: any) => {
+                if (registrations.length === 1) {
+                    return new EventRegistration().fromJson(registrations[0]);
+                }
+                return null;
+            })
+            .toPromise();
+    }
 
     getPayments(eventId: number): Observable<StripeCharge[]> {
         return this.dataService.getApiRequest(`registration/charges/${eventId}`)
@@ -125,7 +151,34 @@ export class RegistrationService {
             });
     }
 
-    getSlotPayments(eventId: number): Observable<SlotPayment[]> {
+    // Registration at the table (cash)
+    sameDayRegistration(event: EventDetail, registration: EventRegistration, payment: SlotPayment): Promise<void> {
+        let payload: any = {
+            event_id: event.id,
+            member_id: registration.memberId,
+            course_setup_hole_id: registration.holeId,
+            starting_order: registration.startingOrder,
+            slot_ids: [registration.id]
+        };
+        return this.dataService.postApiRequest('registration/reserve', payload).toPromise()
+            .then((data: any) => {
+                let group = new EventRegistrationGroup().fromJson(data);
+                group.registrations[0] = _.merge({}, group.registrations[0], registration);
+                group.copyPayment(payment);
+                group.notes = "Same-day registration";
+                return this.dataService.postApiRequest('registration/register', {'group': group.toJson()}).toPromise();
+            });
+    }
+    
+    updateRegistration(reg: EventRegistration): Promise<EventRegistration> {
+        return this.dataService.patchApiRequest(`registrations/${reg.id}`, reg.toJson())
+            .map((data: any) => {
+                return new EventRegistration().fromJson(data);
+            })
+            .toPromise();
+    }
+
+    getSlotPayments(eventId: number): Promise<SlotPayment[]> {
         return this.dataService.getApiRequest('registration/slot-payments', {event_id: eventId})
             .map((json: any[]) => {
                 let payments: SlotPayment[] = [];
@@ -133,11 +186,12 @@ export class RegistrationService {
                     payments.push(new SlotPayment().fromJson(p));
                 });
                 return payments;
-            });
+            })
+            .toPromise();
     }
 
-    addSlotPayment(payment: SlotPayment): Observable<void> {
-        return this.dataService.postApiRequest('registrations/slot-payments', payment);
+    addSlotPayment(payment: SlotPayment): Promise<void> {
+        return this.dataService.postApiRequest('registration/slot-payments', payment.toJson()).toPromise();
     }
 
     // updateSlotPayment(payment: SlotPayment): Observable<void> {

@@ -8,10 +8,10 @@
             <ul dropdownMenu class="dropdown-menu dropdown-menu-right">
                 <!--<li *ngIf="isMajor && currentUser.isOfficer">
                     <a class="clickable" (click)="showTodo('manual')">Offline Registration</a>
-                </li>
+                </li>-->
                 <li *ngIf="!isMajor && (currentUser.isOfficer || currentUser.isBoardMember || currentUser.isProshopStaff)">
                     <a class="clickable" (click)="checkIn()">Pre-event Registration</a>
-                </li>-->
+                </li>
                 <li *ngIf="!isMajor && (currentUser.isOfficer || currentUser.isBoardMember)">
                     <a class="clickable" (click)="addGroups()">Add Par 3 Groups</a>
                 </li>

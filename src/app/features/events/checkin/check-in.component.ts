@@ -1,13 +1,12 @@
-import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DOCUMENT } from '@angular/platform-browser';
-import { EventSignupTable } from '../models/event-signup-table';
-import { EventDetailService, EventDetail, MemberService, PublicMember,
+import { AuthenticationService, EventDetail, MemberService, PublicMember, EventRegistration,
     SlotPayment, RegistrationService } from '../../../core';
 import { TypeaheadMatch, ModalDirective } from 'ng2-bootstrap';
-import { RegistrationSlot } from '../models/registration-slot';
-import { PageScrollService, PageScrollInstance, PageScrollConfig } from 'ng2-page-scroll';
-import { RegistrationRow } from '../models/registration-row';
+import { ToasterService } from 'angular2-toaster';
+import * as _ from 'lodash';
+
+declare const moment: any;
 
 @Component({
     moduleId: module.id,
@@ -16,113 +15,135 @@ import { RegistrationRow } from '../models/registration-row';
 })
 export class CheckInComponent implements OnInit {
 
-    @ViewChild('scrollContainer') container: ElementRef;
-    @ViewChild('addPlayerModal') addPlayerModal: ModalDirective;
+    @ViewChild('openHolesModal')
+    public openHolesModal: ModalDirective;
 
-    public tables: EventSignupTable[];
     public eventDetail: EventDetail;
     public allMembers: PublicMember[];
-    public registeredMembers: PublicMember[];
     public selectedMemberName: string;
-    public addedMemberName: string;
-    public addedMember: PublicMember;
-    private selectedSlot: RegistrationSlot;
-    private slotPayments: SlotPayment[];
+    public currentMember: PublicMember;
+    public registration: EventRegistration;
+    public registrationOriginal: EventRegistration;
+    public selectedHole: EventRegistration;
+    public openHoles: EventRegistration[] = [];
+    public payment: SlotPayment;
 
-    constructor(private eventService: EventDetailService,
+    constructor(private authService: AuthenticationService,
                 private registrationService: RegistrationService,
-                private pageScrollService: PageScrollService,
-                @Inject(DOCUMENT) private document: any,
                 private memberService: MemberService,
+                private toaster: ToasterService,
                 private route: ActivatedRoute) {
     }
 
     ngOnInit(): void {
         this.route.data
             .subscribe((data: {eventDetail: EventDetail}) => {
-                this.tables = [];
                 this.eventDetail = data.eventDetail;
-                let courses = this.eventService.eventCourses(this.eventDetail);
-                courses.slice().reverse().forEach(course => {
-                    this.eventService.signupTable(course.id).do(table => this.tables.push(table)).subscribe();
-                });
-                this.registrationService.getSlotPayments(this.eventDetail.id).subscribe(payments => this.slotPayments = payments);
-        });
-        this.memberService.getMembers().subscribe(
-            members => {
-                this.allMembers = members;
-                this.registeredMembers = members.filter((m: PublicMember) => {
-                    if (this.eventDetail.isRegistered(m.id)) {
-                        return m;
+                this.memberService.getMembers().subscribe(
+                    members => {
+                        this.allMembers = members;
                     }
-                });
-            }
-        );
-        PageScrollConfig.defaultDuration = 500;
-        PageScrollConfig.defaultScrollOffset = 100;
+                );
+        });
     }
 
-    findPlayer($event: TypeaheadMatch) {
-        // Change the styling to highlight the member and scroll into view
-        let anchor: string = 'none';
-        this.tables.forEach((table: EventSignupTable) => {
-            table.rows.forEach((row: RegistrationRow) => {
-                row.slots.forEach((slot: RegistrationSlot) => {
-                    slot.selected = (slot.memberId === $event.item.id);
-                    if (slot.selected) {
-                        anchor = `#hole-${slot.row.holeId}`;
-                    }
-                });
+    findRegistration(member: PublicMember) {
+        this.registrationService.getRegistration(this.eventDetail.id, member.id)
+            .then((reg: EventRegistration) => {
+                if (reg) {
+                    this.registration = reg;
+                    this.registrationOriginal = _.clone(reg);
+                }
             });
-        });
-        if (anchor !== 'none') {
-            let pageScrollInstance: PageScrollInstance = PageScrollInstance.simpleInlineInstance(this.document, anchor, this.container.nativeElement);
-            this.pageScrollService.start(pageScrollInstance);
-        }
-        this.selectedMemberName = '';
     }
 
     findMember($event: TypeaheadMatch): void {
-        this.addedMember = $event.item;
+        this.currentMember = $event.item;
+        this.findRegistration($event.item);
+        this.payment = new SlotPayment();
+        this.payment.paymentConfirmationCode = "Cash";
+        this.payment.recordingMemberId = this.authService.user.member.id;
+        this.selectedMemberName = '';
     }
 
     addPlayer(): void {
-        this.selectedSlot.memberName = this.addedMember.name;
-        this.addPlayerModal.hide();
+        this.registration = _.clone(this.selectedHole);
+        this.registrationOriginal = _.clone(this.selectedHole);
+        this.registration.memberId = this.currentMember.id;
+        this.registration.memberName = this.currentMember.name;
+        this.registration.isEventFeePaid = true;
+        this.updatePayment();
+        this.selectedHole = null;
+        this.openHolesModal.hide();
     }
 
-    cancelAdd(): void {
-        this.addPlayerModal.hide();
+    movePlayer(): void {
+
     }
 
-    openSearch(slot: RegistrationSlot): void {
-        if (slot.memberId === -1) {
-            this.selectedSlot = slot;
-            this.addedMember = null;
-            this.addedMemberName = '';
-            this.addPlayerModal.config = {backdrop: 'static', keyboard: false};
-            this.addPlayerModal.show();
-        }
+    dropPlayer(): void {
+
     }
 
-    // Assumptions: always cash
-    updateSkins(slot: RegistrationSlot, skinsType: string): void {
-        // TODO: allow toggling, but only if not previously paid online
-        if (slot.memberId === -1) return;
-        if (skinsType === 'gross') {
-            if (!slot.registration.isGrossSkinsFeePaid) {
-                // TODO: service PUT
-                slot.registration.isGrossSkinsFeePaid = true;
-            }
+    savePlayer(): void {
+        if (this.registration.groupId > 0) {
+            this.registrationService.updateRegistration(this.registration)
+                .then(() => {
+                    return this.registrationService.addSlotPayment(this.payment);
+                })
+                .then(() => {
+                    this.toaster.pop('success', 'Check-in Complete', `${this.registration.memberName} has been checked in`);
+                    this.clear();
+                })
+                .catch((err: string) => {
+                    this.toaster.pop('error', 'Check-in Failure', err);
+                });
         } else {
-            if (!slot.registration.isNetSkinsFeePaid) {
-                // TODO: service PUT
-                slot.registration.isNetSkinsFeePaid = true;
-            }
+            this.registrationService.sameDayRegistration(this.eventDetail, this.registration, this.payment)
+                .then(() => {
+                    this.toaster.pop('success', 'Check-in Complete', `${this.registration.memberName} has been checked in`);
+                    this.clear();
+                })
+                .catch((err: string) => {
+                    this.toaster.pop('error', 'Check-in Failure', err);
+                });
         }
     }
 
-    private isSlotPayment(registration: RegistrationSlot): boolean {
-        return false;
+    clear(): void {
+        this.currentMember = null;
+        this.registration = null;
+        this.registrationOriginal = null;
+        this.payment = null;
+    }
+
+    findOpenHole(): void {
+        this.registrationService.getOpenSlots(this.eventDetail.id).subscribe(registrations => {
+            this.openHoles = registrations;
+            this.openHolesModal.show();
+        });
+    }
+
+    selectHole(reg: EventRegistration): void {
+        this.selectedHole = reg;
+    }
+
+    cancelOpenHoles(): void {
+        this.selectedHole = null;
+        this.openHolesModal.hide();
+    }
+
+    updatePayment(): void {
+        this.payment.updatePayment(this.eventDetail, this.registration, this.registrationOriginal);
+    }
+
+    isDirty(): boolean {
+        let dirty = false;
+        if (this.registration) {
+            dirty = (!this.registration.groupId ||
+                     this.registration.isNetSkinsFeePaid !== this.registrationOriginal.isNetSkinsFeePaid ||
+                     this.registration.isGrossSkinsFeePaid !== this.registrationOriginal.isGrossSkinsFeePaid);
+        }
+        return dirty;
     }
 }

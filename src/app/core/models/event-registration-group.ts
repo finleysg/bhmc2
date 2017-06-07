@@ -1,9 +1,10 @@
 import { EventRegistration } from './event-registration';
 import { EventPayment } from './event-payment';
 import { EventDetail } from './event-detail';
+import { SlotPayment } from './slot-payment';
 import { PublicMember } from './member';
-declare const moment: any;
 import { User } from './user';
+declare const moment: any;
 
 export class EventRegistrationGroup {
     id: number;
@@ -156,4 +157,10 @@ export class EventRegistrationGroup {
         });
         this.payment.update(subtotal);
     };
+    
+    copyPayment(payment: SlotPayment): void {
+        this.paymentConfirmationCode = payment.paymentConfirmationCode;
+        this.paymentConfirmationDate = payment.paymentConfirmationDate;
+        this.payment.total = payment.paymentAmount;
+    }
 }
