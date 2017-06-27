@@ -35,7 +35,7 @@ export class SlotPayment {
             card_verification_token: this.cardVerificationToken,
             payment_code: this.paymentConfirmationCode,
             payment_amount: this.paymentAmount,
-            payment_timestamp: this.paymentConfirmationDate.format('yyyy-MM-dd hh:mm:ss'),
+            // payment_timestamp: this.paymentConfirmationDate.format('yyyy-MM-dd hh:mm:ss'),
             comment: this.comment
         };
     }
@@ -50,7 +50,7 @@ export class SlotPayment {
         if (registration.isGrossSkinsFeePaid && !original.isGrossSkinsFeePaid) {
             fee += event.skinsFee;
             comment = comment ? ', ' : '' + `gross skins`
-        } 
+        }
         if (registration.isNetSkinsFeePaid && !original.isNetSkinsFeePaid) {
             fee += event.skinsFee;
             comment = comment ? ', ' : '' + `net skins`
