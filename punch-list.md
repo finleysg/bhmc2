@@ -6,7 +6,7 @@
 * Older events or events without courses should fail more gracefully
 * Payments: ability to choose whether or not to save a card
 * Payments: saving/selecting multiple cards
-* Contact messages - send to contact@bhmc.org
+* ~~Contact messages - send to contact@bhmc.org~~
 * Ensure new member registration obeys the config flag
 * Return URL may need to be fixed - might also just be a dev issue
 * Identity and handle returning inactive member signup (redirect from failed login)
@@ -21,6 +21,9 @@
 * Scroll to top on mobile
 * Match play cannot handle multiple documents
 * Job to refund all for a rainout
+* Gold tees on major event export
+* Upload 2 day event teetimes?
+* Easy home page link to tee times and results
 
 ###Reports
 * Payment report by users
@@ -40,7 +43,7 @@
     * A 60-90 minute meeting with officers (and beers)
     * Sponsors - where do we put different levels (code required)
 * Accounts: switch all passwords to GHIN
-    * Create a home page announcement to recommend changing password
+    * ~~Create a home page announcement to recommend changing password~~
 * DNS
     * Transfer bhmc.org ownership to me (current owner must do this)
     * Register domain to point to firebase url
@@ -51,12 +54,12 @@
     * DNS email routes must be set up
     * Mailgun set up
 * Set up account at Stripe
-    * Either create a new account or use my "test" account
-    * Must tie to the club bank account
-    * Create additional admins
-    * Update the website to use production security keys
+    * ~~Either create a new account or use my "test" account~~
+    * ~~Must tie to the club bank account~~
+    * ~~Create additional admins~~
+    * ~~Update the website to use production security keys~~
 * Turn on registration
-    * Currently disabled in the website
+    * ~~Currently disabled in the website~~
     * Run a few sanity tests
 * Admin training
     * Who can do admin tasks (roles)

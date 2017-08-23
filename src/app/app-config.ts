@@ -76,7 +76,7 @@ export class AppConfig {
         this._matchPlayId = json.match_play_event ? json.match_play_event : 0;
         this._acceptNewMembers = json.accept_new_members;
         this._version = (window as any).bhmcVersion;
-        this._stripePublicKey = 'pk_test_huMlHToXOZcuNXb9eQ7viBvY';
+        this._stripePublicKey = 'pk_live_IlLRf6swyzRpCntya5UM8moz';
         this._ravenDsn = 'https://9b56cf753b264c9fa9be08b86846551b@sentry.io/126710';
     }
 }
