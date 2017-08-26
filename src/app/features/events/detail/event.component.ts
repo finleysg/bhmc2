@@ -61,7 +61,6 @@ export class EventComponent implements OnInit {
         return this.eventDetail.canRegister &&
             this.currentUser.isAuthenticated &&
             this.currentUser.member.membershipIsCurrent &&
-            this.currentUser.isStaff &&
             !this.isRegistered;
     }
 
