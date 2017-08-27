@@ -58,7 +58,7 @@ export class EventData {
         data.netSkinsFee = reg.isNetSkinsFeePaid ? detail.skinsFee : 0;
         data.greenFee = reg.isGreensFeePaid ? detail.greensFee : 0;
         data.cartFee = reg.isCartFeePaid ? detail.cartFee : 0;
-        if (group) {
+        if (group && reg.memberId > 0) {
             data.groupId = group.id;
             data.paymentCode = group.paymentConfirmationCode;
             if (group.paymentConfirmationDate) {

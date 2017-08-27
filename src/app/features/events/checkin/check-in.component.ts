@@ -142,7 +142,9 @@ export class CheckInComponent implements OnInit {
         if (this.registration) {
             dirty = (!this.registration.groupId ||
                      this.registration.isNetSkinsFeePaid !== this.registrationOriginal.isNetSkinsFeePaid ||
-                     this.registration.isGrossSkinsFeePaid !== this.registrationOriginal.isGrossSkinsFeePaid);
+                     this.registration.isGrossSkinsFeePaid !== this.registrationOriginal.isGrossSkinsFeePaid ||
+                    (this.registration.groupId === -1 && this.registration.memberId > 0)
+            );
         }
         return dirty;
     }
