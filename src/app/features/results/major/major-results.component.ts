@@ -11,6 +11,7 @@ export class MajorResultsComponent implements OnInit {
 
     currentYear: EventDocument[];
     archives: EventDocument[];
+    champs: EventDocument[];
     years: number[];
     selectedYear: number;
 
@@ -26,5 +27,9 @@ export class MajorResultsComponent implements OnInit {
                 this.currentYear = docs.filter(d => d.year === this.configService.config.year);
                 this.archives = docs.filter(d => d.year !== this.configService.config.year);
             });
+        this.documentService.getDocuments(DocumentType.Other, 2017, null)
+            .subscribe(docs => {
+                this.champs = docs.filter(d => d.title.indexOf('Champion') >= 0);
+            })
     }
 }

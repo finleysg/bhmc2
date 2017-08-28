@@ -70,6 +70,10 @@ export class CheckInComponent implements OnInit {
         this.registration = _.clone(this.selectedHole);
         this.registrationOriginal = _.clone(this.selectedHole);
         this.registration.memberId = this.currentMember.id;
+        this.registration.memberFirstName = this.currentMember.firstName;
+        this.registration.memberLastName = this.currentMember.lastName;
+        this.registration.memberGhin = this.currentMember.ghin;
+        this.registration.memberEmail = this.currentMember.email;
         this.registration.memberName = this.currentMember.name;
         this.registration.isEventFeePaid = true;
         this.updatePayment();
