@@ -15,6 +15,7 @@ export class PoliciesComponent implements OnInit {
 
     public policies: Policy[];
     public byLaws: EventDocument;
+    public statement: EventDocument;
     public policyName: string;
 
     constructor(private policyService: PolicyService,
@@ -30,11 +31,24 @@ export class PoliciesComponent implements OnInit {
                 const d = docs.filter(d => d.title.indexOf('Law') >= 0);
                 if (d && d.length === 1) this.byLaws = d[0];
             });
+        this.documentService.getDocuments(DocumentType.Financial)
+            .subscribe(docs => {
+                const f = docs.sort(function(a, b) {
+                    if (a.lastUpdate.isBefore(b.lastUpdate)) {
+                        return 1;
+                    }
+                    if (a.lastUpdate.isAfter(b.lastUpdate)) {
+                        return -1;
+                    }
+                    return 0;
+                });
+                if (f && f.length > 0) this.statement = f[0];
+            });
     }
 
     loadPolicies(category: string): void {
         let policyCategory = PolicyCategory.ClubPolicy;
-        this.policyName = "Policies & Procedures"
+        this.policyName = "Policies & Procedures";
         if (category === 'rules') {
             this.policyName = "Local Rules";
             policyCategory = PolicyCategory.LocalRule;
