@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EventDocument, DocumentService, DocumentType, EventType } from '../../../core';
+import { EventDocument, DocumentService, DocumentType, EventType, Photo, PhotoType } from '../../../core';
 import { ConfigService } from '../../../app-config.service';
 
 @Component({
@@ -11,7 +11,8 @@ export class MajorResultsComponent implements OnInit {
 
     currentYear: EventDocument[];
     archives: EventDocument[];
-    champs: EventDocument[];
+    clubChampion: Photo;
+    seniorChampion: Photo;
     years: number[];
     selectedYear: number;
 
@@ -27,9 +28,31 @@ export class MajorResultsComponent implements OnInit {
                 this.currentYear = docs.filter(d => d.year === this.configService.config.year);
                 this.archives = docs.filter(d => d.year !== this.configService.config.year);
             });
-        this.documentService.getDocuments(DocumentType.Other, 2017, null)
-            .subscribe(docs => {
-                this.champs = docs.filter(d => d.title.indexOf('Champion') >= 0);
-            })
+        this.documentService.getPhotos(PhotoType.ClubChampion)
+            .subscribe(pics => {
+                const f = pics.sort(function(a, b) {
+                    if (a.lastUpdate.isBefore(b.lastUpdate)) {
+                        return 1;
+                    }
+                    if (a.lastUpdate.isAfter(b.lastUpdate)) {
+                        return -1;
+                    }
+                    return 0;
+                });
+                if (f && f.length > 0) this.clubChampion = f[0];
+            });
+        this.documentService.getPhotos(PhotoType.SeniorChampion)
+            .subscribe(pics => {
+                const f = pics.sort(function(a, b) {
+                    if (a.lastUpdate.isBefore(b.lastUpdate)) {
+                        return 1;
+                    }
+                    if (a.lastUpdate.isAfter(b.lastUpdate)) {
+                        return -1;
+                    }
+                    return 0;
+                });
+                if (f && f.length > 0) this.seniorChampion = f[0];
+            });
     }
 }

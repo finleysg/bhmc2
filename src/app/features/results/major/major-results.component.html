@@ -39,14 +39,22 @@
             <div class="card-body card-padding">
                 <div class="listview">
                     <div class="lv-header">
-                        Reigning Club Champions
+                        Our Reigning Champions
                     </div>
                     <div class="lv-body">
-                        <a class="lv-item" [href]="champ.url" target="_blank" *ngFor="let champ of champs">
+                        <a class="lv-item" [href]="clubChampion.url" *ngIf="clubChampion" target="_blank">
                             <div class="media">
                                 <div class="media-body">
-                                    <div class="lv-title">{{ champ.title }}</div>
-                                    <img class="img-responsive" [src]="champ.url" />
+                                    <div class="lv-title">{{ clubChampion.title }}</div>
+                                    <img class="img-responsive" [src]="clubChampion.url" />
+                                </div>
+                            </div>
+                        </a>
+                        <a class="lv-item" [href]="seniorChampion.url" *ngIf="seniorChampion" target="_blank">
+                            <div class="media">
+                                <div class="media-body">
+                                    <div class="lv-title">{{ seniorChampion.title }}</div>
+                                    <img class="img-responsive" [src]="seniorChampion.url" />
                                 </div>
                             </div>
                         </a>

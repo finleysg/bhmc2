@@ -2,6 +2,7 @@ export { Calendar } from './models/calendar';
 export { CalendarEvent } from './models/calendar-event';
 export { EventDetail, EventType, RegistrationWindowType, SkinsType, StartType } from './models/event-detail';
 export { EventDocument, DocumentType } from './models/event-document';
+export { Photo, PhotoType } from './models/photo';
 export { EventPayment } from './models/event-payment';
 export { EventData, EventDataSummary } from './models/event-data';
 export { EventRegistration } from './models/event-registration';
