@@ -33,8 +33,10 @@ export class EventReportComponent implements OnInit {
                         this.report = [];
                         this.eventDetail.registrations.forEach(r => {
                             let group = groups.find(g => { return g.id === r.groupId; });
-                            this.report.push(EventData.create(this.eventDetail, group, r));
-                            this.summary.update(r);
+                            if (r.memberId > 0) {
+                                this.report.push(EventData.create(this.eventDetail, group, r));
+                                this.summary.update(r);
+                            }
                         });
                     }).subscribe();
                 this.showCourse = this.eventDetail.eventType === EventType.League;
